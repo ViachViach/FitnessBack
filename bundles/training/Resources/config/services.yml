@@ -1,0 +1,28 @@
+services:
+  training.service.training:
+    class: Training\Bundle\TrainingBundle\Service\TrainingService
+    public: true
+    arguments:
+      - '@training.repository.user_training'
+      - '@training.service.exercise'
+      - '@app.service.user'
+
+  training.service.exercise:
+    class: Training\Bundle\TrainingBundle\Service\ExerciseService
+    public: true
+    arguments:
+      - '@training.repository.user_training'
+      - '@app.service.user'
+      - '@doctrine.orm.entity_manager'
+      - '@validator'
+      - '@training.repository.exercise'
+
+  training.service.nutrition:
+    class: Training\Bundle\TrainingBundle\Service\NutritionService
+    public: true
+    arguments:
+      - '@app.service.user'
+
+  Training\Bundle\TrainingBundle\Service\TrainingService: '@training.service.training'
+  Training\Bundle\TrainingBundle\Service\ExerciseService: '@training.service.exercise'
+  Training\Bundle\TrainingBundle\Service\NutritionService: '@training.service.nutrition'
