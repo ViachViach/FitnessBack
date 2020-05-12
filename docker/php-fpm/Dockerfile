@@ -25,4 +25,4 @@ COPY symfony.ini /usr/local/etc/php/conf.d/symfony.ini
 
 COPY xdebug.ini  /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-WORKDIR /var/www/fitness/backend
+WORKDIR /var/www

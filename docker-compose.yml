@@ -21,14 +21,14 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - ./backend:/var/www/fitness/backend:cached
+      - ./:/var/www/:cached
     depends_on:
       - db
     networks:
       - db
       - php
   nginx:
-    container_name: nginx-back
+    container_name: nginx
     build: docker/nginx
     ports:
       - "81:81"
@@ -37,7 +37,7 @@ services:
     networks:
       - php
     volumes:
-      - ./backend:/var/www/fitness/backend:cached
+      - ./:/var/www/:cached
       - ./docker/logs/nginx-back:/var/log/nginx:cached
 
 volumes:
