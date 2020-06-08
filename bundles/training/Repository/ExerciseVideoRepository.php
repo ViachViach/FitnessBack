@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Repository;
+namespace Fitness\Bundle\TrainingBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 

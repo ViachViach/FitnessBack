@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Service;
+namespace Fitness\Bundle\TrainingBundle\Service;
 
 use App\Service\UserService;
 use Doctrine\Common\Collections\Collection;
@@ -10,11 +10,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Training\Bundle\TrainingBundle\Dto\ExerciseDto;
-use Training\Bundle\TrainingBundle\Entity\Exercise;
-use Training\Bundle\TrainingBundle\Entity\ExerciseVideo;
-use Training\Bundle\TrainingBundle\Repository\ExerciseRepository;
-use Training\Bundle\TrainingBundle\Repository\UserTrainingRepository;
+use Fitness\Bundle\TrainingBundle\Dto\ExerciseDto;
+use Fitness\Bundle\TrainingBundle\Entity\Exercise;
+use Fitness\Bundle\TrainingBundle\Entity\ExerciseVideo;
+use Fitness\Bundle\TrainingBundle\Repository\ExerciseRepository;
+use Fitness\Bundle\TrainingBundle\Repository\UserTrainingRepository;
 use App\Exception\UserNotFoundException;
 use InvalidArgumentException;
 
@@ -123,6 +123,21 @@ class ExerciseService
         $exercise = $this->exerciseRepository->findById($exerciseId);
 
         return $this->createDto($exercise);
+    }
+
+    /**
+     * @return array
+     */
+    public function getList(): array
+    {
+        $exercises = $this->exerciseRepository->findAll();
+
+        $exerciseDto = [];
+        foreach ($exercises as $exercise) {
+            $exerciseDto[] = $this->createDto($exercise);
+        }
+
+        return $exerciseDto;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Entity;
+namespace Fitness\Bundle\TrainingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

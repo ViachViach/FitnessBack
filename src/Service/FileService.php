@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use InvalidArgumentException;
-use Training\Bundle\TrainingBundle\Service\ExerciseService;
+use Fitness\Bundle\TrainingBundle\Service\ExerciseService;
 
 class FileService
 {

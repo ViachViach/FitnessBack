@@ -45,4 +45,3 @@ volumes:
 networks:
   db:
   php:
-

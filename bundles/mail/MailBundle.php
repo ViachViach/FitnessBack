@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mail\Bundle\MailBundle;
+namespace Fitness\Bundle\MailBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

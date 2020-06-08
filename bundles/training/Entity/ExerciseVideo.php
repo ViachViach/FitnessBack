@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Entity;
+namespace Fitness\Bundle\TrainingBundle\Entity;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Training\Bundle\TrainingBundle\Repository\ExerciseVideoRepository")
+ * @ORM\Entity(repositoryClass="Fitness\Bundle\TrainingBundle\Repository\ExerciseVideoRepository")
  * @ORM\Table(name="exercise_video", schema="public")
  * @UniqueEntity(
  *      fields={"userTrainingId", "exerciseId"},

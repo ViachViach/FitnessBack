@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle;
+namespace Fitness\Bundle\TrainingBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

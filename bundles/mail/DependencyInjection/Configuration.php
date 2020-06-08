@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mail\Bundle\MailBundle\DependencyInjection;
+namespace Fitness\Bundle\MailBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Dto;
+namespace Fitness\Bundle\TrainingBundle\Dto;
 
 class ExerciseDto
 {
@@ -12,7 +12,7 @@ class ExerciseDto
 
     private string $description;
 
-    private string $videoPath;
+    private string $videoPath = '';
 
     /**
      * @return int

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Service;
+namespace Fitness\Bundle\TrainingBundle\Service;
 
 use App\Exception\UserNotFoundException;
 use App\Service\UserService;
-use Training\Bundle\TrainingBundle\Dto\TrainingDto;
-use Training\Bundle\TrainingBundle\Entity\UserTraining;
-use Training\Bundle\TrainingBundle\Repository\UserTrainingRepository;
+use Fitness\Bundle\TrainingBundle\Dto\TrainingDto;
+use Fitness\Bundle\TrainingBundle\Entity\UserTraining;
+use Fitness\Bundle\TrainingBundle\Repository\UserTrainingRepository;
 
 class TrainingService
 {

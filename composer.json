@@ -48,8 +48,9 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "Training\\Bundle\\TrainingBundle\\": "bundles/training/",
-            "Mail\\Bundle\\MailBundle\\": "bundles/mail/"
+            "Fitness\\Bundle\\AdminBundle\\": "bundles/admin/",
+            "Fitness\\Bundle\\TrainingBundle\\": "bundles/training/",
+            "Fitness\\Bundle\\MailBundle\\": "bundles/mail/"
         }
     },
     "autoload-dev": {

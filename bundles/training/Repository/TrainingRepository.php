@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Repository;
+namespace Fitness\Bundle\TrainingBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Training\Bundle\TrainingBundle\Entity\Training;
+use Fitness\Bundle\TrainingBundle\Entity\Training;
 
 /**
  * @method Training|null find($id, $lockMode = null, $lockVersion = null)

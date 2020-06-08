@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Mail\Bundle\MailBundle\Service;
+namespace Fitness\Bundle\MailBundle\Service;
 
 class MailService
 {

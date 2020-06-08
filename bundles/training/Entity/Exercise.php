@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Entity;
+namespace Fitness\Bundle\TrainingBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Training\Bundle\TrainingBundle\Repository\ExerciseRepository")
+ * @ORM\Entity(repositoryClass="Fitness\Bundle\TrainingBundle\Repository\ExerciseRepository")
  * @ORM\Table(name="exercise", schema="public")
  */
 class Exercise
@@ -31,13 +31,13 @@ class Exercise
     private string $description;
 
     /**
-     * @ORM\Column(type="string", length=255, name="video_path")
+     * @ORM\Column(type="string", length=255, name="video_path", nullable=true)
     */
     private string $videoPath;
 
     /**
      * @ORM\ManyToMany(
-     *     targetEntity="Training\Bundle\TrainingBundle\Entity\Training",
+     *     targetEntity="Fitness\Bundle\TrainingBundle\Entity\Training",
      *     inversedBy="exercises",
      *     cascade={"persist"}
      * )
@@ -124,5 +124,4 @@ class Exercise
     {
         $this->videoPath = $videoPath;
     }
-
 }

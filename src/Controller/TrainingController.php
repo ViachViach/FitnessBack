@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Training\Bundle\TrainingBundle\Dto\TrainingDto;
-use Training\Bundle\TrainingBundle\Service\TrainingService;
+use Fitness\Bundle\TrainingBundle\Dto\TrainingDto;
+use Fitness\Bundle\TrainingBundle\Service\TrainingService;
 use Swagger\Annotations as SWG;
 
 /**

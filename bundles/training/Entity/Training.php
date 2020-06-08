@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Entity;
+namespace Fitness\Bundle\TrainingBundle\Entity;
 
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Training\Bundle\TrainingBundle\Repository\TrainingRepository")
+ * @ORM\Entity(repositoryClass="Fitness\Bundle\TrainingBundle\Repository\TrainingRepository")
  * @ORM\Table(name="training", schema="public")
  */
 class Training
@@ -47,7 +47,7 @@ class Training
     private Collection $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Training\Bundle\TrainingBundle\Entity\Exercise", inversedBy="trainings")
+     * @ORM\ManyToMany(targetEntity="Fitness\Bundle\TrainingBundle\Entity\Exercise", inversedBy="trainings")
      */
     private Collection $exercises;
 

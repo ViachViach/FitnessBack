@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Training\Bundle\TrainingBundle\Entity\Training;
+use Fitness\Bundle\TrainingBundle\Entity\Training;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -108,7 +108,7 @@ class User implements UserInterface
     private string $updateAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Training\Bundle\TrainingBundle\Entity\Training", inversedBy="users")
+     * @ORM\ManyToMany(targetEntity="Fitness\Bundle\TrainingBundle\Entity\Training", inversedBy="users")
      */
     private Collection $trainings;
 

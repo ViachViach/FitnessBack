@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Service;
+namespace Fitness\Bundle\TrainingBundle\Service;
 
 use App\Exception\UserNotFoundException;
 use App\Service\UserService;
@@ -22,6 +22,5 @@ class NutritionService
     public function getNutritionBuCurrencyUser()
     {
         $user = $this->userService->getCurrencyUser();
-
     }
 }

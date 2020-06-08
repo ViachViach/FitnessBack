@@ -8,17 +8,14 @@ use App\Exception\UserNotFoundException;
 use App\Service\FileService;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\NonUniqueResultException;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Training\Bundle\TrainingBundle\Dto\ExerciseDto;
-use Training\Bundle\TrainingBundle\Service\ExerciseService;
+use Fitness\Bundle\TrainingBundle\Service\ExerciseService;
 use InvalidArgumentException;
 use Swagger\Annotations as SWG;
 
@@ -35,12 +32,18 @@ class ExerciseController
 
     private SerializerInterface $serializer;
 
+    /**
+     * ExerciseController constructor.
+     *
+     * @param FileService         $fileService
+     * @param ExerciseService     $exerciseService
+     * @param SerializerInterface $serializer
+     */
     public function __construct(
         FileService $fileService,
         ExerciseService $exerciseService,
         SerializerInterface $serializer
-    )
-    {
+    ) {
         $this->fileService = $fileService;
         $this->exerciseService = $exerciseService;
         $this->serializer = $serializer;
@@ -85,77 +88,6 @@ class ExerciseController
         } catch (InvalidArgumentException $e) {
             throw new HttpException(405, $e->getMessage());
         }
-
-        return new Response();
-    }
-
-    /**
-     * @param int $exerciseId
-     *
-     * @return Response
-     *
-     * @IsGranted("ROLE_ADMIN")
-     *
-     * @Route("/get/{exerciseId}", methods={"GET"})
-     *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Get exercise by id",
-     *     @SWG\Schema(
-     *        ref=@Model(type=ExerciseDto::class)
-     *     )
-     * )
-     */
-    public function actionGet(int $exerciseId): Response
-    {
-        $exerciseDto = $this->exerciseService->getExerciseById($exerciseId);
-
-        $json = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
-
-        return new Response($json);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return Response
-     *
-     * @IsGranted("ROLE_ADMIN")
-     *
-     * @Route("/create", methods={"POST"})
-     *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Create exercise"
-     * )
-     *
-     * @SWG\Parameter(
-     *    name="Create exercise",
-     *    in="body",
-     *    required=true,
-     *    @SWG\Schema(
-     *        ref=@Model(type=ExerciseDto::class)
-     *    )
-     * )
-     * @SWG\Parameter(
-     *      name="file",
-     *      in="formData",
-     *      required=true,
-     *      collectionFormat="multi",
-     *      type="file",
-     *      description="training image"
-     * )
-     */
-    public function actionCreate(Request $request): Response
-    {
-        /**@var ExerciseDto $exerciseDto*/
-        $exerciseDto = $this->serializer->deserialize(
-            $request->getContent(),
-            ExerciseDto::class,
-            JsonEncoder::FORMAT
-        );
-
-        $this->exerciseService->createExercise($exerciseDto);
 
         return new Response();
     }

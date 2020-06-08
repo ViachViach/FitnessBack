@@ -7,9 +7,8 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Training\Bundle\TrainingBundle\Entity\Exercise;
-use Training\Bundle\TrainingBundle\Entity\Training;
-use Training\Bundle\TrainingBundle\Entity\UserTraining;
+use Fitness\Bundle\TrainingBundle\Entity\Exercise;
+use Fitness\Bundle\TrainingBundle\Entity\Training;
 
 class TrainingFixture extends Fixture implements DependentFixtureInterface
 {

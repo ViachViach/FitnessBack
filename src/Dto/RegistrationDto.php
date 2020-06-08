@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-use Training\Bundle\TrainingBundle\Dto\ExerciseDto;
+use Fitness\Bundle\TrainingBundle\Dto\ExerciseDto;
 
 class RegistrationDto
 {
@@ -61,7 +61,4 @@ class RegistrationDto
     {
         $this->exerciseDto = $exerciseDto;
     }
-
-
-
 }

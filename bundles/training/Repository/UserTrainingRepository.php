@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Training\Bundle\TrainingBundle\Repository;
+namespace Fitness\Bundle\TrainingBundle\Repository;
 
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Training\Bundle\TrainingBundle\Entity\Training;
-use Training\Bundle\TrainingBundle\Entity\UserTraining;
+use Fitness\Bundle\TrainingBundle\Entity\Training;
+use Fitness\Bundle\TrainingBundle\Entity\UserTraining;
 
 class UserTrainingRepository extends EntityRepository
 {
