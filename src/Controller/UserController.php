@@ -4,22 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\Controller\UserResponse;
 use App\Exception\UserNotFoundException;
 use App\Service\UserService;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Swagger\Annotations as SWG;
-use App\Dto\UserDto;
+use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 /**
  * @Security(name="Bearer")
- * @SWG\Tag(name="Users")
+ * @OA\Tag(name="Users")
  */
 class UserController
 {
@@ -34,28 +32,32 @@ class UserController
     }
 
     /**
-     * @throws UserNotFoundException
      *
-     * @param Request $request
-     * @return Response
+     * @Route("/", name="user:get-currency-user", methods={"GET"})
      *
-     * @IsGranted("ROLE_USER")
-     *
-     * @Route("/currency-user", methods={"GET"})
-     * @SWG\Response(
-     *     response=200,
-     *     description="Get currency user",
-     *     @SWG\Schema(
-     *        ref=@Model(type=UserDto::class)
-     *     )
+     * @OA\Get(
+     *    description="Get currency user",
+     *    summary="Return currency user",
+     *    @OA\Response(
+     *         response=200,
+     *         description="Array of exercises",
+     *         @OA\Response(
+     *             response=200,
+     *             description="exercise",
+     *             @OA\JsonContent(
+     *                 ref=@Model(type=UserResponse::class)
+     *             )
+     *         ),
+     *    ),
      * )
-     *
+     * @return JsonResponse
+     * @throws UserNotFoundException
      */
-    public function actionGetCurrencyUser(Request $request): Response
+    public function actionGetCurrencyUser(): JsonResponse
     {
-        $user = $this->userService->getCurrencyUserDto();
+        $user = $this->userService->getCurrencyUserResponse();
         $response = $this->serializer->serialize($user, JsonEncoder::FORMAT);
 
-        return new Response($response);
+        return new JsonResponse($response, JsonResponse::HTTP_OK, [], true);
     }
 }

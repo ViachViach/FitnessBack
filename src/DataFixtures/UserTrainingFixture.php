@@ -7,7 +7,7 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Fitness\Bundle\TrainingBundle\Entity\UserTraining;
+use App\Entity\UserTraining;
 
 class UserTrainingFixture extends Fixture implements DependentFixtureInterface
 {
@@ -19,9 +19,12 @@ class UserTrainingFixture extends Fixture implements DependentFixtureInterface
     {
         for ($i = 0; $i < 20; $i++) {
             $userTraining = new UserTraining();
-            $userTraining->setTraining($this->getReference("Training {$i}"));
-            $userTraining->setUser($this->getReference(UserFixture::USER_LIST[rand(0, 1)]));
-            $userTraining->setWeekDay(rand(1, 7));
+            $userTraining
+                ->setTraining($this->getReference("Training {$i}"))
+                ->setUser($this->getReference(UserFixture::USER_LIST[rand(0, 1)]))
+                ->setWeekDay(rand(1, 7))
+            ;
+
             $manager->persist($userTraining);
         }
 

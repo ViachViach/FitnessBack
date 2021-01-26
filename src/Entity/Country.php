@@ -24,20 +24,41 @@ class Country
      */
     private string $name;
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    /**
+     * @param int $id
+     *
+     * @return Country
+     */
+    public function setId(int $id): Country
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    /**
+     * @param string $name
+     *
+     * @return Country
+     */
+    public function setName(string $name): Country
     {
         $this->name = $name;
-
         return $this;
     }
 }

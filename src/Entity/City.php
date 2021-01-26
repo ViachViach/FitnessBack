@@ -30,20 +30,60 @@ class City
      */
     private int $country;
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    /**
+     * @param int $id
+     *
+     * @return City
+     */
+    public function setId(int $id): City
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    /**
+     * @param string $name
+     *
+     * @return City
+     */
+    public function setName(string $name): City
     {
         $this->name = $name;
+        return $this;
+    }
 
+    /**
+     * @return int
+     */
+    public function getCountry(): int
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param int $country
+     *
+     * @return City
+     */
+    public function setCountry(int $country): City
+    {
+        $this->country = $country;
         return $this;
     }
 }

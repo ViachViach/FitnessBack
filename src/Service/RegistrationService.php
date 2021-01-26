@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Dto\RegistrationDto;
+use App\DTO\Controller\Registration;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Exception\RegistrationException;
@@ -38,11 +38,11 @@ class RegistrationService
     }
 
     /**
-     * @param RegistrationDto $registrationDto
+     * @param Registration $registrationDto
      *
      * @throws RegistrationException
      */
-    public function registrationUser(RegistrationDto $registrationDto): void
+    public function registrationUser(Registration $registrationDto): void
     {
         $entityUser = new User();
         $entityUser->setEmail($registrationDto->getEmail());

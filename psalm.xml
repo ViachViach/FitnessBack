@@ -9,7 +9,6 @@
 >
     <projectFiles>
         <directory name="src" />
-        <directory name="bundles" />
         <ignoreFiles>
             <directory name="src/Migrations" />
             <directory name="vendor" />

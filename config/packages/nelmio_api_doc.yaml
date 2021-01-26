@@ -1,18 +1,117 @@
 nelmio_api_doc:
     documentation:
         info:
-            title: Fitness RestApi
-            description: This is an awesome app!
-            version: 1.0.0
-        securityDefinitions:
-            Bearer:
-                type: apiKey
-                description: 'Value: Bearer {jwt}'
-                name: Authorization
-                in: header
-            security:
-                - Bearer: []
+            title: "Fitness REST API"
+            description: "This is an awesome app!"
+            version: "1.0.0"
+
+        security:
+            - Bearer: []
+
+        components:
+            securitySchemes:
+                Bearer:
+                    type: apiKey
+                    description: "Value: Bearer {jwt}"
+                    name: "Authorization"
+                    in: header
+
+            schemas:
+                token:
+                    title: "Token"
+                    description: "Auth and refresh tokens"
+                    type: object
+                    properties:
+                        token:
+                            type: string
+                            readOnly: true
+                        refresh_token:
+                            type: string
+                            readOnly: true
+                credentials:
+                    title: "Credentials"
+                    description: "Auth pair"
+                    type: object
+                    properties:
+                        username:
+                            type: string
+                            example: "username"
+                        password:
+                            type: string
+                            example: "password"
+                refresh_token:
+                    title: "Refresh token"
+                    type: object
+                    properties:
+                        refresh_token:
+                            type: string
+                            example: "token"
+                general_error:
+                    title: "General error"
+                    description: "General exception"
+                    type: object
+                    properties:
+                        code:
+                            type: integer
+                            readOnly: true
+                        message:
+                            type: string
+                            readOnly: true
+
+        paths:
+            /api/token/login:
+                post:
+                    tags: ["Token"]
+                    operationId: "postCredentialsItem"
+                    summary: "Get JWT token to login"
+                    requestBody:
+                        description: "Create new JWT Token"
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: "#/components/schemas/credentials"
+
+                    responses:
+                        !php/const Symfony\Component\HttpFoundation\Response::HTTP_OK:
+                            description: "Get JWT token"
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: "#/components/schemas/token"
+
+                        !php/const Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED:
+                            description: "Invalid credentials"
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: "#/components/schemas/general_error"
+
+            /api/token/refresh:
+                post:
+                    tags: ["Token"]
+                    summary: "Refresh JWT token."
+                    requestBody:
+                        description: "Refresh JWT Token"
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: "#/components/schemas/refresh_token"
+
+                    responses:
+                        !php/const Symfony\Component\HttpFoundation\Response::HTTP_OK:
+                            description: "New JWT token"
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: "#/components/schemas/token"
+
+                        !php/const Symfony\Component\HttpFoundation\Response::HTTP_UNAUTHORIZED:
+                            description: "Invalid refresh token"
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: "#/components/schemas/general_error"
+
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
-

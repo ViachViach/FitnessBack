@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Dto\UserDto;
+use App\DTO\Controller\UserResponse;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Exception\UserNotFoundException;
@@ -45,11 +45,11 @@ class UserService
     }
 
     /**
-     * @return UserDto
+     * @return UserResponse
      *
      * @throws UserNotFoundException
      */
-    public function getCurrencyUserDto(): UserDto
+    public function getCurrencyUserResponse(): UserResponse
     {
         $user = $this->getCurrencyUser();
 
@@ -58,14 +58,16 @@ class UserService
 
     /**
      * @param User $user
-     * @return UserDto
+     * @return UserResponse
      */
-    private function createDto(User $user): UserDto
+    private function createDto(User $user): UserResponse
     {
-        $userDto = new UserDto();
+        $userDto = new UserResponse();
         $roles = $this->getRole($user->getRoles());
-        $userDto->setEmail($user->getEmail());
-        $userDto->setRole($roles);
+        $userDto
+            ->setEmail($user->getEmail())
+            ->setRole($roles)
+        ;
 
         return $userDto;
     }

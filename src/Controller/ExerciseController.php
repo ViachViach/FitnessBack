@@ -4,91 +4,246 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Exception\UserNotFoundException;
-use App\Service\FileService;
-use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\ORM\NonUniqueResultException;
+use App\DTO\Controller\CreateExercise;
+use App\Service\ExerciseService;
 use Nelmio\ApiDocBundle\Annotation\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\DTO\Exception\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use App\DTO\Exception\ValidationException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Fitness\Bundle\TrainingBundle\Service\ExerciseService;
-use InvalidArgumentException;
-use Swagger\Annotations as SWG;
+use App\DTO\Exception\UnauthorizedException;
+use App\DTO\Controller\ExerciseResponse;
 
 /**
  * @Security(name="Bearer")
- * @SWG\Tag(name="Exercise")
+ * @OA\Tag(name="Admin Exercise")
  * @Route("exercise")
+ * @OA\Response(
+ *     response="401",
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *         ref=@Model(type=UnauthorizedException::class),
+ *     ),
+ * )
+ * @OA\Response(
+ *     response="404",
+ *     description="Unauthorized",
+ *     @OA\JsonContent(
+ *         ref=@Model(type=NotFoundException::class),
+ *     ),
+ * )
  */
 class ExerciseController
 {
-    private FileService $fileService;
-
     private ExerciseService $exerciseService;
 
     private SerializerInterface $serializer;
 
+    private UrlGeneratorInterface $urlGenerator;
+
     /**
-     * ExerciseController constructor.
-     *
-     * @param FileService         $fileService
      * @param ExerciseService     $exerciseService
      * @param SerializerInterface $serializer
+     * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
-        FileService $fileService,
         ExerciseService $exerciseService,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        UrlGeneratorInterface $urlGenerator
     ) {
-        $this->fileService = $fileService;
         $this->exerciseService = $exerciseService;
         $this->serializer = $serializer;
+        $this->urlGenerator = $urlGenerator;
+    }
+
+
+    /**
+     * @Route("", name="exercise:create", methods={"POST"})
+     * @OA\Post(
+     *     description="Create exercise",
+     *     summary="Create exercise",
+     *     @OA\RequestBody(
+     *          description="New exercise body",
+     *          @OA\JsonContent(
+     *             ref=@Model(type=CreateExercise::class)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response="201",
+     *          description="exercise created",
+     *          @OA\Header(
+     *              header="Location",
+     *              @OA\Schema(type="string"),
+     *                  description="Location for new entity /exercise/{id}"
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Validation exceptions",
+     *          @OA\JsonContent(
+     *              ref=@Model(type=ValidationException::class),
+     *          ),
+     *     ),
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function create(Request $request): JsonResponse
+    {
+        /**@var CreateExercise $exerciseDto*/
+        $createExercise = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateExercise::class,
+            JsonEncoder::FORMAT
+        );
+
+        $this->exerciseService->create($createExercise);
+
+        return new JsonResponse();
     }
 
     /**
+     * @Route("/{id}", name="exercise:edit", methods={"PUT"}, requirements={"id" = "\d+"})
+     *
+     * @OA\Put(
+     *     description="Update exercise by id",
+     *     summary="Update exercise by id",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         schema=@OA\Schema(type="integer"),
+     *         description="Exercise id",
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Exercise exercise",
+     *         @OA\JsonContent(
+     *             ref=@Model(type=CreateExercise::class)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Exercise",
+     *         @OA\Header(
+     *             header="Location",
+     *             @OA\Schema(type="string"),
+     *                 description="Location for new entity /exercise/{id}"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Validation exceptions",
+     *          @OA\JsonContent(
+     *              ref=@Model(type=ValidationException::class),
+     *          ),
+     *     ),
+     * )
      * @param Request $request
-     * @param int $exerciseId
-     * @param int $trainingId
-     *
-     * @throws UserNotFoundException
-     * @throws NonUniqueResultException
-     * @throws EntityNotFoundException
-     *
-     * @return Response
-     *
-     * @IsGranted("ROLE_USER")
-     *
-     * @Route("/attach-file/training/{trainingId}/exercise/{exerciseId}", methods={"POST"})
-     *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Get trainings for currency users",
-     * )
-     * @SWG\Parameter(
-     *      name="file",
-     *      in="formData",
-     *      required=true,
-     *      type="file",
-     *      description="training image"
-     * )
+     * @param int $id
+     * @return JsonResponse
      */
-    public function actionAttachFile(Request $request, int $trainingId, int $exerciseId): Response
+    public function update(Request $request, int $id): JsonResponse
     {
-        $uploadedFile = $request->files->get('file');
-        try {
-            $this->fileService->uploadExerciseFile(
-                $uploadedFile,
-                $trainingId,
-                $exerciseId
-            );
-        } catch (InvalidArgumentException $e) {
-            throw new HttpException(405, $e->getMessage());
-        }
+        return new JsonResponse(
+            null,
+            JsonResponse::HTTP_OK,
+            ['Location' => $this->urlGenerator->generate('exercise:get', ['id' => 1]),],
+        );
+    }
 
-        return new Response();
+    /**
+     *
+     * @Route("/", name="exercise:get-all", methods={"GET"})
+     *
+     * @OA\Get(
+     *    description="Get exercises",
+     *    summary="Return exercises",
+     *    @OA\Response(
+     *         response=200,
+     *         description="Array of exercises",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 ref=@Model(type=ExerciseResponse::class)
+     *             )
+     *         )
+     *    ),
+     * )
+     * @return JsonResponse
+     */
+    public function get(): JsonResponse
+    {
+        $exerciseDto = $this->exerciseService->getAll();
+        $json = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
+
+        return new JsonResponse($json);
+    }
+
+    /**
+     *
+     * @Route("/{id}", name="exercise:get", methods={"GET"}, requirements={"id" = "\d+"})
+     *
+     * @OA\Get(
+     *    description="Get exercise by id",
+     *    summary="Return exercise by id",
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        required=true,
+     *        schema=@OA\Schema(
+     *            type="integer",
+     *        ),
+     *        description="exercise id",
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="exercise",
+     *        @OA\JsonContent(
+     *           ref=@Model(type=ExerciseResponse::class)
+     *        )
+     *     ),
+     * )
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getById(int $id): JsonResponse
+    {
+        $exerciseDto = $this->exerciseService->getById($id);
+        $json = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
+
+        return new JsonResponse($json);
+    }
+
+    /**
+     * @Route("/{id}", name="exercise:delete", methods={"DELETE"}, requirements={"id" = "\d+"})
+     *
+     * @OA\Delete(
+     *     description="Delete exercise by id",
+     *     summary="Delete exercise by id",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         schema=@OA\Schema(type="integer"),
+     *         description="exercise id",
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Deleted"
+     *     ),
+     * )
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function delete(int $id): JsonResponse
+    {
+        return new JsonResponse(null, JsonResponse::HTTP_OK);
     }
 }
