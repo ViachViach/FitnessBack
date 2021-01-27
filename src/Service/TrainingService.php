@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Adapter\ExerciseAdapter;
 use App\Exception\UserNotFoundException;
 use App\DTO\Controller\TrainingResponse;
 use App\Entity\UserTraining;
@@ -53,13 +54,20 @@ class TrainingService
     private function createDto(UserTraining $userTraining): TrainingResponse
     {
         $trainingDto = new TrainingResponse();
-        $trainingDto->setId($userTraining->getTraining()->getId());
-        $trainingDto->setName($userTraining->getTraining()->getName());
-        $trainingDto->setDescription($userTraining->getTraining()->getDescription());
-        $trainingDto->setWeekDay($userTraining->getWeekDay());
+        $trainingDto
+            ->setId($userTraining->getTraining()->getId())
+            ->setName($userTraining->getTraining()->getName())
+            ->setDescription($userTraining->getTraining()->getDescription())
+            ->setWeekDay($userTraining->getWeekDay())
+        ;
 
-        $exercisesDto = $this->exerciseService->getAll($userTraining->getTraining()->getExercises());
-        $trainingDto->setExercises($exercisesDto);
+        $exercises = [];
+        foreach ($userTraining->getTraining()->getExercises() as $exercise) {
+            $adapter = new ExerciseAdapter($exercise);
+            $exercises[] = $adapter->createResponse();
+        }
+
+        $trainingDto->setExercises($exercises);
 
         return $trainingDto;
     }

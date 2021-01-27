@@ -32,12 +32,9 @@ class UserTrainingFixture extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * This method must return an array of fixtures classes
-     * on which the implementing class depends on
-     *
-     * @return class-string[]
+     * @inheritDoc
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             TrainingFixture::class,

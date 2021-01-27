@@ -14,4 +14,23 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <LessSpecificImplementedReturnType>
+            <errorLevel type="suppress">
+                <directory name="src/Repository"/>
+            </errorLevel>
+        </LessSpecificImplementedReturnType>
+        <!-- suppress until bug of plugin https://github.com/weirdan/doctrine-psalm-plugin/pull/32 is fixed -->
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <directory name="src/Repository"/>
+            </errorLevel>
+        </InvalidArgument>
+
+        <InvalidDocblock>
+            <errorLevel type="suppress">
+                <directory name="vendor"/>
+            </errorLevel>
+        </InvalidDocblock>
+    </issueHandlers>
 </psalm>
