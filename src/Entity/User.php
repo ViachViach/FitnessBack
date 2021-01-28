@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeInterface;
+use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -19,7 +20,7 @@ class User implements UserInterface
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private int $id;
@@ -69,7 +70,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="date")
      */
-    private string $birthday;
+    private DateTimeInterface $birthday;
 
     /**
      * @ORM\Column(type="integer")
@@ -120,6 +121,8 @@ class User implements UserInterface
     public function __construct()
     {
         $this->trainings = new ArrayCollection();
+        $this->createAt = new DateTimeImmutable();
+        $this->updateAt = new DateTimeImmutable();
     }
 
     /**
@@ -317,19 +320,19 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @return DateTimeInterface
      */
-    public function getBirthday(): string
+    public function getBirthday(): DateTimeInterface
     {
         return $this->birthday;
     }
 
     /**
-     * @param string $birthday
+     * @param DateTimeInterface $birthday
      *
      * @return User
      */
-    public function setBirthday(string $birthday): User
+    public function setBirthday(DateTimeInterface $birthday): User
     {
         $this->birthday = $birthday;
         return $this;

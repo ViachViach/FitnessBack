@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExerciseVideoRepository")
- * @ORM\Table(name="exercise_video", schema="public")
  * @UniqueEntity(
  *      fields={"userTrainingId", "exerciseId"},
  *      message="Video alresy exist."
@@ -19,7 +18,7 @@ class ExerciseVideo
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     private int $id;

@@ -20,10 +20,13 @@ final class NotFoundException
 
     /**
      * @param int $code
+     *
+     * @return NotFoundException
      */
-    public function setCode(int $code): void
+    public function setCode(int $code): NotFoundException
     {
         $this->code = $code;
+        return $this;
     }
 
     /**
@@ -36,9 +39,12 @@ final class NotFoundException
 
     /**
      * @param string $message
+     *
+     * @return NotFoundException
      */
-    public function setMessage(string $message): void
+    public function setMessage(string $message): NotFoundException
     {
         $this->message = $message;
+        return $this;
     }
 }

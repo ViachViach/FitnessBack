@@ -11,9 +11,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixture extends Fixture
 {
-    public const FIRST_USER = 'user@admin.ru';
+    public const FIRST_USER = 'user@admin.com';
 
-    public const SECOND_USER = 'admin@admin.ru';
+    public const SECOND_USER = 'admin@admin.com';
 
     public const USER_LIST = [
         self::FIRST_USER,
