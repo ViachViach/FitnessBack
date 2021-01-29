@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +31,7 @@ class Training
     private string $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="trainings", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\User::class", inversedBy="trainings", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="public.user_training",
      *     joinColumns={
@@ -50,12 +49,16 @@ class Training
      */
     private Collection $exercises;
 
-    private UserTraining $userTraining;
+    /**
+     * @ORM\OneToMany(targetEntity="TrainingNutrition", mappedBy="nutrition")
+     */
+    private Collection $trainingNutrition;
 
     public function __construct()
     {
         $this->exercises = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->trainingNutrition = new ArrayCollection();
     }
 
     /**
@@ -116,7 +119,7 @@ class Training
     }
 
     /**
-     * @return ArrayCollection|Collection
+     * @return Collection
      */
     public function getUsers()
     {
@@ -124,51 +127,51 @@ class Training
     }
 
     /**
-     * @param ArrayCollection|Collection $users
+     * @param Collection $users
      *
      * @return Training
      */
-    public function setUsers($users)
+    public function setUsers(Collection $users): Training
     {
         $this->users = $users;
         return $this;
     }
 
     /**
-     * @return ArrayCollection|Collection
+     * @return Collection
      */
-    public function getExercises()
+    public function getExercises(): Collection
     {
         return $this->exercises;
     }
 
     /**
-     * @param ArrayCollection|Collection $exercises
+     * @param Collection $exercises
      *
      * @return Training
      */
-    public function setExercises($exercises)
+    public function setExercises(Collection $exercises): Training
     {
         $this->exercises = $exercises;
         return $this;
     }
 
     /**
-     * @return UserTraining
+     * @return Collection
      */
-    public function getUserTraining(): UserTraining
+    public function getTrainingNutrition(): Collection
     {
-        return $this->userTraining;
+        return $this->trainingNutrition;
     }
 
     /**
-     * @param UserTraining $userTraining
+     * @param Collection $trainingNutrition
      *
      * @return Training
      */
-    public function setUserTraining(UserTraining $userTraining): Training
+    public function setTrainingNutrition(Collection $trainingNutrition): Training
     {
-        $this->userTraining = $userTraining;
+        $this->trainingNutrition = $trainingNutrition;
         return $this;
     }
 }

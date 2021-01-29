@@ -24,13 +24,7 @@ class ExerciseVideo
     private int $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=false, name="user_training_id")
-     */
-    private int $userTrainingId;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Exercise")
-     * @ORM\JoinColumn(columnDefinition="exercise_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Exercise", mappedBy="video")
      */
     private Exercise $exercise;
 
@@ -55,25 +49,6 @@ class ExerciseVideo
     public function setId(int $id): ExerciseVideo
     {
         $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserTrainingId(): int
-    {
-        return $this->userTrainingId;
-    }
-
-    /**
-     * @param int $userTrainingId
-     *
-     * @return ExerciseVideo
-     */
-    public function setUserTrainingId(int $userTrainingId): ExerciseVideo
-    {
-        $this->userTrainingId = $userTrainingId;
         return $this;
     }
 

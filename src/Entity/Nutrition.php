@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -44,9 +46,20 @@ class Nutrition
     private int $protein;
 
     /**
-     * @ORM\OneToMany(targetEntity="Food", mappedBy="nutrition_id")
+     * @ORM\OneToMany(targetEntity="Food", mappedBy="nutrition")
     */
-    private array $foods;
+    private Collection $foods;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TrainingNutrition", mappedBy="nutrition")
+     */
+    private Collection $trainingNutrition;
+
+    public function __construct()
+    {
+        $this->foods = new ArrayCollection();
+        $this->trainingNutrition = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -163,21 +176,40 @@ class Nutrition
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getFoods(): array
+    public function getFoods(): Collection
     {
         return $this->foods;
     }
 
     /**
-     * @param array $foods
+     * @param Collection $foods
      *
      * @return Nutrition
      */
-    public function setFoods(array $foods): Nutrition
+    public function setFoods(Collection $foods): Nutrition
     {
         $this->foods = $foods;
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTrainingNutrition(): Collection
+    {
+        return $this->trainingNutrition;
+    }
+
+    /**
+     * @param Collection $trainingNutrition
+     *
+     * @return Nutrition
+     */
+    public function setTrainingNutrition(Collection $trainingNutrition): Nutrition
+    {
+        $this->trainingNutrition = $trainingNutrition;
         return $this;
     }
 }

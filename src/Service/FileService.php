@@ -6,8 +6,6 @@ namespace App\Service;
 
 use App\DTO\Controller\VideoFile;
 use App\Exception\UserNotFoundException;
-use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -44,16 +42,13 @@ class FileService
 
     /**
      * @param UploadedFile $uploadedFile
-     * @param int          $trainingId
      * @param int          $exerciseId
      *
      * @return string
      *
      * @throws UserNotFoundException
-     * @throws NonUniqueResultException
-     * @throws EntityNotFoundException
      */
-    public function uploadExerciseFile(UploadedFile $uploadedFile, int $trainingId, int $exerciseId): string
+    public function uploadExerciseFile(UploadedFile $uploadedFile, int $exerciseId): string
     {
         $fileDto = new VideoFile();
         $fileDto->setUploadFile($uploadedFile);
@@ -70,7 +65,7 @@ class FileService
         );
 
         $filePath = $this->params->get('front_video_file_path') . $newFilename;
-        $this->exerciseService->attachFile($filePath, $trainingId, $exerciseId);
+        $this->exerciseService->attachFile($filePath, $exerciseId);
 
         return $newFilename;
     }

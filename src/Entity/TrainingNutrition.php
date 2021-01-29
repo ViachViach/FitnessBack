@@ -19,14 +19,12 @@ class TrainingNutrition
     private int $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Training")
-     * @ORM\JoinColumn(name="training_id", referencedColumnName="id")
+     * @ORM\ManyToone(targetEntity="Training", inversedBy="traningNutrition")
      */
     private Training $training;
 
     /**
-     * @ORM\OneToOne(targetEntity="Nutrition")
-     * @ORM\JoinColumn(name="nutrition_id", referencedColumnName="id")
+     * @ORM\ManyToone(targetEntity="Nutrition", inversedBy="trainingNutrition")
      */
     private Nutrition $nutrition;
 

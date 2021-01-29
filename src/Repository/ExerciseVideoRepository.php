@@ -8,6 +8,12 @@ use App\Entity\ExerciseVideo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @method ExerciseVideo|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ExerciseVideo|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ExerciseVideo[]    findAll()
+ * @method ExerciseVideo[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
 class ExerciseVideoRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)

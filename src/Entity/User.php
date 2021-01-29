@@ -78,7 +78,7 @@ class User implements UserInterface
     private int $age;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="int")
      */
     private int $phone;
 
@@ -491,19 +491,19 @@ class User implements UserInterface
     }
 
     /**
-     * @return ArrayCollection|Collection
+     * @return Collection
      */
-    public function getTrainings()
+    public function getTrainings(): Collection
     {
         return $this->trainings;
     }
 
     /**
-     * @param ArrayCollection|Collection $trainings
+     * @param Collection $trainings
      *
      * @return User
      */
-    public function setTrainings($trainings)
+    public function setTrainings(Collection $trainings): User
     {
         $this->trainings = $trainings;
         return $this;

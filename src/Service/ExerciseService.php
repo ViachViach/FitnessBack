@@ -8,18 +8,13 @@ use App\Adapter\ExerciseAdapter;
 use App\DTO\Controller\CreateExercise;
 use App\DTO\Controller\ExerciseResponse;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityNotFoundException;
-use Doctrine\ORM\NonUniqueResultException;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
 use App\Repository\ExerciseRepository;
-use App\Repository\UserTrainingRepository;
 use App\Exception\UserNotFoundException;
 
 class ExerciseService
 {
-    private UserTrainingRepository $userTrainingRepository;
-
     private UserService $userService;
 
     private EntityManagerInterface $entityManager;
@@ -31,20 +26,17 @@ class ExerciseService
     /**
      * ExerciseService constructor.
      *
-     * @param UserTrainingRepository $userTrainingRepository
      * @param UserService            $userService
      * @param EntityManagerInterface $entityManager
      * @param ExerciseRepository     $exerciseRepository
      * @param ValidationService      $validationService
      */
     public function __construct(
-        UserTrainingRepository $userTrainingRepository,
         UserService $userService,
         EntityManagerInterface $entityManager,
         ExerciseRepository $exerciseRepository,
         ValidationService $validationService
     ) {
-        $this->userTrainingRepository = $userTrainingRepository;
         $this->userService = $userService;
         $this->entityManager = $entityManager;
         $this->exerciseRepository = $exerciseRepository;
@@ -70,28 +62,17 @@ class ExerciseService
 
     /**
      * @param string $filePath
-     * @param int    $trainingId
      * @param int    $exerciseId
      *
      * @throws UserNotFoundException
-     * @throws NonUniqueResultException
-     * @throws EntityNotFoundException
      */
-    public function attachFile(string $filePath, int $trainingId, int $exerciseId)
+    public function attachFile(string $filePath,  int $exerciseId)
     {
-        $user = $this->userService->getCurrencyUser();
-
-        $userTraining = $this->userTrainingRepository->findByUserIdAndTrainingId(
-            $user->getId(),
-            $trainingId
-        );
-
         $exercise = $this->exerciseRepository->findById($exerciseId);
 
         $exerciseVideo = new ExerciseVideo();
         $exerciseVideo
             ->setVideoPath($filePath)
-            ->setUserTrainingId($userTraining->getId())
             ->setExercise($exercise)
         ;
 

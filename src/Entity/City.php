@@ -24,10 +24,9 @@ class City
     private string $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Country", inversedBy="cities")
      */
-    private int $country;
+    private Country $country;
 
     /**
      * @return int
@@ -68,19 +67,19 @@ class City
     }
 
     /**
-     * @return int
+     * @return Country
      */
-    public function getCountry(): int
+    public function getCountry(): Country
     {
         return $this->country;
     }
 
     /**
-     * @param int $country
+     * @param Country $country
      *
      * @return City
      */
-    public function setCountry(int $country): City
+    public function setCountry(Country $country): City
     {
         $this->country = $country;
         return $this;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +36,11 @@ class Exercise
     private string $videoPath;
 
     /**
+     * @ORM\OneToOne(targetEntity="ExerciseVideo", mappedBy="exercise")
+    */
+    private ExerciseVideo $video;
+
+    /**
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\Training",
      *     inversedBy="exercises",
@@ -51,6 +57,11 @@ class Exercise
      * )
      */
     private Collection $trainings;
+
+    public function __construct()
+    {
+        $this->trainings = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -144,6 +155,25 @@ class Exercise
     public function setTrainings(Collection $trainings): Exercise
     {
         $this->trainings = $trainings;
+        return $this;
+    }
+
+    /**
+     * @return ExerciseVideo
+     */
+    public function getVideo(): ExerciseVideo
+    {
+        return $this->video;
+    }
+
+    /**
+     * @param ExerciseVideo $video
+     *
+     * @return Exercise
+     */
+    public function setVideo(ExerciseVideo $video): Exercise
+    {
+        $this->video = $video;
         return $this;
     }
 }

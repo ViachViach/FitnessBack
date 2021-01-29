@@ -8,6 +8,7 @@ use App\DTO\Exception\NotFoundException;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class JsonExceptionListener
@@ -33,7 +34,9 @@ class JsonExceptionListener
                 ->setCode(JsonResponse::HTTP_NOT_FOUND)
             ;
 
-            $response->setData($data);
+
+            $data = $this->serializer->serialize($data, JsonEncoder::FORMAT);
+            $response->setJson($data);
         }
 
 

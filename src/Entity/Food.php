@@ -29,10 +29,9 @@ class Food
     private int $count;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Nutrition")
-     * @ORM\JoinColumn(name="nutrition_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Nutrition", inversedBy="foods")
      */
-    private int $nutrition;
+    private Nutrition $nutrition;
 
     /**
      * @return int
@@ -92,19 +91,19 @@ class Food
     }
 
     /**
-     * @return int
+     * @return Nutrition
      */
-    public function getNutrition(): int
+    public function getNutrition(): Nutrition
     {
         return $this->nutrition;
     }
 
     /**
-     * @param int $nutrition
+     * @param Nutrition $nutrition
      *
      * @return Food
      */
-    public function setNutrition(int $nutrition): Food
+    public function setNutrition(Nutrition $nutrition): Food
     {
         $this->nutrition = $nutrition;
         return $this;

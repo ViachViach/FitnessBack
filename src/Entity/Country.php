@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +24,16 @@ class Country
      * @ORM\Column(type="string", length=255)
      */
     private string $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="City", mappedBy="country")
+     */
+    private Collection $cities;
+
+    public function __construct()
+    {
+        $this->cities = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -58,6 +70,25 @@ class Country
     public function setName(string $name): Country
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCities(): Collection
+    {
+        return $this->cities;
+    }
+
+    /**
+     * @param Collection $cities
+     *
+     * @return Country
+     */
+    public function setCities(Collection $cities): Country
+    {
+        $this->cities = $cities;
         return $this;
     }
 }
