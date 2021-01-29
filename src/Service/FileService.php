@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\Controller\VideoFile;
-use App\Exception\UserNotFoundException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -45,8 +44,6 @@ class FileService
      * @param int          $exerciseId
      *
      * @return string
-     *
-     * @throws UserNotFoundException
      */
     public function uploadExerciseFile(UploadedFile $uploadedFile, int $exerciseId): string
     {

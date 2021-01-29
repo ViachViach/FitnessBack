@@ -25,48 +25,19 @@ class TrainingRepository extends ServiceEntityRepository
 
     /**
      * @param int $userId
-     * @param int $trainingId
      *
-     * @return UserTraining
-     *
-     * @throws NonUniqueResultException
-     * @throws EntityNotFoundException
-     */
-    public function findByUserIdAndTrainingId(int $userId, int $trainingId): UserTraining
-    {
-        $qb = $this->createQueryBuilder('user_training');
-
-        $query = $qb->select('user_training')
-            ->leftJoin('user_training.training', 'training')
-            ->leftJoin('user_training.user', 'user')
-            ->where($qb->expr()->eq('training.id', ':trainingId'))
-            ->andWhere($qb->expr()->eq('user.id', ':userId'))
-            ->setParameters([
-                ':userId' => $userId,
-                ':trainingId' => $trainingId
-            ]);
-
-        $userTraining = $query->getQuery()->getOneOrNullResult();
-
-        if ($userTraining === null) {
-            throw new EntityNotFoundException(UserTraining::class);
-        }
-
-        return $userTraining;
-    }
-
-    /**
-     * @param int $userId
-     * @return UserTraining[]
+     * @return Training[]
      */
     public function findByUserId(int $userId): array
     {
-        $qb = $this->createQueryBuilder('user_training');
+        $qb = $this->createQueryBuilder('training');
 
-        $query = $qb->select('user_training')
-            ->leftJoin('user_training.user', 'u')
+        $query = $qb->select('training')
+            ->leftJoin('training.user', 'u')
             ->where($qb->expr()->eq('u.id', ':userId'))
-            ->setParameter(':userId', $userId);
+            ->setParameters([
+                ':userId', $userId,
+            ]);
 
         return $query->getQuery()->execute();
     }

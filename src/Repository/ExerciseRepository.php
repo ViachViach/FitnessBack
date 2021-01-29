@@ -7,7 +7,6 @@ namespace App\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use App\Entity\Exercise;
 use Doctrine\Persistence\ManagerRegistry;
-use InvalidArgumentException;
 
 /**
  * @method Exercise|null find($id, $lockMode = null, $lockVersion = null)
@@ -29,11 +28,6 @@ class ExerciseRepository extends ServiceEntityRepository
      */
     public function findById(int $id): Exercise
     {
-        $exercise = $this->find($id);
-        if ($exercise === null) {
-            throw new InvalidArgumentException(sprintf('Exercise with %b not found', $id));
-        }
-
-        return $exercise;
+        return $this->find($id);
     }
 }

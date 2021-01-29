@@ -7,11 +7,11 @@ namespace App\Service;
 use App\Adapter\ExerciseAdapter;
 use App\DTO\Controller\CreateExercise;
 use App\DTO\Controller\ExerciseResponse;
+use App\Repository\ExerciseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
-use App\Repository\ExerciseRepository;
-use App\Exception\UserNotFoundException;
+use Doctrine\ORM\EntityNotFoundException;
 
 class ExerciseService
 {
@@ -28,7 +28,7 @@ class ExerciseService
      *
      * @param UserService            $userService
      * @param EntityManagerInterface $entityManager
-     * @param ExerciseRepository     $exerciseRepository
+     * @param ExerciseRepository $exerciseRepository
      * @param ValidationService      $validationService
      */
     public function __construct(
@@ -41,6 +41,23 @@ class ExerciseService
         $this->entityManager = $entityManager;
         $this->exerciseRepository = $exerciseRepository;
         $this->validationService = $validationService;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Exercise
+     * @throws EntityNotFoundException
+     */
+    public function getById(int $id): Exercise
+    {
+        $exercise = $this->exerciseRepository->findById($id);
+
+        if ($exercise === null) {
+            throw new EntityNotFoundException(sprintf("Exercise by %d id not found", $id));
+        }
+
+        return $exercise;
     }
 
     /**
@@ -63,10 +80,8 @@ class ExerciseService
     /**
      * @param string $filePath
      * @param int    $exerciseId
-     *
-     * @throws UserNotFoundException
      */
-    public function attachFile(string $filePath,  int $exerciseId)
+    public function attachFile(string $filePath, int $exerciseId): void
     {
         $exercise = $this->exerciseRepository->findById($exerciseId);
 
@@ -97,13 +112,14 @@ class ExerciseService
     }
 
     /**
-     * @param int $exerciseId
+     * @param int $id
      *
      * @return ExerciseResponse
+     * @throws EntityNotFoundException
      */
-    public function getById(int $exerciseId): ExerciseResponse
+    public function getResponseById(int $id): ExerciseResponse
     {
-        $exercise = $this->exerciseRepository->findById($exerciseId);
+        $exercise = $this->getById($id);
         $adapter = new ExerciseAdapter($exercise);
         return $adapter->createResponse();
     }

@@ -7,10 +7,8 @@ namespace App\Service;
 use App\DTO\Controller\Registration;
 use App\Entity\User;
 use App\Enum\RolesEnum;
-use App\Exception\RegistrationException;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RegistrationService
 {
@@ -18,52 +16,39 @@ class RegistrationService
 
     private UserRepository $userRepository;
 
-    private ValidatorInterface $validator;
+    private ValidationService $validationService;
 
     /**
      * RegistrationService constructor.
      *
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UserRepository $userRepository
-     * @param ValidatorInterface $validator
+     * @param ValidationService $validationService
      */
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         UserRepository $userRepository,
-        ValidatorInterface $validator
+        ValidationService $validationService
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->userRepository = $userRepository;
-        $this->validator = $validator;
+        $this->validationService = $validationService;
     }
 
     /**
      * @param Registration $registrationDto
-     *
-     * @throws RegistrationException
      */
     public function registrationUser(Registration $registrationDto): void
     {
-        $entityUser = new User();
-        $entityUser->setEmail($registrationDto->getEmail());
-        $entityUser->setRoles([RolesEnum::ROLE_USER]);
-        $password = $this->passwordEncoder->encodePassword($entityUser, $registrationDto->getPassword());
-        $entityUser->setPassword($password);
-        $this->validate($entityUser);
+        $user = new User();
+        $user
+            ->setEmail($registrationDto->getEmail())
+            ->setRoles([RolesEnum::ROLE_USER])
+        ;
+        $password = $this->passwordEncoder->encodePassword($user, $registrationDto->getPassword());
+        $user->setPassword($password);
 
-        $this->userRepository->save($entityUser);
-    }
-
-    /**
-     * @param User $user
-     * @throws RegistrationException
-     */
-    private function validate(User $user)
-    {
-        $validationErrors = $this->validator->validate($user);
-
-        foreach ($validationErrors as $validationError) {
-            throw new RegistrationException((string) $validationError);
-        }
+        $this->validationService->validate($user);
+        $this->userRepository->save($user);
     }
 }

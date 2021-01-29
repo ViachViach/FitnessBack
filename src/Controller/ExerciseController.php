@@ -215,7 +215,7 @@ class ExerciseController
      */
     public function getById(int $id): JsonResponse
     {
-        $exerciseDto = $this->exerciseService->getById($id);
+        $exerciseDto = $this->exerciseService->getResponseById($id);
         $json = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
 
         return new JsonResponse($json);
