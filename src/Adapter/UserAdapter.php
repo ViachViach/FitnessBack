@@ -17,9 +17,6 @@ class UserAdapter
         $this->user = $user;
     }
 
-    /**
-     * @return UserResponse
-     */
     public function createResponse(): UserResponse
     {
         $user = new UserResponse();
