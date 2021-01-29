@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Adapter\UserAdapter;
 use App\DTO\Controller\UserResponse;
 use App\Entity\User;
-use App\Enum\RolesEnum;
 use App\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\Security;
 use InvalidArgumentException;
@@ -52,37 +52,7 @@ class UserService
     public function getCurrencyUserResponse(): UserResponse
     {
         $user = $this->getCurrencyUser();
-
-        return $this->createDto($user);
-    }
-
-    /**
-     * @param User $user
-     * @return UserResponse
-     */
-    private function createDto(User $user): UserResponse
-    {
-        $userDto = new UserResponse();
-        $roles = $this->getRole($user->getRoles());
-        $userDto
-            ->setEmail($user->getEmail())
-            ->setRole($roles)
-        ;
-
-        return $userDto;
-    }
-
-    /**
-     * @param string[] $roles
-     *
-     * @return string
-     */
-    private function getRole(array $roles): string
-    {
-        if (in_array(RolesEnum::ROLE_USER, $roles)) {
-            return 'user';
-        }
-
-        return 'admin';
+        $adapter = new UserAdapter($user);
+        return $adapter->createResponse();
     }
 }

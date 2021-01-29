@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use _HumbugBox5d215ba2066e\Nette\Schema\ValidationException;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ValidationService
@@ -25,7 +25,7 @@ class ValidationService
     }
 
     /**
-     * @throws ValidationException
+     * @throws ValidatorException
      */
     private function checkConstraintValidation(ConstraintViolationListInterface $constraintViolationList): void
     {
@@ -34,7 +34,7 @@ class ValidationService
                 return;
             }
 
-            throw new ValidationException($validationException->getMessage());
+            throw new ValidatorException($validationException->getMessage());
         }
     }
 }

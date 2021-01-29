@@ -16,17 +16,17 @@ class TrainingAdapter
         $this->training = $training;
     }
 
-    public function createResponse(Training $training): TrainingResponse
+    public function createResponse(): TrainingResponse
     {
         $trainingDto = new TrainingResponse();
         $trainingDto
-            ->setId($training->getId())
-            ->setName($training->getName())
-            ->setDescription($training->getDescription())
+            ->setId($this->training->getId())
+            ->setName($this->training->getName())
+            ->setDescription($this->training->getDescription())
         ;
 
         $exercises = [];
-        foreach ($training->getExercises() as $exercise) {
+        foreach ($this->training->getExercises() as $exercise) {
             $adapter = new ExerciseAdapter($exercise);
             $exercises[] = $adapter->createResponse();
         }

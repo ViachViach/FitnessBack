@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Service\TrainingService;
@@ -28,7 +27,7 @@ class TrainingController
         $this->serializer = $serializer;
     }
 
-    public function actionGetTrainings(Request $request): JsonResponse
+    public function getTrainingsByCurrentUserId(): JsonResponse
     {
         $trainings = $this->trainingService->getTrainingsByCurrencyUser();
         $response = $this->serializer->serialize($trainings, JsonEncoder::FORMAT);
