@@ -21,9 +21,7 @@ class NutritionService
     }
 
     /**
-     * @param int $id
      *
-     * @return Nutrition
      * @throws EntityNotFoundException
      */
     public function getById(int $id): Nutrition

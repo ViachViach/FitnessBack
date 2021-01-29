@@ -8,8 +8,8 @@ use App\Adapter\UserAdapter;
 use App\DTO\Controller\UserResponse;
 use App\Entity\User;
 use App\Exception\UserNotFoundException;
-use Symfony\Component\Security\Core\Security;
 use InvalidArgumentException;
+use Symfony\Component\Security\Core\Security;
 
 class UserService
 {
@@ -18,7 +18,6 @@ class UserService
     /**
      * UserService constructor.
      *
-     * @param Security $security
      */
     public function __construct(Security $security)
     {
@@ -26,13 +25,13 @@ class UserService
     }
 
     /**
-     * @return User
      *
      * @throws UserNotFoundException
      */
     public function getCurrencyUser(): User
     {
         $user = $this->security->getUser();
+
         if ($user === null) {
             throw new UserNotFoundException('User not found');
         }
@@ -45,7 +44,6 @@ class UserService
     }
 
     /**
-     * @return UserResponse
      *
      * @throws UserNotFoundException
      */
@@ -53,6 +51,7 @@ class UserService
     {
         $user = $this->getCurrencyUser();
         $adapter = new UserAdapter($user);
+
         return $adapter->createResponse();
     }
 }

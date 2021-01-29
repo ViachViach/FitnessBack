@@ -7,13 +7,13 @@ namespace App\Controller;
 use App\DTO\Controller\UserResponse;
 use App\Exception\UserNotFoundException;
 use App\Service\UserService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use OpenApi\Annotations as OA;
 
 /**
  * @Security(name="Bearer")
@@ -50,7 +50,6 @@ class UserController
      *         ),
      *    ),
      * )
-     * @return JsonResponse
      * @throws UserNotFoundException
      */
     public function actionGetCurrencyUser(): JsonResponse

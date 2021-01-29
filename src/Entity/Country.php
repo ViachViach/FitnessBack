@@ -35,60 +35,39 @@ class Country
         $this->cities = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return Country
-     */
     public function setId(int $id): Country
     {
         $this->id = $id;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Country
-     */
     public function setName(string $name): Country
     {
         $this->name = $name;
+
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getCities(): Collection
     {
         return $this->cities;
     }
 
-    /**
-     * @param Collection $cities
-     *
-     * @return Country
-     */
     public function setCities(Collection $cities): Country
     {
         $this->cities = $cities;
+
         return $this;
     }
 }

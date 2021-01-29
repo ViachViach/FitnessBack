@@ -33,79 +33,51 @@ class Food
      */
     private Nutrition $nutrition;
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return Food
-     */
     public function setId(int $id): Food
     {
         $this->id = $id;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Food
-     */
     public function setName(string $name): Food
     {
         $this->name = $name;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getCount(): int
     {
         return $this->count;
     }
 
-    /**
-     * @param int $count
-     *
-     * @return Food
-     */
     public function setCount(int $count): Food
     {
         $this->count = $count;
+
         return $this;
     }
 
-    /**
-     * @return Nutrition
-     */
     public function getNutrition(): Nutrition
     {
         return $this->nutrition;
     }
 
-    /**
-     * @param Nutrition $nutrition
-     *
-     * @return Food
-     */
     public function setNutrition(Nutrition $nutrition): Food
     {
         $this->nutrition = $nutrition;
+
         return $this;
     }
 }

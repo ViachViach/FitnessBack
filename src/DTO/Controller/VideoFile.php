@@ -18,22 +18,15 @@ final class VideoFile
      */
     private UploadedFile $uploadFile;
 
-    /**
-     * @return UploadedFile
-     */
     public function getUploadFile(): UploadedFile
     {
         return $this->uploadFile;
     }
 
-    /**
-     * @param UploadedFile $uploadFile
-     *
-     * @return VideoFile
-     */
     public function setUploadFile(UploadedFile $uploadFile): VideoFile
     {
         $this->uploadFile = $uploadFile;
+
         return $this;
     }
 }

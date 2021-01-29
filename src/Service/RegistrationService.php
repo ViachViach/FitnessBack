@@ -21,9 +21,6 @@ class RegistrationService
     /**
      * RegistrationService constructor.
      *
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param UserRepository $userRepository
-     * @param ValidationService $validationService
      */
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
@@ -35,9 +32,6 @@ class RegistrationService
         $this->validationService = $validationService;
     }
 
-    /**
-     * @param Registration $registrationDto
-     */
     public function registrationUser(Registration $registrationDto): void
     {
         $user = new User();

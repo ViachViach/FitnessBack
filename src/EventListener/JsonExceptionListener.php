@@ -39,7 +39,6 @@ class JsonExceptionListener
             $response->setJson($data);
         }
 
-
         $event->setResponse($response);
     }
 }

@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\NutritionService;
-use Doctrine\ORM\EntityNotFoundException;
-use Nelmio\ApiDocBundle\Annotation\Security;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use OpenApi\Annotations as OA;
-use Symfony\Component\Serializer\SerializerInterface;
-use App\Service\TrainingService;
-use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use App\DTO\Exception\UnauthorizedException;
-use App\DTO\Exception\NotFoundException;
 use App\DTO\Controller\NutritionResponse;
+use App\DTO\Exception\NotFoundException;
+use App\DTO\Exception\UnauthorizedException;
+use App\Service\NutritionService;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Security(name="Bearer")
@@ -50,7 +49,6 @@ class NutritionController
         $this->serializer = $serializer;
     }
 
-
     /**
      *
      * @Route("/{id}", name="nutrition:get", methods={"GET"}, requirements={"id" = "\d+"})
@@ -75,16 +73,13 @@ class NutritionController
      *        )
      *     ),
      * )
-     * @param int $id
-     * @return JsonResponse
      */
     public function get(int $id): JsonResponse
     {
         $nutrition = $this->nutritionService->getById($id);
+        $data = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
-
-
-        return new JsonResponse();
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     public function getAll(): JsonResponse

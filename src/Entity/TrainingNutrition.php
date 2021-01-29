@@ -33,79 +33,51 @@ class TrainingNutrition
      */
     private int $weekDay;
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return TrainingNutrition
-     */
     public function setId(int $id): TrainingNutrition
     {
         $this->id = $id;
+
         return $this;
     }
 
-    /**
-     * @return Training
-     */
     public function getTraining(): Training
     {
         return $this->training;
     }
 
-    /**
-     * @param Training $training
-     *
-     * @return TrainingNutrition
-     */
     public function setTraining(Training $training): TrainingNutrition
     {
         $this->training = $training;
+
         return $this;
     }
 
-    /**
-     * @return Nutrition
-     */
     public function getNutrition(): Nutrition
     {
         return $this->nutrition;
     }
 
-    /**
-     * @param Nutrition $nutrition
-     *
-     * @return TrainingNutrition
-     */
     public function setNutrition(Nutrition $nutrition): TrainingNutrition
     {
         $this->nutrition = $nutrition;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getWeekDay(): int
     {
         return $this->weekDay;
     }
 
-    /**
-     * @param int $weekDay
-     *
-     * @return TrainingNutrition
-     */
     public function setWeekDay(int $weekDay): TrainingNutrition
     {
         $this->weekDay = $weekDay;
+
         return $this;
     }
 }

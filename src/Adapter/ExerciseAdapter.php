@@ -16,9 +16,6 @@ class ExerciseAdapter
         $this->exercise = $exercise;
     }
 
-    /**
-     * @return ExerciseResponse
-     */
     public function createResponse(): ExerciseResponse
     {
         $exerciseDto = new ExerciseResponse();

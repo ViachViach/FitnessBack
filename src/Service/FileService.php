@@ -22,10 +22,6 @@ class FileService
     /**
      * FileService constructor.
      *
-     * @param SluggerInterface      $slugger
-     * @param ParameterBagInterface $params
-     * @param ExerciseService       $exerciseService
-     * @param ValidationService $validateService
      */
     public function __construct(
         SluggerInterface $slugger,
@@ -39,12 +35,6 @@ class FileService
         $this->validateService = $validateService;
     }
 
-    /**
-     * @param UploadedFile $uploadedFile
-     * @param int          $exerciseId
-     *
-     * @return string
-     */
     public function uploadExerciseFile(UploadedFile $uploadedFile, int $exerciseId): string
     {
         $fileDto = new VideoFile();
@@ -58,7 +48,7 @@ class FileService
 
         $uploadedFile->move(
             $this->params->get('upload_videos'),
-            $newFilename
+            $newFilename,
         );
 
         $filePath = $this->params->get('front_video_file_path') . $newFilename;

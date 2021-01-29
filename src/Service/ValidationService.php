@@ -34,7 +34,7 @@ class ValidationService
                 return;
             }
 
-            throw new ValidatorException($validationException->getMessage());
+            throw new ValidatorException((string) $validationException->getMessage());
         }
     }
 }

@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Entity\Exercise;
+use App\Entity\Training;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use App\Entity\Exercise;
-use App\Entity\Training;
 
 class TrainingFixture extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $exerciseIncrement = 30;
-        $exercises = $this->createExerciseFixture($manager, $exerciseIncrement);
 
         for ($i = 0; $i < 20; $i++) {
             $training = new Training();
@@ -25,7 +24,7 @@ class TrainingFixture extends Fixture implements DependentFixtureInterface
             $exerciseIdAlreadySet = [];
 
             for ($te = 0; $te < $rand; $te++) {
-                $newItem = $this->getUnsetExercise($exerciseIdAlreadySet, ($exerciseIncrement-1));
+                $newItem = $this->getUnsetExercise($exerciseIdAlreadySet, ($exerciseIncrement - 1));
                 $exerciseIdAlreadySet[] = $newItem;
             }
 
@@ -47,38 +46,13 @@ class TrainingFixture extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @param ObjectManager $manager
-     * @param int $count
-     *
-     * @return array
-     */
-    private function createExerciseFixture(ObjectManager $manager, int $count): array
-    {
-        $exerciseIds = [];
-        for ($i = 0; $i < $count; $i++) {
-            $exercise = new Exercise();
-            $exercise->setName("Exercise $i");
-            $exercise->setDescription("Some description about this exercise........");
-            $manager->persist($exercise);
-
-            $exerciseIds[] = $exercise;
-        }
-
-        $manager->flush();
-
-        return $exerciseIds;
-    }
-
-    /**
-     * @param array $setExerciseIds
-     * @param int $exerciseIncrement
-     *
-     * @return int
+     * @param int[] $setExerciseIds
      */
     private function getUnsetExercise(array $setExerciseIds, int $exerciseIncrement): int
     {
         $exerciseId = rand(0, $exerciseIncrement);
-        while (in_array($exerciseId, $setExerciseIds)) {
+
+        while (in_array($exerciseId, $setExerciseIds, true)) {
             $exerciseId = rand(0, $exerciseIncrement);
         }
 

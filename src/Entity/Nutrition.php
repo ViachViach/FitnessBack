@@ -61,155 +61,99 @@ class Nutrition
         $this->trainingNutrition = new ArrayCollection();
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return Nutrition
-     */
     public function setId(int $id): Nutrition
     {
         $this->id = $id;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Nutrition
-     */
     public function setName(string $name): Nutrition
     {
         $this->name = $name;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return Nutrition
-     */
     public function setDescription(string $description): Nutrition
     {
         $this->description = $description;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getMill(): int
     {
         return $this->mill;
     }
 
-    /**
-     * @param int $mill
-     *
-     * @return Nutrition
-     */
     public function setMill(int $mill): Nutrition
     {
         $this->mill = $mill;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getCalories(): int
     {
         return $this->calories;
     }
 
-    /**
-     * @param int $calories
-     *
-     * @return Nutrition
-     */
     public function setCalories(int $calories): Nutrition
     {
         $this->calories = $calories;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getProtein(): int
     {
         return $this->protein;
     }
 
-    /**
-     * @param int $protein
-     *
-     * @return Nutrition
-     */
     public function setProtein(int $protein): Nutrition
     {
         $this->protein = $protein;
+
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getFoods(): Collection
     {
         return $this->foods;
     }
 
-    /**
-     * @param Collection $foods
-     *
-     * @return Nutrition
-     */
     public function setFoods(Collection $foods): Nutrition
     {
         $this->foods = $foods;
+
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getTrainingNutrition(): Collection
     {
         return $this->trainingNutrition;
     }
 
-    /**
-     * @param Collection $trainingNutrition
-     *
-     * @return Nutrition
-     */
     public function setTrainingNutrition(Collection $trainingNutrition): Nutrition
     {
         $this->trainingNutrition = $trainingNutrition;
+
         return $this;
     }
 }

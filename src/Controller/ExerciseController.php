@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\DTO\Controller\CreateExercise;
-use App\Service\ExerciseService;
-use Nelmio\ApiDocBundle\Annotation\Security;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\DTO\Controller\ExerciseResponse;
 use App\DTO\Exception\NotFoundException;
+use App\DTO\Exception\UnauthorizedException;
+use App\DTO\Exception\ValidationException;
+use App\Service\ExerciseService;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use OpenApi\Annotations as OA;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use App\DTO\Exception\ValidationException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use App\DTO\Exception\UnauthorizedException;
-use App\DTO\Controller\ExerciseResponse;
 
 /**
  * @Security(name="Bearer")
@@ -47,11 +47,6 @@ class ExerciseController
 
     private UrlGeneratorInterface $urlGenerator;
 
-    /**
-     * @param ExerciseService     $exerciseService
-     * @param SerializerInterface $serializer
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(
         ExerciseService $exerciseService,
         SerializerInterface $serializer,
@@ -61,7 +56,6 @@ class ExerciseController
         $this->serializer = $serializer;
         $this->urlGenerator = $urlGenerator;
     }
-
 
     /**
      * @Route("", name="exercise:create", methods={"POST"})
@@ -91,16 +85,13 @@ class ExerciseController
      *          ),
      *     ),
      * )
-     * @param Request $request
-     * @return JsonResponse
      */
     public function create(Request $request): JsonResponse
     {
-        /**@var CreateExercise $exerciseDto*/
         $createExercise = $this->serializer->deserialize(
             $request->getContent(),
             CreateExercise::class,
-            JsonEncoder::FORMAT
+            JsonEncoder::FORMAT,
         );
 
         $this->exerciseService->create($createExercise);
@@ -145,11 +136,8 @@ class ExerciseController
      *          ),
      *     ),
      * )
-     * @param Request $request
-     * @param int $id
-     * @return JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(): JsonResponse
     {
         return new JsonResponse(
             null,
@@ -176,7 +164,6 @@ class ExerciseController
      *         )
      *    ),
      * )
-     * @return JsonResponse
      */
     public function get(): JsonResponse
     {
@@ -210,8 +197,6 @@ class ExerciseController
      *        )
      *     ),
      * )
-     * @param int $id
-     * @return JsonResponse
      */
     public function getById(int $id): JsonResponse
     {
@@ -239,10 +224,8 @@ class ExerciseController
      *         description="Deleted"
      *     ),
      * )
-     * @param int $id
-     * @return JsonResponse
      */
-    public function delete(int $id): JsonResponse
+    public function delete(): JsonResponse
     {
         return new JsonResponse(null, JsonResponse::HTTP_OK);
     }

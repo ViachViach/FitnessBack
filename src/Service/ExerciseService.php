@@ -7,10 +7,10 @@ namespace App\Service;
 use App\Adapter\ExerciseAdapter;
 use App\DTO\Controller\CreateExercise;
 use App\DTO\Controller\ExerciseResponse;
-use App\Repository\ExerciseRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
+use App\Repository\ExerciseRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 
 class ExerciseService
@@ -26,10 +26,6 @@ class ExerciseService
     /**
      * ExerciseService constructor.
      *
-     * @param UserService            $userService
-     * @param EntityManagerInterface $entityManager
-     * @param ExerciseRepository $exerciseRepository
-     * @param ValidationService      $validationService
      */
     public function __construct(
         UserService $userService,
@@ -44,9 +40,7 @@ class ExerciseService
     }
 
     /**
-     * @param int $id
      *
-     * @return Exercise
      * @throws EntityNotFoundException
      */
     public function getById(int $id): Exercise
@@ -68,6 +62,7 @@ class ExerciseService
         $exercises = $this->exerciseRepository->findAll();
 
         $result = [];
+
         foreach ($exercises as $exercise) {
             $adapter = new ExerciseAdapter($exercise);
             $result[] = $adapter->createResponse();
@@ -76,11 +71,6 @@ class ExerciseService
         return $result;
     }
 
-
-    /**
-     * @param string $filePath
-     * @param int    $exerciseId
-     */
     public function attachFile(string $filePath, int $exerciseId): void
     {
         $exercise = $this->exerciseRepository->findById($exerciseId);
@@ -96,9 +86,6 @@ class ExerciseService
         $this->entityManager->flush();
     }
 
-    /**
-     * @param CreateExercise $createExercise
-     */
     public function create(CreateExercise $createExercise): void
     {
         $exercise = new Exercise();
@@ -112,15 +99,14 @@ class ExerciseService
     }
 
     /**
-     * @param int $id
      *
-     * @return ExerciseResponse
      * @throws EntityNotFoundException
      */
     public function getResponseById(int $id): ExerciseResponse
     {
         $exercise = $this->getById($id);
         $adapter = new ExerciseAdapter($exercise);
+
         return $adapter->createResponse();
     }
 }

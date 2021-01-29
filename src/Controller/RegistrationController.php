@@ -6,11 +6,13 @@ namespace App\Controller;
 
 use App\DTO\Controller\Registration;
 use App\Service\RegistrationService;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use OpenApi\Annotations as OA;
+
+use function assert;
 
 /**
  * @OA\Tag(name="Registration")
@@ -21,7 +23,6 @@ class RegistrationController
 
     private SerializerInterface $serializer;
 
-
     public function __construct(RegistrationService $registrationService, SerializerInterface $serializer)
     {
         $this->registrationService = $registrationService;
@@ -30,12 +31,12 @@ class RegistrationController
 
     public function actionRegistration(Request $request): JsonResponse
     {
-        /** @var Registration $registrationDto */
         $registrationDto = $this->serializer->deserialize(
             $request->getContent(),
             Registration::class,
-            JsonEncoder::FORMAT
+            JsonEncoder::FORMAT,
         );
+        assert($registrationDto instanceof Registration);
 
         $this->registrationService->registrationUser($registrationDto);
 

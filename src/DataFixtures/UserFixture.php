@@ -27,9 +27,6 @@ class UserFixture extends Fixture
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    /**
-     * @param ObjectManager $manager
-     */
     public function load(ObjectManager $manager): void
     {
         $user = new User();
@@ -38,7 +35,7 @@ class UserFixture extends Fixture
 
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            'user'
+            'user',
         ));
 
         $this->addReference(self::FIRST_USER, $user);
@@ -51,7 +48,7 @@ class UserFixture extends Fixture
 
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            'admin'
+            'admin',
         ));
 
         $this->addReference(self::SECOND_USER, $user);

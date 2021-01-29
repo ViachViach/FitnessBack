@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use DateTimeInterface;
-use DateTimeImmutable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -34,6 +34,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @var string[]
      */
     private array $roles = [];
 
@@ -136,7 +137,7 @@ class User implements UserInterface
     }
 
     /**
-     * @see UserInterface
+     * @inheritDoc
      */
     public function getRoles(): array
     {
@@ -147,7 +148,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    /**
+     * @param string[] $roles
+     */
+    public function setRoles(array $roles): User
     {
         $this->roles = $roles;
 
@@ -172,7 +176,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): void
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
     }
@@ -180,332 +184,213 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     *
-     * @return User
-     */
     public function setId(int $id): User
     {
         $this->id = $id;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     *
-     * @return User
-     */
     public function setEmail(string $email): User
     {
         $this->email = $email;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @param string $firstName
-     *
-     * @return User
-     */
     public function setFirstName(string $firstName): User
     {
         $this->firstName = $firstName;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getSecondName(): string
     {
         return $this->secondName;
     }
 
-    /**
-     * @param string $secondName
-     *
-     * @return User
-     */
     public function setSecondName(string $secondName): User
     {
         $this->secondName = $secondName;
+
         return $this;
     }
 
-    /**
-     * @return float
-     */
     public function getHeight(): float
     {
         return $this->height;
     }
 
-    /**
-     * @param float $height
-     *
-     * @return User
-     */
     public function setHeight(float $height): User
     {
         $this->height = $height;
+
         return $this;
     }
 
-    /**
-     * @return float
-     */
     public function getWeight(): float
     {
         return $this->weight;
     }
 
-    /**
-     * @param float $weight
-     *
-     * @return User
-     */
     public function setWeight(float $weight): User
     {
         $this->weight = $weight;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getSex(): int
     {
         return $this->sex;
     }
 
-    /**
-     * @param int $sex
-     *
-     * @return User
-     */
     public function setSex(int $sex): User
     {
         $this->sex = $sex;
+
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getBirthday(): DateTimeInterface
     {
         return $this->birthday;
     }
 
-    /**
-     * @param DateTimeInterface $birthday
-     *
-     * @return User
-     */
     public function setBirthday(DateTimeInterface $birthday): User
     {
         $this->birthday = $birthday;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getAge(): int
     {
         return $this->age;
     }
 
-    /**
-     * @param int $age
-     *
-     * @return User
-     */
     public function setAge(int $age): User
     {
         $this->age = $age;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getPhone(): int
     {
         return $this->phone;
     }
 
-    /**
-     * @param int $phone
-     *
-     * @return User
-     */
     public function setPhone(int $phone): User
     {
         $this->phone = $phone;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getCity(): int
     {
         return $this->city;
     }
 
-    /**
-     * @param int $city
-     *
-     * @return User
-     */
     public function setCity(int $city): User
     {
         $this->city = $city;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getAddress(): string
     {
         return $this->address;
     }
 
-    /**
-     * @param string $address
-     *
-     * @return User
-     */
     public function setAddress(string $address): User
     {
         $this->address = $address;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPostCode(): string
     {
         return $this->postCode;
     }
 
-    /**
-     * @param string $postCode
-     *
-     * @return User
-     */
     public function setPostCode(string $postCode): User
     {
         $this->postCode = $postCode;
+
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getCreateAt(): DateTimeInterface
     {
         return $this->createAt;
     }
 
-    /**
-     * @param DateTimeInterface $createAt
-     *
-     * @return User
-     */
     public function setCreateAt(DateTimeInterface $createAt): User
     {
         $this->createAt = $createAt;
+
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface
-     */
     public function getUpdateAt(): DateTimeInterface
     {
         return $this->updateAt;
     }
 
-    /**
-     * @param DateTimeInterface $updateAt
-     *
-     * @return User
-     */
     public function setUpdateAt(DateTimeInterface $updateAt): User
     {
         $this->updateAt = $updateAt;
+
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDeleteAt(): ?DateTimeInterface
     {
         return $this->deleteAt;
     }
 
-    /**
-     * @param DateTimeInterface|null $deleteAt
-     *
-     * @return User
-     */
     public function setDeleteAt(?DateTimeInterface $deleteAt): User
     {
         $this->deleteAt = $deleteAt;
+
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getTrainings(): Collection
     {
         return $this->trainings;
     }
 
-    /**
-     * @param Collection $trainings
-     *
-     * @return User
-     */
     public function setTrainings(Collection $trainings): User
     {
         $this->trainings = $trainings;
+
         return $this;
     }
 }

@@ -13,17 +13,11 @@ final class ValidationException
     */
     private array $errors;
 
-    /**
-     * @return int
-     */
     public function getCode(): int
     {
         return $this->code;
     }
 
-    /**
-     * @param int $code
-     */
     public function setCode(int $code): void
     {
         $this->code = $code;

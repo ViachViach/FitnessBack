@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Adapter\TrainingAdapter;
-use App\Exception\UserNotFoundException;
 use App\DTO\Controller\TrainingResponse;
+use App\Exception\UserNotFoundException;
 use App\Repository\TrainingRepository;
 
 class TrainingService
@@ -34,6 +34,7 @@ class TrainingService
         $trainings = $this->trainingRepository->findByUserId($user->getId());
 
         $trainingsDto = [];
+
         foreach ($trainings as $training) {
             $adapter = new TrainingAdapter($training);
             $trainingsDto[] = $adapter->createResponse();

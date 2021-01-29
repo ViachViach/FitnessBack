@@ -26,6 +26,7 @@ class TrainingAdapter
         ;
 
         $exercises = [];
+
         foreach ($this->training->getExercises() as $exercise) {
             $adapter = new ExerciseAdapter($exercise);
             $exercises[] = $adapter->createResponse();

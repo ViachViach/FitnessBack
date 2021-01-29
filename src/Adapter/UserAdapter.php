@@ -31,12 +31,10 @@ class UserAdapter
 
     /**
      * @param string[] $roles
-     *
-     * @return string
      */
     private function getRole(array $roles): string
     {
-        if (in_array(RolesEnum::ROLE_USER, $roles)) {
+        if (in_array(RolesEnum::ROLE_USER, $roles, true)) {
             return 'user';
         }
 
