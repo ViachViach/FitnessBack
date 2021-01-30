@@ -8,6 +8,7 @@ use App\DTO\Controller\Registration;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Repository\UserRepository;
+use CustomValidationBundle\Service\ValidationServiceInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationService
@@ -16,16 +17,12 @@ class RegistrationService
 
     private UserRepository $userRepository;
 
-    private ValidationService $validationService;
+    private ValidationServiceInterface $validationService;
 
-    /**
-     * RegistrationService constructor.
-     *
-     */
     public function __construct(
         UserPasswordEncoderInterface $passwordEncoder,
         UserRepository $userRepository,
-        ValidationService $validationService
+        ValidationServiceInterface $validationService
     ) {
         $this->passwordEncoder = $passwordEncoder;
         $this->userRepository = $userRepository;

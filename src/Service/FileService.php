@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\Controller\VideoFile;
+use CustomValidationBundle\Service\ValidationServiceInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -17,17 +18,13 @@ class FileService
 
     private ExerciseService $exerciseService;
 
-    private ValidationService $validateService;
+    private ValidationServiceInterface $validateService;
 
-    /**
-     * FileService constructor.
-     *
-     */
     public function __construct(
         SluggerInterface $slugger,
         ParameterBagInterface $params,
         ExerciseService $exerciseService,
-        ValidationService $validateService
+        ValidationServiceInterface $validateService
     ) {
         $this->slugger = $slugger;
         $this->params = $params;

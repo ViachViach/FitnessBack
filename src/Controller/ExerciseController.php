@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Security(name="Bearer")
- * @OA\Tag(name="Admin Exercise")
+ * @OA\Tag(name="Exercise")
  * @Route("exercise")
  * @OA\Response(
  *     response="401",

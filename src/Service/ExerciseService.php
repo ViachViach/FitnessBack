@@ -10,6 +10,7 @@ use App\DTO\Controller\ExerciseResponse;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
 use App\Repository\ExerciseRepository;
+use CustomValidationBundle\Service\ValidationServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -21,17 +22,13 @@ class ExerciseService
 
     private ExerciseRepository $exerciseRepository;
 
-    private ValidationService $validationService;
+    private ValidationServiceInterface $validationService;
 
-    /**
-     * ExerciseService constructor.
-     *
-     */
     public function __construct(
         UserService $userService,
         EntityManagerInterface $entityManager,
         ExerciseRepository $exerciseRepository,
-        ValidationService $validationService
+        ValidationServiceInterface $validationService
     ) {
         $this->userService = $userService;
         $this->entityManager = $entityManager;

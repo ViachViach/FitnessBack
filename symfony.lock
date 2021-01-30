@@ -676,6 +676,9 @@
     "twig/twig": {
         "version": "v3.0.3"
     },
+    "viachviach/custom-validation-bundle": {
+        "version": "v0.0.2"
+    },
     "vimeo/psalm": {
         "version": "3.10.1"
     },
