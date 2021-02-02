@@ -27,6 +27,7 @@ final class ValidationException
     public function setMessage(string $message): ValidationException
     {
         $this->message = $message;
+
         return $this;
     }
 }
