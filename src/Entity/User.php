@@ -79,7 +79,7 @@ class User implements UserInterface
     private int $age;
 
     /**
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     private int $phone;
 

@@ -31,7 +31,7 @@ class Training
     private string $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User::class", inversedBy="trainings", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="trainings", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="public.user_training",
      *     joinColumns={

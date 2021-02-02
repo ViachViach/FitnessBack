@@ -15,8 +15,6 @@ use OpenApi\Annotations as OA;
  */
 final class CreateExercise
 {
-    private int $id;
-
     /**
      * @OA\Property(
      *     nullable=true,
@@ -26,20 +24,6 @@ final class CreateExercise
     private string $name;
 
     private string $description;
-
-    private string $videoPath = '';
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): CreateExercise
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     public function getName(): string
     {
@@ -61,18 +45,6 @@ final class CreateExercise
     public function setDescription(string $description): CreateExercise
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getVideoPath(): string
-    {
-        return $this->videoPath;
-    }
-
-    public function setVideoPath(string $videoPath): CreateExercise
-    {
-        $this->videoPath = $videoPath;
 
         return $this;
     }

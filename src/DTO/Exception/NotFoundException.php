@@ -7,7 +7,6 @@ namespace App\DTO\Exception;
 final class NotFoundException
 {
     private int $code;
-
     private string $message;
 
     public function getCode(): int

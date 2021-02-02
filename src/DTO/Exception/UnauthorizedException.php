@@ -7,7 +7,6 @@ namespace App\DTO\Exception;
 final class UnauthorizedException
 {
     private int $code;
-
     private string $message;
 
     public function getCode(): int

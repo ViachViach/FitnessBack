@@ -7,11 +7,7 @@ namespace App\DTO\Exception;
 final class ValidationException
 {
     private int $code;
-
-    /**
-     * @var string[]
-    */
-    private array $errors;
+    private string $message;
 
     public function getCode(): int
     {
@@ -23,19 +19,14 @@ final class ValidationException
         $this->code = $code;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getErrors(): array
+    public function getMessage(): string
     {
-        return $this->errors;
+        return $this->message;
     }
 
-    /**
-     * @param string[] $errors
-     */
-    public function setErrors(array $errors): void
+    public function setMessage(string $message): ValidationException
     {
-        $this->errors = $errors;
+        $this->message = $message;
+        return $this;
     }
 }
