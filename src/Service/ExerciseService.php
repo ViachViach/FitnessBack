@@ -10,9 +10,9 @@ use App\DTO\Controller\ExerciseResponse;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
 use App\Repository\ExerciseRepository;
-use CustomValidationBundle\Service\ValidationServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
+use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 
 class ExerciseService
 {

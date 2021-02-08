@@ -15,6 +15,7 @@ return [
     Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
     Nelmio\ApiDocBundle\NelmioApiDocBundle::class => ['all' => true],
     Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
-    CustomValidationBundle\CustomValidationBundle::class => ['all' => true],
+    ViachViach\CustomValidationBundle\CustomValidationBundle::class => ['all' => true],
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
+    ViachViach\ExceptionHandler\ExceptionHandlerBundle::class => ['all' => true],
 ];

@@ -700,6 +700,9 @@
     "viachviach/custom-validation-bundle": {
         "version": "v0.0.2"
     },
+    "viachviach/exception-handler": {
+        "version": "v0.0.1"
+    },
     "vimeo/psalm": {
         "version": "3.10.1"
     },

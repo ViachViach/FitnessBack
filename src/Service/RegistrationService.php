@@ -8,8 +8,8 @@ use App\DTO\Controller\Registration;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Repository\UserRepository;
-use CustomValidationBundle\Service\ValidationServiceInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 
 class RegistrationService
 {

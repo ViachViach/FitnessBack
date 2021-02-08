@@ -3,7 +3,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.10",
@@ -28,7 +28,8 @@
         "symfony/twig-bundle": "^5.2",
         "symfony/validator": "^5.2",
         "symfony/yaml": "^5.2",
-        "viachviach/custom-validation-bundle": "^0.0"
+        "viachviach/custom-validation-bundle": "dev-master",
+        "viachviach/exception-handler": "dev-master"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.33",

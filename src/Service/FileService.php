@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\Controller\VideoFile;
-use CustomValidationBundle\Service\ValidationServiceInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 
 class FileService
 {
