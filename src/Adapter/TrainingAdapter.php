@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adapter;
 
-use App\DTO\Controller\TrainingResponse;
+use App\DTO\Controller\Response\TrainingResponse;
 use App\Entity\Training;
 
 class TrainingAdapter

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Adapter\UserAdapter;
-use App\DTO\Controller\UserResponse;
+use App\DTO\Controller\Response\UserResponse;
 use App\Entity\User;
 use App\Exception\UserNotFoundException;
 use InvalidArgumentException;

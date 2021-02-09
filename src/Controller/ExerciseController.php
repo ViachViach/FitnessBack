@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\DTO\Controller\CreateExercise;
-use App\DTO\Controller\ExerciseResponse;
+use App\DTO\Controller\Request\CreateExerciseRequest;
+use App\DTO\Controller\Response\ExerciseResponse;
 use App\DTO\Exception\NotFoundException;
 use App\DTO\Exception\UnauthorizedException;
 use App\DTO\Exception\ValidationException;
@@ -65,7 +65,7 @@ class ExerciseController
      *     @OA\RequestBody(
      *          description="New exercise body",
      *          @OA\JsonContent(
-     *             ref=@Model(type=CreateExercise::class)
+     *             ref=@Model(type=CreateExerciseRequest::class)
      *         )
      *     ),
      *     @OA\Response(
@@ -90,7 +90,7 @@ class ExerciseController
     {
         $createExercise = $this->serializer->deserialize(
             $request->getContent(),
-            CreateExercise::class,
+            CreateExerciseRequest::class,
             JsonEncoder::FORMAT,
         );
 
@@ -116,7 +116,7 @@ class ExerciseController
      *         required=true,
      *         description="Exercise exercise",
      *         @OA\JsonContent(
-     *             ref=@Model(type=CreateExercise::class)
+     *             ref=@Model(type=CreateExerciseRequest::class)
      *         )
      *     ),
      *     @OA\Response(
@@ -165,7 +165,7 @@ class ExerciseController
      *    ),
      * )
      */
-    public function get(): JsonResponse
+    public function getAll(): JsonResponse
     {
         $exerciseDto = $this->exerciseService->getAll();
         $json = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);

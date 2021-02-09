@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Adapter\ExerciseAdapter;
-use App\DTO\Controller\CreateExercise;
-use App\DTO\Controller\ExerciseResponse;
+use App\DTO\Controller\Request\CreateExerciseRequest;
+use App\DTO\Controller\Response\ExerciseResponse;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
 use App\Repository\ExerciseRepository;
@@ -83,7 +83,7 @@ class ExerciseService
         $this->entityManager->flush();
     }
 
-    public function create(CreateExercise $createExercise): void
+    public function create(CreateExerciseRequest $createExercise): void
     {
         $exercise = new Exercise();
         $exercise

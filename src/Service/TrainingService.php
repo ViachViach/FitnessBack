@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Adapter\TrainingAdapter;
-use App\DTO\Controller\TrainingResponse;
+use App\DTO\Controller\Response\TrainingResponse;
 use App\Exception\UserNotFoundException;
 use App\Repository\TrainingRepository;
 

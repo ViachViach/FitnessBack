@@ -82,6 +82,25 @@ class NutritionController
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
+    /**
+     *
+     * @Route("/", name="exercise:get-all", methods={"GET"})
+     *
+     * @OA\Get(
+     *    description="Get exercises",
+     *    summary="Return exercises",
+     *    @OA\Response(
+     *         response=200,
+     *         description="Array of exercises",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 ref=@Model(type=ExerciseResponse::class)
+     *             )
+     *         )
+     *    ),
+     * )
+     */
     public function getAll(): JsonResponse
     {
         return new JsonResponse();

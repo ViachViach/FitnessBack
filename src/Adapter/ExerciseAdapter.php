@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adapter;
 
-use App\DTO\Controller\ExerciseResponse;
+use App\DTO\Controller\Response\ExerciseResponse;
 use App\Entity\Exercise;
 
 class ExerciseAdapter

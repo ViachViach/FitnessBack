@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adapter;
 
-use App\DTO\Controller\UserResponse;
+use App\DTO\Controller\Response\UserResponse;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 

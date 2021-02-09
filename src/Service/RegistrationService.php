@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\DTO\Controller\Registration;
+use App\DTO\Controller\Request\Registration;
 use App\Entity\User;
 use App\Enum\RolesEnum;
 use App\Repository\UserRepository;

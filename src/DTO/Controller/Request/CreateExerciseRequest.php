@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\Controller;
+namespace App\DTO\Controller\Request;
 
 use OpenApi\Annotations as OA;
 
@@ -13,7 +13,7 @@ use OpenApi\Annotations as OA;
  *     required={"name", "description"}
  * )
  */
-final class CreateExercise
+final class CreateExerciseRequest
 {
     /**
      * @OA\Property(
@@ -30,7 +30,7 @@ final class CreateExercise
         return $this->name;
     }
 
-    public function setName(string $name): CreateExercise
+    public function setName(string $name): CreateExerciseRequest
     {
         $this->name = $name;
 
@@ -42,7 +42,7 @@ final class CreateExercise
         return $this->description;
     }
 
-    public function setDescription(string $description): CreateExercise
+    public function setDescription(string $description): CreateExerciseRequest
     {
         $this->description = $description;
 
