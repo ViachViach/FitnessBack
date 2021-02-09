@@ -69,13 +69,13 @@ class ExerciseController
      *         )
      *     ),
      *     @OA\Response(
-     *          response="201",
-     *          description="exercise created",
-     *          @OA\Header(
-     *              header="Location",
-     *              @OA\Schema(type="string"),
-     *                  description="Location for new entity /exercise/{id}"
-     *          ),
+     *         response=200,
+     *         description="Array of exercises",
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 ref=@Model(type=ExerciseResponse::class)
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *          response="400",
@@ -95,16 +95,9 @@ class ExerciseController
         );
 
         $exercise = $this->exerciseService->create($createExercise);
+        $data = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
 
-        return new JsonResponse(
-            null,
-            JsonResponse::HTTP_OK,
-            [
-                'Location' => $this->urlGenerator->generate('exercise:get', [
-                    'id' => $exercise->getId()
-                ])
-            ],
-        );
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -153,7 +146,8 @@ class ExerciseController
             JsonEncoder::FORMAT,
         );
 
-        $data = $this->exerciseService->update($createExercise, $id);
+        $exercise = $this->exerciseService->update($createExercise, $id);
+        $data = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
@@ -213,9 +207,9 @@ class ExerciseController
     public function getById(int $id): JsonResponse
     {
         $exerciseDto = $this->exerciseService->getResponseById($id);
-        $json = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
+        $data = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
 
-        return new JsonResponse($json);
+        return new JsonResponse($data);
     }
 
     /**
