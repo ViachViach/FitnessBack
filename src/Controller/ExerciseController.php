@@ -94,9 +94,17 @@ class ExerciseController
             JsonEncoder::FORMAT,
         );
 
-        $this->exerciseService->create($createExercise);
+        $exercise = $this->exerciseService->create($createExercise);
 
-        return new JsonResponse();
+        return new JsonResponse(
+            null,
+            JsonResponse::HTTP_OK,
+            [
+                'Location' => $this->urlGenerator->generate('exercise:get', [
+                    'id' => $exercise->getId()
+                ])
+            ],
+        );
     }
 
     /**
@@ -121,11 +129,11 @@ class ExerciseController
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Exercise",
-     *         @OA\Header(
-     *             header="Location",
-     *             @OA\Schema(type="string"),
-     *                 description="Location for new entity /exercise/{id}"
+     *         description="Array of exercises",
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 ref=@Model(type=ExerciseResponse::class)
+     *             )
      *         )
      *     ),
      *     @OA\Response(
@@ -137,13 +145,17 @@ class ExerciseController
      *     ),
      * )
      */
-    public function update(): JsonResponse
+    public function update(Request $request, int $id): JsonResponse
     {
-        return new JsonResponse(
-            null,
-            JsonResponse::HTTP_OK,
-            ['Location' => $this->urlGenerator->generate('exercise:get', ['id' => 1]),],
+        $createExercise = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateExerciseRequest::class,
+            JsonEncoder::FORMAT,
         );
+
+        $data = $this->exerciseService->update($createExercise, $id);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -167,10 +179,10 @@ class ExerciseController
      */
     public function getAll(): JsonResponse
     {
-        $exerciseDto = $this->exerciseService->getAll();
-        $json = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
+        $exerciseResponse = $this->exerciseService->getAll();
+        $data = $this->serializer->serialize($exerciseResponse, JsonEncoder::FORMAT);
 
-        return new JsonResponse($json);
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**

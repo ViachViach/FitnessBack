@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\DTO\Controller\UserResponse;
+use App\DTO\Controller\Response\UserResponse;
 use App\Exception\UserNotFoundException;
 use App\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\Model;

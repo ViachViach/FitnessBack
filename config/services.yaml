@@ -28,7 +28,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
-    ViachViach\ExceptionHandler\Service\ExceptionHandler:
+    ViachViach\ExceptionHandler\EventListener\JsonExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 

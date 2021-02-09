@@ -83,7 +83,7 @@ class ExerciseService
         $this->entityManager->flush();
     }
 
-    public function create(CreateExerciseRequest $createExercise): void
+    public function create(CreateExerciseRequest $createExercise): ExerciseResponse
     {
         $exercise = new Exercise();
         $exercise
@@ -93,6 +93,26 @@ class ExerciseService
 
         $this->entityManager->persist($exercise);
         $this->entityManager->flush();
+
+        $adapter = new ExerciseAdapter($exercise);
+
+        return $adapter->createResponse();
+    }
+
+    public function update(CreateExerciseRequest $createExercise, int $id): ExerciseResponse
+    {
+        $exercise = $this->getById($id);
+        $exercise
+            ->setName($createExercise->getName())
+            ->setDescription($createExercise->getDescription())
+        ;
+
+        $this->entityManager->persist($exercise);
+        $this->entityManager->flush();
+
+        $adapter = new ExerciseAdapter($exercise);
+
+        return $adapter->createResponse();
     }
 
     /**

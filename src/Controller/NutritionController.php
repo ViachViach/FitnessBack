@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\DTO\Controller\NutritionResponse;
+use App\DTO\Controller\Response\NutritionResponse;
 use App\DTO\Exception\NotFoundException;
 use App\DTO\Exception\UnauthorizedException;
 use App\Service\NutritionService;
@@ -95,7 +95,7 @@ class NutritionController
      *         @OA\JsonContent(
      *             type="array",
      *             @OA\Items(
-     *                 ref=@Model(type=ExerciseResponse::class)
+     *                 ref=@Model(type=NutritionResponse::class)
      *             )
      *         )
      *    ),
