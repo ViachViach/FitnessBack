@@ -101,6 +101,9 @@ class NutritionController
      */
     public function getAll(): JsonResponse
     {
-        return new JsonResponse();
+        $nutrition = $this->nutritionService->getAll();
+        $data = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 }

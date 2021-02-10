@@ -18,13 +18,14 @@ class ExerciseAdapter
 
     public function createResponse(): ExerciseResponse
     {
-        $exerciseDto = new ExerciseResponse();
-        $exerciseDto->setId($this->exercise->getId());
-        $exerciseDto->setName($this->exercise->getName());
-        $exerciseDto->setDescription($this->exercise->getDescription());
-        $exerciseDto->setUpdateAt($this->exercise->getUpdateAt());
-        $exerciseDto->setCreateAt($this->exercise->getCreateAt());
+        $exerciseResponse = new ExerciseResponse();
+        $exerciseResponse->setId($this->exercise->getId())
+            ->setName($this->exercise->getName())
+            ->setDescription($this->exercise->getDescription())
+            ->setUpdateAt($this->exercise->getUpdateAt())
+            ->setCreateAt($this->exercise->getCreateAt())
+        ;
 
-        return $exerciseDto;
+        return $exerciseResponse;
     }
 }

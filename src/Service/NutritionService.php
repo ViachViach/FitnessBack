@@ -32,6 +32,13 @@ class NutritionService
             throw new EntityNotFoundException(sprintf('Nutrition by %d id not found', $id));
         }
 
+
+
         return $nutrition;
+    }
+
+    public function getAll()
+    {
+
     }
 }
