@@ -7,7 +7,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="training_nutrition", schema="public")
+ * @ORM\Entity(repositoryClass="App\Repository\TrainingNutritionRepository")
  */
 class TrainingNutrition
 {

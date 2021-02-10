@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,6 +42,21 @@ class Exercise
     private ExerciseVideo $video;
 
     /**
+     * @ORM\Column(type="datetimetz", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private DateTimeInterface $createAt;
+
+    /**
+     * @ORM\Column(type="datetimetz", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private DateTimeInterface $updateAt;
+
+    /**
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    private DateTimeInterface $deleteAt;
+
+    /**
      * @ORM\ManyToMany(
      *     targetEntity="App\Entity\Training",
      *     inversedBy="exercises",
@@ -49,10 +65,10 @@ class Exercise
      * @ORM\JoinTable(
      *     name="public.training_exercise",
      *     joinColumns={
-     *          @ORM\JoinColumn(name="training_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="training_id", referencedColumnName="id")
      *     },
      *     inverseJoinColumns={
-     *          @ORM\JoinColumn(name="exercise_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="exercise_id", referencedColumnName="id")
      *     }
      * )
      */
@@ -131,6 +147,42 @@ class Exercise
     public function setVideo(ExerciseVideo $video): Exercise
     {
         $this->video = $video;
+
+        return $this;
+    }
+
+    public function getCreateAt(): DateTimeInterface
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(DateTimeInterface $createAt): Exercise
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(DateTimeInterface $updateAt): Exercise
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getDeleteAt(): DateTimeInterface
+    {
+        return $this->deleteAt;
+    }
+
+    public function setDeleteAt(DateTimeInterface $deleteAt): Exercise
+    {
+        $this->deleteAt = $deleteAt;
 
         return $this;
     }

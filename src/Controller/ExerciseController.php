@@ -209,7 +209,7 @@ class ExerciseController
         $exerciseDto = $this->exerciseService->getResponseById($id);
         $data = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
 
-        return new JsonResponse($data);
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -231,8 +231,10 @@ class ExerciseController
      *     ),
      * )
      */
-    public function delete(): JsonResponse
+    public function delete(int $id): JsonResponse
     {
+        $this->exerciseService->deleteById($id);
+
         return new JsonResponse(null, JsonResponse::HTTP_OK);
     }
 }

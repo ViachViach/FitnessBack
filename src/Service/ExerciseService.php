@@ -10,6 +10,7 @@ use App\DTO\Controller\Response\ExerciseResponse;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
 use App\Repository\ExerciseRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
@@ -125,5 +126,19 @@ class ExerciseService
         $adapter = new ExerciseAdapter($exercise);
 
         return $adapter->createResponse();
+    }
+
+    public function deleteById(int $id): void
+    {
+        $exercise = $this->getById($id);
+
+        $now = new DateTimeImmutable();
+        $exercise
+            ->setDeleteAt($now)
+            ->setUpdateAt($now)
+        ;
+
+        $this->entityManager->persist($exercise);
+        $this->entityManager->flush();
     }
 }

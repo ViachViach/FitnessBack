@@ -15,7 +15,7 @@ RUN set -xe && apk update && apk add --no-cache \
     make \
     icu-dev \
     && docker-php-source extract \
-    && pecl install xdebug \
+    && pecl install xdebug-3.0.1 \
     && docker-php-ext-enable xdebug \
     && docker-php-source delete \
     && docker-php-ext-install pdo_pgsql pcntl sockets soap intl \
