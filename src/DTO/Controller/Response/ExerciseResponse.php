@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\DTO\Controller\Response;
 
+use DateTimeInterface;
+
 final class ExerciseResponse
 {
     private int $id;
-
     private string $name;
-
     private string $description;
-
-    private string $videoPath = '';
+    private string $videoPath;
+    private DateTimeInterface $createAt;
+    private DateTimeInterface $updateAt;
 
     public function getId(): int
     {
@@ -58,6 +59,30 @@ final class ExerciseResponse
     public function setVideoPath(string $videoPath): ExerciseResponse
     {
         $this->videoPath = $videoPath;
+
+        return $this;
+    }
+
+    public function getCreateAt(): DateTimeInterface
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(DateTimeInterface $createAt): ExerciseResponse
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(DateTimeInterface $updateAt): ExerciseResponse
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }

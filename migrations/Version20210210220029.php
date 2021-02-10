@@ -24,7 +24,7 @@ final class Version20210210220029 extends AbstractMigration
 
         $this->addSql('ALTER TABLE exercise ADD create_at TIMESTAMP(0) WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL');
         $this->addSql('ALTER TABLE exercise ADD update_at TIMESTAMP(0) WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL');
-        $this->addSql('ALTER TABLE exercise ADD delete_at TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL');
+        $this->addSql('ALTER TABLE exercise ADD deleted_at TIMESTAMP(0) WITH TIME ZONE DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -34,6 +34,6 @@ final class Version20210210220029 extends AbstractMigration
 
         $this->addSql('ALTER TABLE exercise DROP create_at');
         $this->addSql('ALTER TABLE exercise DROP update_at');
-        $this->addSql('ALTER TABLE exercise DROP delete_at');
+        $this->addSql('ALTER TABLE exercise DROP deleted_at');
     }
 }

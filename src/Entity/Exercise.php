@@ -7,6 +7,8 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,7 +56,7 @@ class Exercise
     /**
      * @ORM\Column(type="datetimetz", nullable=true)
      */
-    private DateTimeInterface $deleteAt;
+    private DateTimeInterface $deletedAt;
 
     /**
      * @ORM\ManyToMany(
@@ -65,10 +67,10 @@ class Exercise
      * @ORM\JoinTable(
      *     name="public.training_exercise",
      *     joinColumns={
-     * @ORM\JoinColumn(name="training_id", referencedColumnName="id")
+     *         @ORM\JoinColumn(name="training_id", referencedColumnName="id")
      *     },
      *     inverseJoinColumns={
-     * @ORM\JoinColumn(name="exercise_id", referencedColumnName="id")
+     *         @ORM\JoinColumn(name="exercise_id", referencedColumnName="id")
      *     }
      * )
      */
@@ -129,7 +131,15 @@ class Exercise
 
     public function getTrainings(): Collection
     {
-        return $this->trainings;
+        if (!$this->trainings instanceof Selectable) {
+            return $this->trainings;
+        }
+
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->isNull('deletedAt'))
+        ;
+
+        return $this->trainings->matching($criteria);
     }
 
     public function setTrainings(Collection $trainings): Exercise
@@ -177,12 +187,12 @@ class Exercise
 
     public function getDeleteAt(): DateTimeInterface
     {
-        return $this->deleteAt;
+        return $this->deletedAt;
     }
 
-    public function setDeleteAt(DateTimeInterface $deleteAt): Exercise
+    public function setDeleteAt(DateTimeInterface $deletedAt): Exercise
     {
-        $this->deleteAt = $deleteAt;
+        $this->deleteAt = $deletedAt;
 
         return $this;
     }

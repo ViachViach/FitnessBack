@@ -9,7 +9,6 @@ use App\DTO\Exception\NotFoundException;
 use App\DTO\Exception\UnauthorizedException;
 use App\Service\NutritionService;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +16,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Security(name="Bearer")
  * @OA\Tag(name="Nutrition")
  * @Route("nutrition")
  * @OA\Response(
@@ -84,7 +82,7 @@ class NutritionController
 
     /**
      *
-     * @Route("/", name="exercise:get-all", methods={"GET"})
+     * @Route("/", name="nutrition:get-all", methods={"GET"})
      *
      * @OA\Get(
      *    description="Get exercises",

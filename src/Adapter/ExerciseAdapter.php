@@ -22,6 +22,8 @@ class ExerciseAdapter
         $exerciseDto->setId($this->exercise->getId());
         $exerciseDto->setName($this->exercise->getName());
         $exerciseDto->setDescription($this->exercise->getDescription());
+        $exerciseDto->setUpdateAt($this->exercise->getUpdateAt());
+        $exerciseDto->setCreateAt($this->exercise->getCreateAt());
 
         return $exerciseDto;
     }

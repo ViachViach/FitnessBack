@@ -25,6 +25,7 @@ class ExerciseVideo
 
     /**
      * @ORM\OneToOne(targetEntity="Exercise", mappedBy="video")
+     * @ORM\JoinColumn(name="exercise_id", referencedColumnName="id")
      */
     private Exercise $exercise;
 

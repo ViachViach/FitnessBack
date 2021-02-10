@@ -46,6 +46,15 @@ class Training
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Exercise", inversedBy="trainings")
+     * @ORM\JoinTable(
+     *     name="public.training_exercise",
+     *     joinColumns={
+     *         @ORM\JoinColumn(name="exercise_id", referencedColumnName="id")
+     *     },
+     *     inverseJoinColumns={
+     *         @ORM\JoinColumn(name="training_id", referencedColumnName="id")
+     *     }
+     * )
      */
     private Collection $exercises;
 

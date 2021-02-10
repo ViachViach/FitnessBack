@@ -16,7 +16,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Security(name="Bearer")
  * @OA\Tag(name="Users")
  */
 class UserController

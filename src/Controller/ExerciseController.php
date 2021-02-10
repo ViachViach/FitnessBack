@@ -11,7 +11,6 @@ use App\DTO\Exception\UnauthorizedException;
 use App\DTO\Exception\ValidationException;
 use App\Service\ExerciseService;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * @Security(name="Bearer")
  * @OA\Tag(name="Exercise")
  * @Route("exercise")
  * @OA\Response(
@@ -101,7 +99,7 @@ class ExerciseController
     }
 
     /**
-     * @Route("/{id}", name="exercise:edit", methods={"PUT"}, requirements={"id" = "\d+"})
+     * @Route("/{id}", name="exercise:update", methods={"PUT"}, requirements={"id" = "\d+"})
      *
      * @OA\Put(
      *     description="Update exercise by id",
@@ -153,8 +151,7 @@ class ExerciseController
     }
 
     /**
-     *
-     * @Route("/", name="exercise:get-all", methods={"GET"})
+     * @Route("", name="exercise:get-all", methods={"GET"})
      *
      * @OA\Get(
      *    description="Get exercises",

@@ -23,6 +23,29 @@ class ExerciseRepository extends ServiceEntityRepository
 
     public function findById(int $id): ?Exercise
     {
-        return $this->find($id);
+        $qb = $this->createQueryBuilder('exercise');
+
+        $query = $qb->select('exercise')
+            ->where($qb->expr()->eq('exercise.id', ':id'))
+            ->andWhere($qb->expr()->isNull('exercise.deletedAt'))
+            ->setParameters([
+                ':id' => $id,
+            ]);
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return Exercise[]
+    */
+    public function findAllExisting(): array
+    {
+        $qb = $this->createQueryBuilder('exercise');
+
+        $query = $qb->select('exercise')
+            ->where($qb->expr()->isNull('exercise.deletedAt'))
+        ;
+
+        return $query->getQuery()->getResult();
     }
 }

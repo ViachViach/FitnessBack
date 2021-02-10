@@ -57,7 +57,7 @@ class ExerciseService
      */
     public function getAll(): array
     {
-        $exercises = $this->exerciseRepository->findAll();
+        $exercises = $this->exerciseRepository->findAllExisting();
 
         $result = [];
 
@@ -86,10 +86,14 @@ class ExerciseService
 
     public function create(CreateExerciseRequest $createExercise): ExerciseResponse
     {
+        $now = new DateTimeImmutable();
+
         $exercise = new Exercise();
         $exercise
             ->setName($createExercise->getName())
             ->setDescription($createExercise->getDescription())
+            ->setUpdateAt($now)
+            ->setCreateAt($now)
         ;
 
         $this->entityManager->persist($exercise);
