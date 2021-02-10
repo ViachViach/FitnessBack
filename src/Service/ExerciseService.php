@@ -138,7 +138,7 @@ class ExerciseService
 
         $now = new DateTimeImmutable();
         $exercise
-            ->setDeleteAt($now)
+            ->setDeletedAt($now)
             ->setUpdateAt($now)
         ;
 

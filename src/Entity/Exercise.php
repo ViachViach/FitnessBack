@@ -185,14 +185,14 @@ class Exercise
         return $this;
     }
 
-    public function getDeleteAt(): DateTimeInterface
+    public function getDeletedAt(): DateTimeInterface
     {
         return $this->deletedAt;
     }
 
-    public function setDeleteAt(DateTimeInterface $deletedAt): Exercise
+    public function setDeletedAt(DateTimeInterface $deletedAt): Exercise
     {
-        $this->deleteAt = $deletedAt;
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
