@@ -20,4 +20,32 @@ class NutritionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Nutrition::class);
     }
+
+    public function findById(int $id): ?Nutrition
+    {
+        $qb = $this->createQueryBuilder('nutrition');
+
+        $query = $qb->select('nutrition')
+            ->where($qb->expr()->eq('nutrition.id', ':id'))
+            ->andWhere($qb->expr()->isNull('nutrition.deletedAt'))
+            ->setParameters([
+                ':id' => $id,
+            ]);
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @return Nutrition[]
+     */
+    public function findAllExisting(): array
+    {
+        $qb = $this->createQueryBuilder('nutrition');
+
+        $query = $qb->select('nutrition')
+            ->where($qb->expr()->isNull('nutrition.deletedAt'))
+        ;
+
+        return $query->getQuery()->getResult();
+    }
 }

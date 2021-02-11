@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -44,6 +45,21 @@ class Nutrition
      * @ORM\Column(type="integer")
      */
     private int $protein;
+
+    /**
+     * @ORM\Column(type="datetimetz", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private DateTimeInterface $createAt;
+
+    /**
+     * @ORM\Column(type="datetimetz", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private DateTimeInterface $updateAt;
+
+    /**
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    private DateTimeInterface $deletedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Food", mappedBy="nutrition")
@@ -153,6 +169,42 @@ class Nutrition
     public function setTrainingNutrition(Collection $trainingNutrition): Nutrition
     {
         $this->trainingNutrition = $trainingNutrition;
+
+        return $this;
+    }
+
+    public function getCreateAt(): DateTimeInterface
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(DateTimeInterface $createAt): Nutrition
+    {
+        $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(DateTimeInterface $updateAt): Nutrition
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(DateTimeInterface $deletedAt): Nutrition
+    {
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }

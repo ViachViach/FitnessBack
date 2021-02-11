@@ -82,7 +82,7 @@ class NutritionController
 
     /**
      *
-     * @Route("/", name="nutrition:get-all", methods={"GET"})
+     * @Route("", name="nutrition:get-all", methods={"GET"})
      *
      * @OA\Get(
      *    description="Get exercises",

@@ -28,6 +28,24 @@ class NutritionAdapter
             ->setProtein($this->nutrition->getProtein())
         ;
 
+        $trainings = [];
+        $foods = [];
+
+        foreach ($this->nutrition->getTrainingNutrition() as $trainingNutrition) {
+            $adapter = new TrainingAdapter($trainingNutrition->training);
+            $trainings[] = $adapter->createResponse();
+        }
+
+        foreach ($this->nutrition->getFoods() as $food) {
+            $adapter = new FoodAdapter($food);
+            $foods[] = $adapter->createResponse();
+        }
+
+        $nutritionResponse
+            ->setTraining($trainings)
+            ->setFoods($foods)
+        ;
+
         return $nutritionResponse;
     }
 }

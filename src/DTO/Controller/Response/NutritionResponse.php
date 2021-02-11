@@ -19,10 +19,9 @@ final class NutritionResponse
     private array $foods;
 
     /**
-     * @var array<TrainingNutritionResponse>
+     * @var array<TrainingResponse>
      */
-    private array $TrainingNutrition;
-
+    private array $trainings;
 
     public function getId(): int
     {
@@ -36,98 +35,63 @@ final class NutritionResponse
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return NutritionResponse
-     */
     public function setName(string $name): NutritionResponse
     {
         $this->name = $name;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     *
-     * @return NutritionResponse
-     */
     public function setDescription(string $description): NutritionResponse
     {
         $this->description = $description;
+
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getMill(): int
     {
         return $this->mill;
     }
 
-    /**
-     * @param string $mill
-     *
-     * @return NutritionResponse
-     */
     public function setMill(int $mill): NutritionResponse
     {
         $this->mill = $mill;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getCalories(): int
     {
         return $this->calories;
     }
 
-    /**
-     * @param int $calories
-     *
-     * @return NutritionResponse
-     */
     public function setCalories(int $calories): NutritionResponse
     {
         $this->calories = $calories;
+
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getProtein(): int
     {
         return $this->protein;
     }
 
-    /**
-     * @param int $protein
-     *
-     * @return NutritionResponse
-     */
     public function setProtein(int $protein): NutritionResponse
     {
         $this->protein = $protein;
+
         return $this;
     }
 
@@ -142,30 +106,30 @@ final class NutritionResponse
     /**
      * @param FoodResponse[] $foods
      *
-     * @return NutritionResponse
      */
     public function setFoods(array $foods): NutritionResponse
     {
         $this->foods = $foods;
+
         return $this;
     }
 
     /**
-     * @return TrainingNutritionResponse[]
+     * @return TrainingResponse[]
      */
-    public function getTrainingNutrition(): array
+    public function getTraining(): array
     {
-        return $this->TrainingNutrition;
+        return $this->trainings;
     }
 
     /**
-     * @param TrainingNutritionResponse[] $TrainingNutrition
+     * @param TrainingResponse[] $trainings
      *
-     * @return NutritionResponse
      */
-    public function setTrainingNutrition(array $TrainingNutrition): NutritionResponse
+    public function setTraining(array $trainings): NutritionResponse
     {
-        $this->TrainingNutrition = $TrainingNutrition;
+        $this->trainings = $trainings;
+
         return $this;
     }
 }
