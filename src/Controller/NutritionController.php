@@ -88,11 +88,11 @@ class NutritionController
      * @Route("", name="nutrition:get-all", methods={"GET"})
      *
      * @OA\Get(
-     *    description="Get exercises",
-     *    summary="Return exercises",
+     *    description="Get nutrition",
+     *    summary="Return nutrition",
      *    @OA\Response(
      *         response=200,
-     *         description="Array of exercises",
+     *         description="Array of nutrition",
      *         @OA\JsonContent(
      *             type="array",
      *             @OA\Items(
@@ -183,7 +183,7 @@ class NutritionController
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Exercise nutrition",
+     *         description="Nutrition",
      *         @OA\JsonContent(
      *             ref=@Model(type=CreateNutritionRequest::class)
      *         )
