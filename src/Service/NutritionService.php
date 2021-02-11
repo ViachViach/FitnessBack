@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Adapter\NutritionAdapter;
+use App\DTO\Controller\Request\CreateNutritionRequest;
 use App\DTO\Controller\Response\NutritionResponse;
-use App\Entity\Nutrition;
 use App\Repository\NutritionRepository;
 use Doctrine\ORM\EntityNotFoundException;
 
@@ -54,5 +54,17 @@ class NutritionService
         }
 
         return $result;
+    }
+
+    public function delete(int $id): void
+    {
+    }
+
+    public function create(CreateNutritionRequest $createExercise): NutritionResponse
+    {
+    }
+
+    public function update(CreateNutritionRequest $createExercise, int $id): NutritionResponse
+    {
     }
 }

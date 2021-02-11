@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\Controller\Request\CreateNutritionRequest;
 use App\DTO\Controller\Response\NutritionResponse;
 use App\DTO\Exception\NotFoundException;
 use App\DTO\Exception\UnauthorizedException;
+use App\DTO\Exception\ValidationException;
 use App\Service\NutritionService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
@@ -15,8 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
-use App\DTO\Exception\ValidationException;
-use App\DTO\Controller\Request\CreateNutritionRequest;
 
 /**
  * @OA\Tag(name="Nutrition")
@@ -131,6 +131,8 @@ class NutritionController
      */
     public function delete(int $id): JsonResponse
     {
+        $this->nutritionService->delete($id);
+
         return new JsonResponse();
     }
 
@@ -165,6 +167,14 @@ class NutritionController
      */
     public function create(Request $request): JsonResponse
     {
+        $createNutrition = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateNutritionRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $this->nutritionService->create($createNutrition);
+
         return new JsonResponse();
     }
 
@@ -208,6 +218,14 @@ class NutritionController
      */
     public function update(Request $request, int $id): JsonResponse
     {
+        $createNutrition = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateNutritionRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $this->nutritionService->update($createNutrition, $id);
+
         return new JsonResponse();
     }
 }
