@@ -50,7 +50,7 @@ class NutritionService
     public function deleteById(int $id): void
     {
         $nutrition = $this->getById($id);
-        
+
         $nutrition
             ->setUpdateAt(new DateTimeImmutable())
             ->setDeletedAt(new DateTimeImmutable())
@@ -80,7 +80,20 @@ class NutritionService
 
     public function update(CreateNutritionRequest $createExercise, int $id): NutritionResponse
     {
-        return new NutritionResponse();
+        $nutrition = $this->getById($id);
+        $nutrition
+            ->setName($createExercise->getName())
+            ->setDescription($createExercise->getDescription())
+            ->setMill($createExercise->getMill())
+            ->setCalories($createExercise->getCalories())
+            ->setProtein($createExercise->getProtein())
+            ->setUpdateAt(new DateTimeImmutable())
+        ;
+
+        $this->nutritionRepository->save($nutrition);
+
+        $adapter = new NutritionAdapter($nutrition);
+        return $adapter->createResponse();
     }
 
     /**

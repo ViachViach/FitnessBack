@@ -126,7 +126,7 @@ class NutritionController
     {
         $this->nutritionService->deleteById($id);
 
-        return new JsonResponse();
+        return new JsonResponse(null, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -218,8 +218,9 @@ class NutritionController
             JsonEncoder::FORMAT,
         );
 
-        $this->nutritionService->update($createNutrition, $id);
+        $nutrition = $this->nutritionService->update($createNutrition, $id);
+        $data      = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
-        return new JsonResponse();
+        return new JsonResponse($data, JsonResponse::HTTP_OK);
     }
 }
