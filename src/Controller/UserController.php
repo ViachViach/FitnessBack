@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\UserService;
 use App\DTO\Controller\Response\UserResponse;
 use App\Exception\UserNotFoundException;
-use App\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,15 +19,10 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class UserController
 {
-    private UserService $userService;
-
-    private SerializerInterface $serializer;
-
-    public function __construct(UserService $userService, SerializerInterface $serializer)
-    {
-        $this->userService = $userService;
-        $this->serializer = $serializer;
-    }
+    public function __construct(
+        private UserService $userService,
+        private SerializerInterface $serializer
+    ) { }
 
     /**
      *
@@ -53,7 +47,7 @@ class UserController
      */
     public function actionGetCurrencyUser(): JsonResponse
     {
-        $user = $this->userService->getCurrencyUserResponse();
+        $user     = $this->userService->getCurrencyUserResponse();
         $response = $this->serializer->serialize($user, JsonEncoder::FORMAT);
 
         return new JsonResponse($response, JsonResponse::HTTP_OK, [], true);

@@ -34,9 +34,12 @@ class TrainingRepository extends ServiceEntityRepository
         $query = $qb->select('training')
             ->leftJoin('training.user', 'u')
             ->where($qb->expr()->eq('u.id', ':userId'))
-            ->setParameters([
-                ':userId', $userId,
-            ]);
+            ->setParameters(
+                [
+                    ':userId',
+                    $userId,
+                ]
+            );
 
         return $query->getQuery()->execute();
     }

@@ -15,22 +15,15 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class TrainingController
 {
-    private TrainingService $trainingService;
-
-    private SerializerInterface $serializer;
-
     public function __construct(
-        TrainingService $trainingService,
-        SerializerInterface $serializer
-    ) {
-        $this->trainingService = $trainingService;
-        $this->serializer = $serializer;
-    }
+        private TrainingService $trainingService,
+        private SerializerInterface $serializer
+    ) { }
 
     public function getTrainingsByCurrentUserId(): JsonResponse
     {
         $trainings = $this->trainingService->getTrainingsByCurrencyUser();
-        $response = $this->serializer->serialize($trainings, JsonEncoder::FORMAT);
+        $response  = $this->serializer->serialize($trainings, JsonEncoder::FORMAT);
 
         return new JsonResponse($response);
     }

@@ -66,7 +66,7 @@ class Training
     public function __construct()
     {
         $this->exercises = new ArrayCollection();
-        $this->users = new ArrayCollection();
+        $this->users     = new ArrayCollection();
         $this->trainingNutrition = new ArrayCollection();
     }
 

@@ -28,9 +28,9 @@ class NutritionRepository extends ServiceEntityRepository
         $query = $qb->select('nutrition')
             ->where($qb->expr()->eq('nutrition.id', ':id'))
             ->andWhere($qb->expr()->isNull('nutrition.deletedAt'))
-            ->setParameters([
-                ':id' => $id,
-            ]);
+            ->setParameters(
+                [':id' => $id]
+            );
 
         return $query->getQuery()->getOneOrNullResult();
     }
@@ -43,8 +43,7 @@ class NutritionRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('nutrition');
 
         $query = $qb->select('nutrition')
-            ->where($qb->expr()->isNull('nutrition.deletedAt'))
-        ;
+            ->where($qb->expr()->isNull('nutrition.deletedAt'));
 
         return $query->getQuery()->getResult();
     }

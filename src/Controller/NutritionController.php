@@ -38,17 +38,10 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class NutritionController
 {
-    private NutritionService $nutritionService;
-
-    private SerializerInterface $serializer;
-
     public function __construct(
-        NutritionService $nutritionService,
-        SerializerInterface $serializer
-    ) {
-        $this->nutritionService = $nutritionService;
-        $this->serializer = $serializer;
-    }
+        private NutritionService $nutritionService,
+        private SerializerInterface $serializer
+    ) { }
 
     /**
      *
@@ -78,7 +71,7 @@ class NutritionController
     public function get(int $id): JsonResponse
     {
         $nutrition = $this->nutritionService->getById($id);
-        $data = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
+        $data      = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
@@ -105,7 +98,7 @@ class NutritionController
     public function getAll(): JsonResponse
     {
         $nutrition = $this->nutritionService->getAll();
-        $data = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
+        $data      = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }

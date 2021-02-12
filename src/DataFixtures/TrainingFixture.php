@@ -40,9 +40,7 @@ class TrainingFixture extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies(): array
     {
-        return [
-            UserFixture::class
-        ];
+        return [UserFixture::class];
     }
 
     /**
@@ -52,7 +50,7 @@ class TrainingFixture extends Fixture implements DependentFixtureInterface
     {
         $exerciseId = rand(0, $exerciseIncrement);
 
-        while (in_array($exerciseId, $setExerciseIds, true)) {
+        while (in_array($exerciseId, $setExerciseIds, true) === true) {
             $exerciseId = rand(0, $exerciseIncrement);
         }
 

@@ -9,12 +9,9 @@ use App\Entity\Exercise;
 
 class ExerciseAdapter
 {
-    private Exercise $exercise;
-
-    public function __construct(Exercise $exercise)
-    {
-        $this->exercise = $exercise;
-    }
+    public function __construct(
+        private Exercise $exercise
+    ) { }
 
     public function createResponse(): ExerciseResponse
     {
@@ -23,8 +20,7 @@ class ExerciseAdapter
             ->setName($this->exercise->getName())
             ->setDescription($this->exercise->getDescription())
             ->setUpdateAt($this->exercise->getUpdateAt())
-            ->setCreateAt($this->exercise->getCreateAt())
-        ;
+            ->setCreateAt($this->exercise->getCreateAt());
 
         return $exerciseResponse;
     }

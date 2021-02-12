@@ -33,10 +33,12 @@ class UserFixture extends Fixture
         $user->setEmail(self::FIRST_USER);
         $user->setRoles(['ROLE_USER']);
 
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
-            'user',
-        ));
+        $user->setPassword(
+            $this->passwordEncoder->encodePassword(
+                $user,
+                'user',
+            )
+        );
 
         $this->addReference(self::FIRST_USER, $user);
         $manager->persist($user);
@@ -46,10 +48,12 @@ class UserFixture extends Fixture
         $user->setEmail(self::SECOND_USER);
         $user->setRoles(['ROLE_USER', 'ROLE_ADMIN']);
 
-        $user->setPassword($this->passwordEncoder->encodePassword(
-            $user,
-            'admin',
-        ));
+        $user->setPassword(
+            $this->passwordEncoder->encodePassword(
+                $user,
+                'admin',
+            )
+        );
 
         $this->addReference(self::SECOND_USER, $user);
         $manager->persist($user);

@@ -10,21 +10,17 @@ use App\Enum\RolesEnum;
 
 class UserAdapter
 {
-    private User $user;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct(
+        private User $user
+    ) { }
 
     public function createResponse(): UserResponse
     {
-        $user = new UserResponse();
+        $user  = new UserResponse();
         $roles = $this->getRole($this->user->getRoles());
         $user
             ->setEmail($user->getEmail())
-            ->setRole($roles)
-        ;
+            ->setRole($roles);
 
         return $user;
     }
@@ -34,7 +30,7 @@ class UserAdapter
      */
     private function getRole(array $roles): string
     {
-        if (in_array(RolesEnum::ROLE_USER, $roles, true)) {
+        if (in_array(RolesEnum::ROLE_USER, $roles, true) === true) {
             return 'user';
         }
 

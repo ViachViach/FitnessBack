@@ -9,12 +9,9 @@ use App\Entity\Nutrition;
 
 class NutritionAdapter
 {
-    private Nutrition $nutrition;
-
-    public function __construct(Nutrition $nutrition)
-    {
-        $this->nutrition = $nutrition;
-    }
+    public function __construct(
+        private Nutrition $nutrition
+    ) { }
 
     public function createResponse(): NutritionResponse
     {
@@ -25,14 +22,13 @@ class NutritionAdapter
             ->setCalories($this->nutrition->getCalories())
             ->setDescription($this->nutrition->getDescription())
             ->setMill($this->nutrition->getMill())
-            ->setProtein($this->nutrition->getProtein())
-        ;
+            ->setProtein($this->nutrition->getProtein());
 
         $trainings = [];
-        $foods = [];
+        $foods     = [];
 
         foreach ($this->nutrition->getTrainingNutrition() as $trainingNutrition) {
-            $adapter = new TrainingAdapter($trainingNutrition->training);
+            $adapter     = new TrainingAdapter($trainingNutrition->training);
             $trainings[] = $adapter->createResponse();
         }
 
@@ -43,8 +39,7 @@ class NutritionAdapter
 
         $nutritionResponse
             ->setTraining($trainings)
-            ->setFoods($foods)
-        ;
+            ->setFoods($foods);
 
         return $nutritionResponse;
     }

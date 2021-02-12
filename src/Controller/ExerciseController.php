@@ -39,21 +39,11 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class ExerciseController
 {
-    private ExerciseService $exerciseService;
-
-    private SerializerInterface $serializer;
-
-    private UrlGeneratorInterface $urlGenerator;
-
     public function __construct(
-        ExerciseService $exerciseService,
-        SerializerInterface $serializer,
-        UrlGeneratorInterface $urlGenerator
-    ) {
-        $this->exerciseService = $exerciseService;
-        $this->serializer = $serializer;
-        $this->urlGenerator = $urlGenerator;
-    }
+        private ExerciseService $exerciseService,
+        private SerializerInterface $serializer,
+        private UrlGeneratorInterface $urlGenerator
+    ) { }
 
     /**
      * @Route("", name="exercise:create", methods={"POST"})
@@ -93,7 +83,7 @@ class ExerciseController
         );
 
         $exercise = $this->exerciseService->create($createExercise);
-        $data = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
+        $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
@@ -145,7 +135,7 @@ class ExerciseController
         );
 
         $exercise = $this->exerciseService->update($createExercise, $id);
-        $data = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
+        $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
@@ -204,7 +194,7 @@ class ExerciseController
     public function getById(int $id): JsonResponse
     {
         $exerciseDto = $this->exerciseService->getResponseById($id);
-        $data = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
+        $data        = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }

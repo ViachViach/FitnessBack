@@ -9,12 +9,9 @@ use App\Entity\Training;
 
 class TrainingAdapter
 {
-    private Training $training;
-
-    public function __construct(Training $training)
-    {
-        $this->training = $training;
-    }
+    public function __construct(
+        private Training $training
+    ) { }
 
     public function createResponse(): TrainingResponse
     {
@@ -22,13 +19,12 @@ class TrainingAdapter
         $trainingDto
             ->setId($this->training->getId())
             ->setName($this->training->getName())
-            ->setDescription($this->training->getDescription())
-        ;
+            ->setDescription($this->training->getDescription());
 
         $exercises = [];
 
         foreach ($this->training->getExercises() as $exercise) {
-            $adapter = new ExerciseAdapter($exercise);
+            $adapter     = new ExerciseAdapter($exercise);
             $exercises[] = $adapter->createResponse();
         }
 

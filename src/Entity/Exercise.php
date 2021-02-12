@@ -136,8 +136,7 @@ class Exercise
         }
 
         $criteria = Criteria::create()
-            ->andWhere(Criteria::expr()->isNull('deletedAt'))
-        ;
+            ->andWhere(Criteria::expr()->isNull('deletedAt'));
 
         return $this->trainings->matching($criteria);
     }

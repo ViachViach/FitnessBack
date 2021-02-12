@@ -13,16 +13,9 @@ use Symfony\Component\Security\Core\Security;
 
 class UserService
 {
-    private Security $security;
-
-    /**
-     * UserService constructor.
-     *
-     */
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
+    public function __construct(
+        private Security $security
+    ) { }
 
     /**
      *
@@ -49,7 +42,7 @@ class UserService
      */
     public function getCurrencyUserResponse(): UserResponse
     {
-        $user = $this->getCurrencyUser();
+        $user    = $this->getCurrencyUser();
         $adapter = new UserAdapter($user);
 
         return $adapter->createResponse();

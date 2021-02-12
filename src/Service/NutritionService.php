@@ -12,15 +12,10 @@ use Doctrine\ORM\EntityNotFoundException;
 
 class NutritionService
 {
-    private UserService $userService;
-
-    private NutritionRepository $nutritionRepository;
-
-    public function __construct(UserService $userService, NutritionRepository $nutritionRepository)
-    {
-        $this->userService = $userService;
-        $this->nutritionRepository = $nutritionRepository;
-    }
+    public function __construct(
+        private UserService $userService,
+        private NutritionRepository $nutritionRepository
+    ) { }
 
     /**
      *
@@ -49,7 +44,7 @@ class NutritionService
         $result = [];
 
         foreach ($nutrition as $item) {
-            $adapter = new NutritionAdapter($item);
+            $adapter  = new NutritionAdapter($item);
             $result[] = $adapter->createResponse();
         }
 
@@ -62,9 +57,11 @@ class NutritionService
 
     public function create(CreateNutritionRequest $createExercise): NutritionResponse
     {
+        return new NutritionResponse();
     }
 
     public function update(CreateNutritionRequest $createExercise, int $id): NutritionResponse
     {
+        return new NutritionResponse();
     }
 }

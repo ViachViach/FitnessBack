@@ -9,12 +9,9 @@ use App\Entity\Food;
 
 class FoodAdapter
 {
-    private Food $food;
-
-    public function __construct(Food $food)
-    {
-        $this->food = $food;
-    }
+    public function __construct(
+        private Food $food
+    ) { }
 
     public function createResponse(): FoodResponse
     {
@@ -22,8 +19,7 @@ class FoodAdapter
         $foodResponse
             ->setId($this->food->getId())
             ->setName($this->food->getName())
-            ->setCount($this->food->getCount())
-        ;
+            ->setCount($this->food->getCount());
 
         return $foodResponse;
     }

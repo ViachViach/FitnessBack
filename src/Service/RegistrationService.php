@@ -13,29 +13,18 @@ use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 
 class RegistrationService
 {
-    private UserPasswordEncoderInterface $passwordEncoder;
-
-    private UserRepository $userRepository;
-
-    private ValidationServiceInterface $validationService;
-
     public function __construct(
-        UserPasswordEncoderInterface $passwordEncoder,
-        UserRepository $userRepository,
-        ValidationServiceInterface $validationService
-    ) {
-        $this->passwordEncoder = $passwordEncoder;
-        $this->userRepository = $userRepository;
-        $this->validationService = $validationService;
-    }
+        private UserPasswordEncoderInterface $passwordEncoder,
+        private UserRepository $userRepository,
+        private ValidationServiceInterface $validationService
+    ) { }
 
     public function registrationUser(Registration $registrationDto): void
     {
         $user = new User();
         $user
             ->setEmail($registrationDto->getEmail())
-            ->setRoles([RolesEnum::ROLE_USER])
-        ;
+            ->setRoles([RolesEnum::ROLE_USER]);
         $password = $this->passwordEncoder->encodePassword($user, $registrationDto->getPassword());
         $user->setPassword($password);
 

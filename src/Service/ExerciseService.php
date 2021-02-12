@@ -17,28 +17,14 @@ use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 
 class ExerciseService
 {
-    private UserService $userService;
-
-    private EntityManagerInterface $entityManager;
-
-    private ExerciseRepository $exerciseRepository;
-
-    private ValidationServiceInterface $validationService;
-
     public function __construct(
-        UserService $userService,
-        EntityManagerInterface $entityManager,
-        ExerciseRepository $exerciseRepository,
-        ValidationServiceInterface $validationService
-    ) {
-        $this->userService = $userService;
-        $this->entityManager = $entityManager;
-        $this->exerciseRepository = $exerciseRepository;
-        $this->validationService = $validationService;
-    }
+        private UserService $userService,
+        private EntityManagerInterface $entityManager,
+        private ExerciseRepository $exerciseRepository,
+        private ValidationServiceInterface $validationService
+    ) { }
 
     /**
-     *
      * @throws EntityNotFoundException
      */
     public function getById(int $id): Exercise
@@ -62,7 +48,7 @@ class ExerciseService
         $result = [];
 
         foreach ($exercises as $exercise) {
-            $adapter = new ExerciseAdapter($exercise);
+            $adapter  = new ExerciseAdapter($exercise);
             $result[] = $adapter->createResponse();
         }
 
@@ -76,8 +62,7 @@ class ExerciseService
         $exerciseVideo = new ExerciseVideo();
         $exerciseVideo
             ->setVideoPath($filePath)
-            ->setExercise($exercise)
-        ;
+            ->setExercise($exercise);
 
         $this->validationService->validate($exerciseVideo);
         $this->entityManager->persist($exerciseVideo);
@@ -93,8 +78,7 @@ class ExerciseService
             ->setName($createExercise->getName())
             ->setDescription($createExercise->getDescription())
             ->setUpdateAt($now)
-            ->setCreateAt($now)
-        ;
+            ->setCreateAt($now);
 
         $this->entityManager->persist($exercise);
         $this->entityManager->flush();
@@ -109,8 +93,7 @@ class ExerciseService
         $exercise = $this->getById($id);
         $exercise
             ->setName($createExercise->getName())
-            ->setDescription($createExercise->getDescription())
-        ;
+            ->setDescription($createExercise->getDescription());
 
         $this->entityManager->persist($exercise);
         $this->entityManager->flush();
@@ -127,7 +110,7 @@ class ExerciseService
     public function getResponseById(int $id): ExerciseResponse
     {
         $exercise = $this->getById($id);
-        $adapter = new ExerciseAdapter($exercise);
+        $adapter  = new ExerciseAdapter($exercise);
 
         return $adapter->createResponse();
     }
@@ -139,8 +122,7 @@ class ExerciseService
         $now = new DateTimeImmutable();
         $exercise
             ->setDeletedAt($now)
-            ->setUpdateAt($now)
-        ;
+            ->setUpdateAt($now);
 
         $this->entityManager->persist($exercise);
         $this->entityManager->flush();

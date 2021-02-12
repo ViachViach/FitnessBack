@@ -28,9 +28,9 @@ class ExerciseRepository extends ServiceEntityRepository
         $query = $qb->select('exercise')
             ->where($qb->expr()->eq('exercise.id', ':id'))
             ->andWhere($qb->expr()->isNull('exercise.deletedAt'))
-            ->setParameters([
-                ':id' => $id,
-            ]);
+            ->setParameters(
+                [':id' => $id]
+            );
 
         return $query->getQuery()->getOneOrNullResult();
     }
@@ -43,8 +43,7 @@ class ExerciseRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('exercise');
 
         $query = $qb->select('exercise')
-            ->where($qb->expr()->isNull('exercise.deletedAt'))
-        ;
+            ->where($qb->expr()->isNull('exercise.deletedAt'));
 
         return $query->getQuery()->getResult();
     }

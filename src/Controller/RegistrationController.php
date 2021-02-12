@@ -19,15 +19,10 @@ use function assert;
  */
 class RegistrationController
 {
-    private RegistrationService $registrationService;
-
-    private SerializerInterface $serializer;
-
-    public function __construct(RegistrationService $registrationService, SerializerInterface $serializer)
-    {
-        $this->registrationService = $registrationService;
-        $this->serializer = $serializer;
-    }
+    public function __construct(
+        private RegistrationService $registrationService,
+        private SerializerInterface $serializer
+    ) { }
 
     public function actionRegistration(Request $request): JsonResponse
     {
