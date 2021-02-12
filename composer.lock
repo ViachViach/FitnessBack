@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e519ee02d4e38b124ea6e78379e201f1",
+    "content-hash": "cb5feb8f09841b0af94b94e633bca6a7",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -7400,12 +7400,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ViachViach/ExceptionHandler.git",
-                "reference": "d23182f0f709b70982b780b241a2b3d72bd0eb39"
+                "reference": "5da980a82e9804d579dba68a127d5bd7646d6be5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ViachViach/ExceptionHandler/zipball/d23182f0f709b70982b780b241a2b3d72bd0eb39",
-                "reference": "d23182f0f709b70982b780b241a2b3d72bd0eb39",
+                "url": "https://api.github.com/repos/ViachViach/ExceptionHandler/zipball/5da980a82e9804d579dba68a127d5bd7646d6be5",
+                "reference": "5da980a82e9804d579dba68a127d5bd7646d6be5",
                 "shasum": ""
             },
             "require": {
@@ -7454,7 +7454,7 @@
                 "issues": "https://github.com/ViachViach/ExceptionHandler/issues",
                 "source": "https://github.com/ViachViach/ExceptionHandler/tree/master"
             },
-            "time": "2021-02-09T22:54:21+00:00"
+            "time": "2021-02-12T19:28:50+00:00"
         },
         {
             "name": "webmozart/assert",

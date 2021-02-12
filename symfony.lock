@@ -707,7 +707,7 @@
         "version": "v0.0.2"
     },
     "viachviach/exception-handler": {
-        "version": "v0.0.1"
+        "version": "dev-master"
     },
     "vimeo/psalm": {
         "version": "3.10.1"

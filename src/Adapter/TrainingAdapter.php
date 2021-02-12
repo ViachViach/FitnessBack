@@ -19,7 +19,8 @@ class TrainingAdapter
         $trainingDto
             ->setId($this->training->getId())
             ->setName($this->training->getName())
-            ->setDescription($this->training->getDescription());
+            ->setDescription($this->training->getDescription())
+        ;
 
         $exercises = [];
 

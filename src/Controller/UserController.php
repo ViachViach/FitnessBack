@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\UserService;
 use App\DTO\Controller\Response\UserResponse;
 use App\Exception\UserNotFoundException;
+use App\Service\UserService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;

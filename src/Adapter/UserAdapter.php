@@ -20,7 +20,8 @@ class UserAdapter
         $roles = $this->getRole($this->user->getRoles());
         $user
             ->setEmail($user->getEmail())
-            ->setRole($roles);
+            ->setRole($roles)
+        ;
 
         return $user;
     }

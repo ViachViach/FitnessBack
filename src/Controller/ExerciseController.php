@@ -14,6 +14,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -51,7 +52,7 @@ class ExerciseController
      *     description="Create exercise",
      *     summary="Create exercise",
      *     @OA\RequestBody(
-     *          description="New exercise body",
+     *          description="Exercise body",
      *          @OA\JsonContent(
      *             ref=@Model(type=CreateExerciseRequest::class)
      *         )
@@ -74,7 +75,7 @@ class ExerciseController
      *     ),
      * )
      */
-    public function create(Request $request): JsonResponse
+    public function create(Request $request): Response
     {
         $createExercise = $this->serializer->deserialize(
             $request->getContent(),
@@ -85,7 +86,7 @@ class ExerciseController
         $exercise = $this->exerciseService->create($createExercise);
         $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+        return new Response($data, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -126,7 +127,7 @@ class ExerciseController
      *     ),
      * )
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(Request $request, int $id): Response
     {
         $createExercise = $this->serializer->deserialize(
             $request->getContent(),
@@ -137,7 +138,7 @@ class ExerciseController
         $exercise = $this->exerciseService->update($createExercise, $id);
         $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+        return new Response($data, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -158,12 +159,12 @@ class ExerciseController
      *    ),
      * )
      */
-    public function getAll(): JsonResponse
+    public function getAll(): Response
     {
         $exerciseResponse = $this->exerciseService->getAll();
         $data = $this->serializer->serialize($exerciseResponse, JsonEncoder::FORMAT);
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+        return new Response($data, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -191,12 +192,12 @@ class ExerciseController
      *     ),
      * )
      */
-    public function getById(int $id): JsonResponse
+    public function getById(int $id): Response
     {
         $exerciseDto = $this->exerciseService->getResponseById($id);
         $data        = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+        return new Response($data, JsonResponse::HTTP_OK);
     }
 
     /**
@@ -218,10 +219,10 @@ class ExerciseController
      *     ),
      * )
      */
-    public function delete(int $id): JsonResponse
+    public function delete(int $id): Response
     {
         $this->exerciseService->deleteById($id);
 
-        return new JsonResponse(null, JsonResponse::HTTP_OK);
+        return new Response(null, JsonResponse::HTTP_OK);
     }
 }

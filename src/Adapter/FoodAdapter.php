@@ -19,7 +19,8 @@ class FoodAdapter
         $foodResponse
             ->setId($this->food->getId())
             ->setName($this->food->getName())
-            ->setCount($this->food->getCount());
+            ->setCount($this->food->getCount())
+        ;
 
         return $foodResponse;
     }

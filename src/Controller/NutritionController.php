@@ -14,6 +14,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -135,7 +136,7 @@ class NutritionController
      *     description="Create nutrition",
      *     summary="Create nutrition",
      *     @OA\RequestBody(
-     *          description="New nutrition body",
+     *          description="Nutrition body",
      *          @OA\JsonContent(
      *             ref=@Model(type=CreateNutritionRequest::class)
      *         )
@@ -158,7 +159,7 @@ class NutritionController
      *     ),
      * )
      */
-    public function create(Request $request): JsonResponse
+    public function create(Request $request): Response
     {
         $createNutrition = $this->serializer->deserialize(
             $request->getContent(),
@@ -166,9 +167,10 @@ class NutritionController
             JsonEncoder::FORMAT,
         );
 
-        $this->nutritionService->create($createNutrition);
+        $nutrition = $this->nutritionService->create($createNutrition);
+        $data      = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
-        return new JsonResponse();
+        return new Response($data, JsonResponse::HTTP_OK);
     }
 
     /**

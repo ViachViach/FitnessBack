@@ -47,4 +47,13 @@ class NutritionRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function save(Nutrition $nutrition): void
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($nutrition);
+        $entityManager->flush();
+
+    }
 }

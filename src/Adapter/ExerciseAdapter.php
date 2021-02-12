@@ -20,7 +20,8 @@ class ExerciseAdapter
             ->setName($this->exercise->getName())
             ->setDescription($this->exercise->getDescription())
             ->setUpdateAt($this->exercise->getUpdateAt())
-            ->setCreateAt($this->exercise->getCreateAt());
+            ->setCreateAt($this->exercise->getCreateAt())
+        ;
 
         return $exerciseResponse;
     }

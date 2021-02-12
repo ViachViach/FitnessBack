@@ -22,7 +22,8 @@ class NutritionAdapter
             ->setCalories($this->nutrition->getCalories())
             ->setDescription($this->nutrition->getDescription())
             ->setMill($this->nutrition->getMill())
-            ->setProtein($this->nutrition->getProtein());
+            ->setProtein($this->nutrition->getProtein())
+        ;
 
         $trainings = [];
         $foods     = [];
