@@ -9,9 +9,9 @@ use App\DTO\Controller\Request\CreateNutritionRequest;
 use App\DTO\Controller\Response\NutritionResponse;
 use App\Entity\Nutrition;
 use App\Repository\NutritionRepository;
-use Doctrine\ORM\EntityNotFoundException;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 use DateTimeImmutable;
+use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class NutritionService
 {
@@ -97,14 +97,14 @@ class NutritionService
     }
 
     /**
-     * @throws EntityNotFoundException
+     * @throws NotFoundException
      */
     public function getById(int $id): Nutrition
     {
         $nutrition = $this->nutritionRepository->findById($id);
 
         if ($nutrition === null) {
-            throw new EntityNotFoundException(sprintf('Nutrition by %d id not found', $id));
+            throw new NotFoundException(sprintf('Nutrition by %d id not found', $id));
         }
 
         return $nutrition;

@@ -221,6 +221,6 @@ class NutritionController
         $nutrition = $this->nutritionService->update($createNutrition, $id);
         $data      = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK);
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], null);
     }
 }

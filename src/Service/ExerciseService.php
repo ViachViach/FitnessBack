@@ -14,6 +14,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
+use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class ExerciseService
 {
@@ -25,14 +26,14 @@ class ExerciseService
     ) { }
 
     /**
-     * @throws EntityNotFoundException
+     * @throws NotFoundException
      */
     public function getById(int $id): Exercise
     {
         $exercise = $this->exerciseRepository->findById($id);
 
         if ($exercise === null) {
-            throw new EntityNotFoundException(sprintf("Exercise by %d id not found", $id));
+            throw new NotFoundException(sprintf("Exercise by %d id not found", $id));
         }
 
         return $exercise;
