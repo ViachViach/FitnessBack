@@ -54,6 +54,5 @@ class NutritionRepository extends ServiceEntityRepository
 
         $entityManager->persist($nutrition);
         $entityManager->flush();
-
     }
 }

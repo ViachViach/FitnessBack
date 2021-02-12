@@ -21,17 +21,9 @@ class NutritionService
         private ValidationServiceInterface $validationService,
     ) { }
 
-    /**
-     *
-     * @throws EntityNotFoundException
-     */
-    public function getById(int $id): NutritionResponse
+    public function getResponseById(int $id): NutritionResponse
     {
-        $nutrition = $this->nutritionRepository->findById($id);
-
-        if ($nutrition === null) {
-            throw new EntityNotFoundException(sprintf('Nutrition by %d id not found', $id));
-        }
+        $nutrition = $this->getById($id);
 
         $adapter = new NutritionAdapter($nutrition);
 
@@ -55,8 +47,16 @@ class NutritionService
         return $result;
     }
 
-    public function delete(int $id): void
+    public function deleteById(int $id): void
     {
+        $nutrition = $this->getById($id);
+        
+        $nutrition
+            ->setUpdateAt(new DateTimeImmutable())
+            ->setDeletedAt(new DateTimeImmutable())
+        ;
+
+        $this->nutritionRepository->save($nutrition);
     }
 
     public function create(CreateNutritionRequest $createExercise): NutritionResponse
@@ -72,7 +72,6 @@ class NutritionService
             ->setUpdateAt(new DateTimeImmutable())
         ;
 
-        $this->validationService->validate($nutrition);
         $this->nutritionRepository->save($nutrition);
 
         $adapter = new NutritionAdapter($nutrition);
@@ -82,5 +81,19 @@ class NutritionService
     public function update(CreateNutritionRequest $createExercise, int $id): NutritionResponse
     {
         return new NutritionResponse();
+    }
+
+    /**
+     * @throws EntityNotFoundException
+     */
+    public function getById(int $id): Nutrition
+    {
+        $nutrition = $this->nutritionRepository->findById($id);
+
+        if ($nutrition === null) {
+            throw new EntityNotFoundException(sprintf('Nutrition by %d id not found', $id));
+        }
+
+        return $nutrition;
     }
 }

@@ -14,7 +14,6 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -71,7 +70,7 @@ class NutritionController
      */
     public function get(int $id): JsonResponse
     {
-        $nutrition = $this->nutritionService->getById($id);
+        $nutrition = $this->nutritionService->getResponseById($id);
         $data      = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
@@ -125,7 +124,7 @@ class NutritionController
      */
     public function delete(int $id): JsonResponse
     {
-        $this->nutritionService->delete($id);
+        $this->nutritionService->deleteById($id);
 
         return new JsonResponse();
     }
@@ -159,7 +158,7 @@ class NutritionController
      *     ),
      * )
      */
-    public function create(Request $request): Response
+    public function create(Request $request): JsonResponse
     {
         $createNutrition = $this->serializer->deserialize(
             $request->getContent(),
@@ -170,7 +169,7 @@ class NutritionController
         $nutrition = $this->nutritionService->create($createNutrition);
         $data      = $this->serializer->serialize($nutrition, JsonEncoder::FORMAT);
 
-        return new Response($data, JsonResponse::HTTP_OK);
+        return new JsonResponse($data, JsonResponse::HTTP_OK);
     }
 
     /**

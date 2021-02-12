@@ -2,9 +2,9 @@
 
 Just do it `make build` in terminal
 
-mkdir ./backend/config/jwt
-openssl genpkey -out ./backend/config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-openssl pkey -in ./backend/config/jwt/private.pem -out config/jwt/public.pem -pubout
+`mkdir ./backend/config/jwt`
+`openssl genpkey -out ./backend/config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
+`openssl pkey -in ./backend/config/jwt/private.pem -out config/jwt/public.pem -pubout`
 
 
 #Frontend 

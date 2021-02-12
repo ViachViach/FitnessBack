@@ -47,4 +47,12 @@ class ExerciseRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function save(Exercise $exercise): void
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($exercise);
+        $entityManager->flush();
+    }
 }

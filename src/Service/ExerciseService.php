@@ -80,8 +80,7 @@ class ExerciseService
             ->setUpdateAt($now)
             ->setCreateAt($now);
 
-        $this->entityManager->persist($exercise);
-        $this->entityManager->flush();
+        $this->exerciseRepository->save($exercise);
 
         $adapter = new ExerciseAdapter($exercise);
 
@@ -95,8 +94,7 @@ class ExerciseService
             ->setName($createExercise->getName())
             ->setDescription($createExercise->getDescription());
 
-        $this->entityManager->persist($exercise);
-        $this->entityManager->flush();
+        $this->exerciseRepository->save($exercise);
 
         $adapter = new ExerciseAdapter($exercise);
 
@@ -124,7 +122,6 @@ class ExerciseService
             ->setDeletedAt($now)
             ->setUpdateAt($now);
 
-        $this->entityManager->persist($exercise);
-        $this->entityManager->flush();
+        $this->exerciseRepository->save($exercise);
     }
 }
