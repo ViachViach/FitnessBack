@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DTO\Controller\Request\CreateExerciseRequest;
 use App\Service\TrainingService;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -20,7 +21,7 @@ use App\DTO\Exception\ValidationException;
 
 /**
  * @OA\Tag(name="Training")
- * @Route("Ttaining")
+ * @Route("ttaining")
  * @OA\Response(
  *     response="401",
  *     description="Unauthorized",
@@ -44,19 +45,19 @@ class TrainingController
     ) { }
 
     /**
-     * @Route("", name="food:create", methods={"POST"})
+     * @Route("", name="training:create", methods={"POST"})
      * @OA\Post(
-     *     description="Create food",
-     *     summary="Create food",
+     *     description="Create training",
+     *     summary="Create training",
      *     @OA\RequestBody(
-     *          description="food body",
+     *          description="training body",
      *          @OA\JsonContent(
      *             ref=@Model(type=CreateTrainingRequest::class)
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Array of food",
+     *         description="Array of trainings",
      *         @OA\JsonContent(
      *             @OA\Items(
      *                 ref=@Model(type=TrainingResponse::class)
@@ -74,32 +75,42 @@ class TrainingController
      */
     public function create(Request $request): JsonResponse
     {
-        return new JsonResponse();
+        $createTraining = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateExerciseRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+
+        $training = $this->trainingService->crete($createTraining);
+        $data     = $this->serializer->serialize($training, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
-     * @Route("/{id}", name="food:update", methods={"PUT"}, requirements={"id" = "\d+"})
+     * @Route("/{id}", name="training:update", methods={"PUT"}, requirements={"id" = "\d+"})
      *
      * @OA\Put(
-     *     description="Update food by id",
-     *     summary="Update food by id",
+     *     description="Update training by id",
+     *     summary="Update training by id",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
      *         schema=@OA\Schema(type="integer"),
-     *         description="food id",
+     *         description="training id",
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         description="food",
+     *         description="training",
      *         @OA\JsonContent(
      *             ref=@Model(type=CreateTrainingRequest::class)
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Array of food",
+     *         description="Array of training",
      *         @OA\JsonContent(
      *             @OA\Items(
      *                 ref=@Model(type=TrainingResponse::class)
@@ -117,16 +128,26 @@ class TrainingController
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        return new JsonResponse();
+        $createTraining = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateExerciseRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+
+        $training = $this->trainingService->update($createTraining, $id);
+        $data     = $this->serializer->serialize($training, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
      *
-     * @Route("/{id}", name="food:get", methods={"GET"}, requirements={"id" = "\d+"})
+     * @Route("/{id}", name="training:get", methods={"GET"}, requirements={"id" = "\d+"})
      *
      * @OA\Get(
-     *    description="Get food by id",
-     *    summary="Return food by id",
+     *    description="Get training by id",
+     *    summary="Return training by id",
      *    @OA\Parameter(
      *        name="id",
      *        in="path",
@@ -134,11 +155,11 @@ class TrainingController
      *        schema=@OA\Schema(
      *            type="integer",
      *        ),
-     *        description="food id",
+     *        description="training id",
      *    ),
      *    @OA\Response(
      *        response=200,
-     *        description="food",
+     *        description="training",
      *        @OA\JsonContent(
      *           ref=@Model(type=TrainingResponse::class)
      *        )
@@ -147,18 +168,21 @@ class TrainingController
      */
     public function getById(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $exercise = $this->trainingService->getResponseById($id);
+        $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
-     * @Route("", name="food:get-all", methods={"GET"})
+     * @Route("", name="training:get-all", methods={"GET"})
      *
      * @OA\Get(
-     *    description="Get food",
-     *    summary="Return food",
+     *    description="Get training",
+     *    summary="Return training",
      *    @OA\Response(
      *         response=200,
-     *         description="Array of food",
+     *         description="Array of training",
      *         @OA\JsonContent(
      *             type="array",
      *             @OA\Items(
@@ -170,21 +194,24 @@ class TrainingController
      */
     public function getAll(): JsonResponse
     {
-        return new JsonResponse();
+        $trainings = $this->trainingService->getAll();
+        $data      = $this->serializer->serialize($trainings, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
-     * @Route("/{id}", name="food:delete", methods={"DELETE"}, requirements={"id" = "\d+"})
+     * @Route("/{id}", name="training:delete", methods={"DELETE"}, requirements={"id" = "\d+"})
      *
      * @OA\Delete(
-     *     description="Delete food by id",
-     *     summary="Delete food by id",
+     *     description="Delete training by id",
+     *     summary="Delete training by id",
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         required=true,
      *         schema=@OA\Schema(type="integer"),
-     *         description="food id",
+     *         description="training id",
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -194,7 +221,9 @@ class TrainingController
      */
     public function delete(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $this->trainingService->delete($id);
+
+        return new JsonResponse(null, JsonResponse::HTTP_OK);
     }
 
     public function getTrainingsByCurrentUserId(): JsonResponse

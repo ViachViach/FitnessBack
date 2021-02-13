@@ -43,4 +43,12 @@ class TrainingRepository extends ServiceEntityRepository
 
         return $query->getQuery()->execute();
     }
+
+    public function save(Training $training): void
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($training);
+        $entityManager->flush();
+    }
 }
