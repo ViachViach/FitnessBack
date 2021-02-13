@@ -85,9 +85,56 @@ class CityController
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
+
+    /**
+     * @Route("/{id}", name="city:update", methods={"PUT"}, requirements={"id" = "\d+"})
+     *
+     * @OA\Put(
+     *     description="Update city by id",
+     *     summary="Update city by id",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         schema=@OA\Schema(type="integer"),
+     *         description="City id",
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             ref=@Model(type=CreateCityRequest::class)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Array of city",
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 ref=@Model(type=CityResponse::class)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Validation exceptions",
+     *          @OA\JsonContent(
+     *              ref=@Model(type=ValidationException::class),
+     *          ),
+     *     ),
+     * )
+     */
     public function update(Request $request, int $id): JsonResponse
     {
-        return new JsonResponse();
+        $updateCity = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateCityRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $city = $this->cityService->update($updateCity, $id);
+        $data = $this->serializer->serialize($city, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     public function getById(int $id): JsonResponse

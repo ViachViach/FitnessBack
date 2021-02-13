@@ -35,7 +35,18 @@ class CityService
 
     public function update(CreateCityRequest $createCityRequest, int $id): CityResponse
     {
+        $country = $this->countryService->getById($createCityRequest->getCountryId());
 
+        $city = $this->getById($id);
+        $city
+            ->setName($createCityRequest->getName())
+            ->setCountry($country)
+        ;
+
+        $this->cityRepository->save($city);
+
+        $adapter = new CityAdapter($city);
+        return $adapter->createResponse();
     }
 
     public function getResponseById(int $id): CityResponse
