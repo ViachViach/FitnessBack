@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Country;
+use App\Entity\Exercise;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,5 +20,13 @@ class CountryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Country::class);
+    }
+
+    public function save(Country $country): void
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($country);
+        $entityManager->flush();
     }
 }

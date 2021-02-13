@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Adapter\CountryAdapter;
-use App\DTO\Controller\Request\CreateCityRequest;
+use App\DTO\Controller\Request\CreateCountryRequest;
 use App\DTO\Controller\Response\CountryResponse;
 use App\Entity\Country;
 use App\Repository\CountryRepository;
@@ -17,23 +17,27 @@ class CountryService
         private CountryRepository $countryRepository
     ) { }
 
-    public function create(CreateCityRequest $createCityRequest): CountryResponse
+    public function create(CreateCountryRequest $createCityRequest): CountryResponse
     {
         $country = new Country();
         $country
             ->setName($createCityRequest->getName())
         ;
 
+        $this->countryRepository->save($country);
+
         $adapter = new CountryAdapter($country);
         return $adapter->createResponse();
     }
 
-    public function update(CreateCityRequest $createCityRequest, int $id): CountryResponse
+    public function update(CreateCountryRequest $createCityRequest, int $id): CountryResponse
     {
         $country = $this->getById($id);
         $country
             ->setName($createCityRequest->getName())
         ;
+
+        $this->countryRepository->save($country);
 
         $adapter = new CountryAdapter($country);
         return $adapter->createResponse();
@@ -56,7 +60,7 @@ class CountryService
 
         $result = [];
         foreach ($countries as $country) {
-            $adapter = new CountryAdapter($country);
+            $adapter  = new CountryAdapter($country);
             $result[] = $adapter->createResponse();
         }
 
