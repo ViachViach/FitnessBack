@@ -6,11 +6,17 @@ namespace App\Controller;
 
 use App\DTO\Exception\NotFoundException;
 use App\DTO\Exception\UnauthorizedException;
+use App\Service\CityService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\DTO\Controller\Request\CreateCityRequest;
+use App\DTO\Controller\Response\CityResponse;
+use App\DTO\Exception\ValidationException;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @OA\Tag(name="City")
@@ -32,8 +38,49 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CityController
 {
+    public function __construct(
+        private SerializerInterface $serializer,
+        private CityService $cityService,
+    ) { }
+
+    /**
+     * @Route("", name="city:create", methods={"POST"})
+     * @OA\Post(
+     *     description="Create city",
+     *     summary="Create city",
+     *     @OA\RequestBody(
+     *          description="City body",
+     *          @OA\JsonContent(
+     *             ref=@Model(type=CreateCityRequest::class)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         @OA\JsonContent(
+     *             @OA\Items(
+     *                 ref=@Model(type=CityResponse::class)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response="400",
+     *          description="Validation city",
+     *          @OA\JsonContent(
+     *              ref=@Model(type=ValidationException::class),
+     *          ),
+     *     ),
+     * )
+     */
     public function create(Request $request): JsonResponse
     {
+        $createCity = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateCityRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $this->cityService->create($createCity);
+
         return new JsonResponse();
     }
 
