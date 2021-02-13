@@ -1,19 +1,32 @@
-## Building
+## About
 
-Just do it `make build` in terminal
+Fitness REST API is an application which help people to training at home. We want to share a healthy lifestyle.
 
-`mkdir ./backend/config/jwt`
-`openssl genpkey -out ./backend/config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096`
-`openssl pkey -in ./backend/config/jwt/private.pem -out config/jwt/public.pem -pubout`
+## Installation
+```
+# Download using composer
+git clone git@github.com:ViachViach/FitnessBack.git
+```
 
+## Getting Started
 
-#Frontend 
+### Docker
+This project store docker images. Download docker application to your machine if you don't have it. Open your terminal:
+    
+    cd /path/to/your_project_folder
+    docker-compose up -d --build
 
-`127.0.0.1:8888`
+### Composer
+Make composer install:
 
-#Backend
+    docker-composer exec php-fitness /bin/sh
+    composer install
 
-`127.0.0.1:81`
-`127.0.0.1:81/api/doc`: Api documentation
-`127.0.0.1:81/api/login`: login
-`127.0.0.1:81/api/v1/somePath`: routing to api
+### Code style and test
+You can check code style and test locally:
+
+    composer check
+
+### Application
+Your application is available on localhost:81
+Swagger documentation localhost:81/api/doc
