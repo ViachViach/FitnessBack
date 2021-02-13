@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\DTO\Exception\NotFoundException;
 use App\DTO\Exception\UnauthorizedException;
+use App\Service\CountryService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\DTO\Controller\Request\CreateCountryRequest;
 use App\DTO\Exception\ValidationException;
 use App\DTO\Controller\Response\CountryResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @OA\Tag(name="Country")
@@ -35,6 +38,11 @@ use App\DTO\Controller\Response\CountryResponse;
  */
 class CountryController
 {
+    public function __construct(
+        private SerializerInterface $serializer,
+        private CountryService $countryService
+    ) { }
+
     /**
      * @Route("", name="country:create", methods={"POST"})
      * @OA\Post(
@@ -66,7 +74,16 @@ class CountryController
      */
     public function create(Request $request): JsonResponse
     {
-        return new JsonResponse();
+        $createCountry = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateCountryRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $country = $this->countryService->create($createCountry);
+        $data    = $this->serializer->serialize($country, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -109,7 +126,16 @@ class CountryController
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        return new JsonResponse();
+        $updateCountry = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateCountryRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $country = $this->countryService->update($updateCountry, $id);
+        $data    = $this->serializer->serialize($country, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -139,7 +165,10 @@ class CountryController
      */
     public function getById(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $country = $this->countryService->getResponseById($id);
+        $data    = $this->serializer->serialize($country, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -162,7 +191,10 @@ class CountryController
      */
     public function getAll(): JsonResponse
     {
-        return new JsonResponse();
+        $countries = $this->countryService->getAll();
+        $data      = $this->serializer->serialize($countries, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -186,6 +218,8 @@ class CountryController
      */
     public function delete(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $this->countryService->deleteById($id);
+
+        return new JsonResponse(null, JsonResponse::HTTP_OK);
     }
 }

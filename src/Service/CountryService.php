@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Adapter\CountryAdapter;
 use App\DTO\Controller\Request\CreateCityRequest;
-use App\DTO\Controller\Response\CityResponse;
-use App\Entity\City;
+use App\DTO\Controller\Response\CountryResponse;
 use App\Entity\Country;
 use App\Repository\CountryRepository;
 use ViachViach\ExceptionHandler\Exception\NotFoundException;
@@ -17,29 +17,55 @@ class CountryService
         private CountryRepository $countryRepository
     ) { }
 
-    public function create(CreateCityRequest $createCityRequest): CityResponse
+    public function create(CreateCityRequest $createCityRequest): CountryResponse
     {
+        $country = new Country();
+        $country
+            ->setName($createCityRequest->getName())
+        ;
 
+        $adapter = new CountryAdapter($country);
+        return $adapter->createResponse();
     }
 
-    public function update(CreateCityRequest $createCityRequest, int $id): CityResponse
+    public function update(CreateCityRequest $createCityRequest, int $id): CountryResponse
     {
+        $country = $this->getById($id);
+        $country
+            ->setName($createCityRequest->getName())
+        ;
 
+        $adapter = new CountryAdapter($country);
+        return $adapter->createResponse();
     }
 
-    public function getResponseById(int $id): CityResponse
+    public function getResponseById(int $id): CountryResponse
     {
+        $country = $this->getById($id);
 
+        $adapter = new CountryAdapter($country);
+        return $adapter->createResponse();
     }
 
+    /**
+     * @var CountryResponse[]
+    */
     public function getAll(): array
     {
+        $countries = $this->countryRepository->findAll();
 
+        $result = [];
+        foreach ($countries as $country) {
+            $adapter = new CountryAdapter($country);
+            $result[] = $adapter->createResponse();
+        }
+
+        return $result;
     }
 
     public function deleteById(int $id): void
     {
-
+        $country = $this->getById($id);
     }
 
     /**

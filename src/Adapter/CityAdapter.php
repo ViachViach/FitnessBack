@@ -9,12 +9,9 @@ use App\Entity\City;
 
 class CityAdapter
 {
-    private City $city;
-
-    public function __construct(City $city)
-    {
-        $this->city = $city;
-    }
+    public function __construct(
+        private City $city
+    ) { }
 
     public function createResponse(): CityResponse
     {

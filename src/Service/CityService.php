@@ -67,7 +67,7 @@ class CityService
 
         $result = [];
         foreach ($cities as $city) {
-            $adapter = new CityAdapter($city);
+            $adapter  = new CityAdapter($city);
             $result[] = $adapter->createResponse();
         }
 
