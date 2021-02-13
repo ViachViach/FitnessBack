@@ -61,6 +61,8 @@ class NutritionService
 
     public function create(CreateNutritionRequest $createExercise): NutritionResponse
     {
+        $this->validationService->validate($createExercise);
+
         $nutrition = new Nutrition();
         $nutrition
             ->setName($createExercise->getName())
@@ -72,6 +74,7 @@ class NutritionService
             ->setUpdateAt(new DateTimeImmutable())
         ;
 
+        $this->validationService->validate($nutrition);
         $this->nutritionRepository->save($nutrition);
 
         $adapter = new NutritionAdapter($nutrition);
@@ -80,6 +83,8 @@ class NutritionService
 
     public function update(CreateNutritionRequest $createExercise, int $id): NutritionResponse
     {
+        $this->validationService->validate($createExercise);
+
         $nutrition = $this->getById($id);
         $nutrition
             ->setName($createExercise->getName())
@@ -90,6 +95,7 @@ class NutritionService
             ->setUpdateAt(new DateTimeImmutable())
         ;
 
+        $this->validationService->validate($nutrition);
         $this->nutritionRepository->save($nutrition);
 
         $adapter = new NutritionAdapter($nutrition);

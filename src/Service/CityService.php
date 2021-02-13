@@ -22,6 +22,7 @@ class CityService
 
     public function create(CreateCityRequest $createCityRequest): CityResponse
     {
+        $this->validationService->validate($createCityRequest);
         $country = $this->countryService->getById($createCityRequest->getCountryId());
 
         $city = new City();
@@ -39,6 +40,7 @@ class CityService
 
     public function update(CreateCityRequest $createCityRequest, int $id): CityResponse
     {
+        $this->validationService->validate($createCityRequest);
         $country = $this->countryService->getById($createCityRequest->getCountryId());
 
         $city = $this->getById($id);
@@ -47,6 +49,7 @@ class CityService
             ->setCountry($country)
         ;
 
+        $this->validationService->validate($city);
         $this->cityRepository->save($city);
 
         $adapter = new CityAdapter($city);

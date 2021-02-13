@@ -72,15 +72,16 @@ class ExerciseService
 
     public function create(CreateExerciseRequest $createExercise): ExerciseResponse
     {
-        $now = new DateTimeImmutable();
+        $this->validationService->validate($createExercise);
 
         $exercise = new Exercise();
         $exercise
             ->setName($createExercise->getName())
             ->setDescription($createExercise->getDescription())
-            ->setUpdateAt($now)
-            ->setCreateAt($now);
+            ->setUpdateAt(new DateTimeImmutable())
+            ->setCreateAt(new DateTimeImmutable());
 
+        $this->validationService->validate($exercise);
         $this->exerciseRepository->save($exercise);
 
         $adapter = new ExerciseAdapter($exercise);
@@ -90,11 +91,13 @@ class ExerciseService
 
     public function update(CreateExerciseRequest $createExercise, int $id): ExerciseResponse
     {
+        $this->validationService->validate($createExercise);
         $exercise = $this->getById($id);
         $exercise
             ->setName($createExercise->getName())
             ->setDescription($createExercise->getDescription());
 
+        $this->validationService->validate($exercise);
         $this->exerciseRepository->save($exercise);
 
         $adapter = new ExerciseAdapter($exercise);

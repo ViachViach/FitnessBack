@@ -10,13 +10,15 @@ use App\DTO\Controller\Response\TrainingResponse;
 use App\Entity\Training;
 use App\Exception\UserNotFoundException;
 use App\Repository\TrainingRepository;
+use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class TrainingService
 {
     public function __construct(
         private TrainingRepository $trainingRepository,
-        private UserService $userService
+        private UserService $userService,
+        private ValidationServiceInterface $validationService,
     ) { }
 
     /**
@@ -40,12 +42,14 @@ class TrainingService
 
     public function crete(CreateTrainingRequest $createTrainingRequest): TrainingResponse
     {
+        $this->validationService->validate($createTrainingRequest);
         $training = new Training();
         $training
             ->setName($createTrainingRequest->getName())
             ->setDescription($createTrainingRequest->getDescription())
         ;
 
+        $this->validationService->validate($training);
         $this->trainingRepository->save($training);
 
         $adapter = new TrainingAdapter($training);
@@ -54,12 +58,14 @@ class TrainingService
 
     public function update(CreateTrainingRequest $createTrainingRequest, int $id): TrainingResponse
     {
+        $this->validationService->validate($createTrainingRequest);
         $training = $this->getById($id);
         $training
             ->setName($createTrainingRequest->getName())
             ->setDescription($createTrainingRequest->getDescription())
         ;
 
+        $this->validationService->validate($training);
         $this->trainingRepository->save($training);
 
         $adapter = new TrainingAdapter($training);

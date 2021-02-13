@@ -9,21 +9,25 @@ use App\DTO\Controller\Request\CreateCountryRequest;
 use App\DTO\Controller\Response\CountryResponse;
 use App\Entity\Country;
 use App\Repository\CountryRepository;
+use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class CountryService
 {
     public function __construct(
-        private CountryRepository $countryRepository
+        private CountryRepository $countryRepository,
+        private ValidationServiceInterface $validationService,
     ) { }
 
     public function create(CreateCountryRequest $createCityRequest): CountryResponse
     {
+        $this->validationService->validate($createCityRequest);
         $country = new Country();
         $country
             ->setName($createCityRequest->getName())
         ;
 
+        $this->validationService->validate($country);
         $this->countryRepository->save($country);
 
         $adapter = new CountryAdapter($country);
@@ -32,11 +36,13 @@ class CountryService
 
     public function update(CreateCountryRequest $createCityRequest, int $id): CountryResponse
     {
+        $this->validationService->validate($createCityRequest);
         $country = $this->getById($id);
         $country
             ->setName($createCityRequest->getName())
         ;
 
+        $this->validationService->validate($country);
         $this->countryRepository->save($country);
 
         $adapter = new CountryAdapter($country);

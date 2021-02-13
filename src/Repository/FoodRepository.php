@@ -20,4 +20,12 @@ class FoodRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Food::class);
     }
+
+    public function save(Food $food): void
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($food);
+        $entityManager->flush();
+    }
 }

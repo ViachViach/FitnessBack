@@ -9,21 +9,27 @@ use App\DTO\Controller\Request\CreateCityRequest;
 use App\DTO\Controller\Response\FoodResponse;
 use App\Entity\Food;
 use App\Repository\FoodRepository;
+use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class FoodService
 {
     public function __construct(
-        private FoodRepository $foodRepository
+        private FoodRepository $foodRepository,
+        private ValidationServiceInterface $validationService,
     ) { }
 
     public function create(CreateCityRequest $createCityRequest): FoodResponse
     {
+        $this->validationService->validate($createCityRequest);
         $food = new Food();
         $food
             ->setName($createCityRequest->getName())
             ->setCount($createCityRequest->getCount())
         ;
+
+        $this->validationService->validate($food);
+        $this->foodRepository->save($food);
 
         $adapter = new FoodAdapter($food);
         return $adapter->createResponse();
@@ -31,11 +37,15 @@ class FoodService
 
     public function update(CreateCityRequest $createCityRequest, int $id): FoodResponse
     {
+        $this->validationService->validate($createCityRequest);
         $food = $this->getById($id);
         $food
             ->setName($createCityRequest->getName())
             ->setCount($createCityRequest->getCount())
         ;
+
+        $this->validationService->validate($food);
+        $this->foodRepository->save($food);
 
         $adapter = new FoodAdapter($food);
         return $adapter->createResponse();
