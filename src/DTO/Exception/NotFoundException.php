@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace App\DTO\Exception;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Not found exception",
+ *     description="Not found exception schema"
+ * )
+ */
 final class NotFoundException
 {
     private int $code;

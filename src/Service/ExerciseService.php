@@ -10,7 +10,7 @@ use App\DTO\Controller\Response\ExerciseResponse;
 use App\Entity\Exercise;
 use App\Entity\ExerciseVideo;
 use App\Repository\ExerciseRepository;
-use DateTimeImmutable;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
@@ -78,8 +78,8 @@ class ExerciseService
         $exercise
             ->setName($createExercise->getName())
             ->setDescription($createExercise->getDescription())
-            ->setUpdateAt(new DateTimeImmutable())
-            ->setCreateAt(new DateTimeImmutable());
+            ->setUpdateAt(new DateTime())
+            ->setCreateAt(new DateTime());
 
         $this->validationService->validate($exercise);
         $this->exerciseRepository->save($exercise);
@@ -95,7 +95,9 @@ class ExerciseService
         $exercise = $this->getById($id);
         $exercise
             ->setName($createExercise->getName())
-            ->setDescription($createExercise->getDescription());
+            ->setDescription($createExercise->getDescription())
+            ->setUpdateAt(new DateTime())
+        ;
 
         $this->validationService->validate($exercise);
         $this->exerciseRepository->save($exercise);
@@ -121,10 +123,9 @@ class ExerciseService
     {
         $exercise = $this->getById($id);
 
-        $now = new DateTimeImmutable();
         $exercise
-            ->setDeletedAt($now)
-            ->setUpdateAt($now);
+            ->setDeletedAt(new DateTime())
+            ->setUpdateAt(new DateTime());
 
         $this->exerciseRepository->save($exercise);
     }

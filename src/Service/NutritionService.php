@@ -10,7 +10,7 @@ use App\DTO\Controller\Response\NutritionResponse;
 use App\Entity\Nutrition;
 use App\Repository\NutritionRepository;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
-use DateTimeImmutable;
+use DateTime;
 use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class NutritionService
@@ -52,8 +52,8 @@ class NutritionService
         $nutrition = $this->getById($id);
 
         $nutrition
-            ->setUpdateAt(new DateTimeImmutable())
-            ->setDeletedAt(new DateTimeImmutable())
+            ->setUpdateAt(new DateTime())
+            ->setDeletedAt(new DateTime())
         ;
 
         $this->nutritionRepository->save($nutrition);
@@ -70,8 +70,8 @@ class NutritionService
             ->setMill($createExercise->getMill())
             ->setCalories($createExercise->getCalories())
             ->setProtein($createExercise->getProtein())
-            ->setCreateAt(new DateTimeImmutable())
-            ->setUpdateAt(new DateTimeImmutable())
+            ->setCreateAt(new DateTime())
+            ->setUpdateAt(new DateTime())
         ;
 
         $this->validationService->validate($nutrition);
@@ -92,7 +92,7 @@ class NutritionService
             ->setMill($createExercise->getMill())
             ->setCalories($createExercise->getCalories())
             ->setProtein($createExercise->getProtein())
-            ->setUpdateAt(new DateTimeImmutable())
+            ->setUpdateAt(new DateTime())
         ;
 
         $this->validationService->validate($nutrition);

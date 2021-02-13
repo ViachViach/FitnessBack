@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Adapter\FoodAdapter;
-use App\DTO\Controller\Request\CreateCityRequest;
+use App\DTO\Controller\Request\CreateFoodRequest;
 use App\DTO\Controller\Response\FoodResponse;
 use App\Entity\Food;
 use App\Repository\FoodRepository;
@@ -19,13 +19,13 @@ class FoodService
         private ValidationServiceInterface $validationService,
     ) { }
 
-    public function create(CreateCityRequest $createCityRequest): FoodResponse
+    public function create(CreateFoodRequest $createFoodRequest): FoodResponse
     {
-        $this->validationService->validate($createCityRequest);
+        $this->validationService->validate($createFoodRequest);
         $food = new Food();
         $food
-            ->setName($createCityRequest->getName())
-            ->setCount($createCityRequest->getCount())
+            ->setName($createFoodRequest->getName())
+            ->setCount($createFoodRequest->getCount())
         ;
 
         $this->validationService->validate($food);
@@ -35,13 +35,13 @@ class FoodService
         return $adapter->createResponse();
     }
 
-    public function update(CreateCityRequest $createCityRequest, int $id): FoodResponse
+    public function update(CreateFoodRequest $createFoodRequest, int $id): FoodResponse
     {
-        $this->validationService->validate($createCityRequest);
+        $this->validationService->validate($createFoodRequest);
         $food = $this->getById($id);
         $food
-            ->setName($createCityRequest->getName())
-            ->setCount($createCityRequest->getCount())
+            ->setName($createFoodRequest->getName())
+            ->setCount($createFoodRequest->getCount())
         ;
 
         $this->validationService->validate($food);

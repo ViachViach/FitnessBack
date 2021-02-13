@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace App\DTO\Exception;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Validation exception",
+ *     description="Validation exception schema"
+ * )
+ */
 final class ValidationException
 {
     private int $code;

@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace App\DTO\Exception;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Unauthorized exception",
+ *     description="Unauthorized exception schema"
+ * )
+ */
 final class UnauthorizedException
 {
     private int $code;
