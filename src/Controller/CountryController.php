@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @OA\Tag(name="Countrition")
- * @Route("nutrition")
+ * @OA\Tag(name="Country")
+ * @Route("country")
  * @OA\Response(
  *     response="401",
  *     description="Unauthorized",

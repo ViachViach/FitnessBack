@@ -58,9 +58,20 @@ class CityService
         return $adapter->createResponse();
     }
 
+    /**
+     * @return CityResponse[]
+    */
     public function getAll(): array
     {
+        $cities = $this->cityRepository->findAll();
 
+        $result = [];
+        foreach ($cities as $city) {
+            $adapter = new CityAdapter($city);
+            $result[] = $adapter->createResponse();
+        }
+
+        return $result;
     }
 
     public function deleteById(int $id): void

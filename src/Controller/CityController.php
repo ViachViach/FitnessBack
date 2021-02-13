@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @OA\Tag(name="City")
- * @Route("nutrition")
+ * @Route("city")
  * @OA\Response(
  *     response="401",
  *     description="Unauthorized",
@@ -45,6 +45,7 @@ class CityController
 
     /**
      * @Route("", name="city:create", methods={"POST"})
+     *
      * @OA\Post(
      *     description="Create city",
      *     summary="Create city",
@@ -56,6 +57,7 @@ class CityController
      *     ),
      *     @OA\Response(
      *         response=200,
+     *         description="",
      *         @OA\JsonContent(
      *             @OA\Items(
      *                 ref=@Model(type=CityResponse::class)
@@ -170,13 +172,56 @@ class CityController
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
+    /**
+     *
+     * @Route("/", name="city:get-all", methods={"GET"}, requirements={"id" = "\d+"})
+     *
+     * @OA\Get(
+     *    description="Get cities",
+     *    summary="Return cities",
+     *    @OA\Response(
+     *        response=200,
+     *        description="city",
+     *        @OA\JsonContent(
+     *           type="array",
+     *           @OA\Items(
+     *               ref=@Model(type=CityResponse::class)
+     *           )
+     *        )
+     *     ),
+     * )
+     */
     public function getAll(): JsonResponse
     {
-        return new JsonResponse();
+        $city = $this->cityService->getAll();
+        $data = $this->serializer->serialize($city, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
+    /**
+     * @Route("/{id}", name="city:delete", methods={"DELETE"}, requirements={"id" = "\d+"})
+     *
+     * @OA\Delete(
+     *     description="Delete city by id",
+     *     summary="Delete city by id",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         schema=@OA\Schema(type="integer"),
+     *         description="city id",
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Deleted"
+     *     ),
+     * )
+     */
     public function delete(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $this->cityService->deleteById($id);
+
+        return new JsonResponse(null, JsonResponse::HTTP_OK);
     }
 }

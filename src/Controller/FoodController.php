@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @OA\Tag(name="Food")
- * @Route("nutrition")
+ * @Route("food")
  * @OA\Response(
  *     response="401",
  *     description="Unauthorized",
