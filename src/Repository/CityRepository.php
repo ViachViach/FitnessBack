@@ -20,4 +20,12 @@ class CityRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, City::class);
     }
+
+    public function save(City $city): void
+    {
+        $entityManager = $this->getEntityManager();
+
+        $entityManager->persist($city);
+        $entityManager->flush();
+    }
 }

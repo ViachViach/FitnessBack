@@ -7,7 +7,9 @@ namespace App\Service;
 use App\DTO\Controller\Request\CreateCityRequest;
 use App\DTO\Controller\Response\CityResponse;
 use App\Entity\City;
+use App\Entity\Country;
 use App\Repository\CountryRepository;
+use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class CountryService
 {
@@ -40,8 +42,17 @@ class CountryService
 
     }
 
-    public function getById(int $id): City
+    /**
+     * @throws  NotFoundException
+    */
+    public function getById(int $id): Country
     {
+        $country = $this->countryRepository->find($id);
 
+        if ($country === null) {
+            throw new NotFoundException();
+        }
+
+        return $country;
     }
 }

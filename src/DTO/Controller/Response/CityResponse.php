@@ -8,7 +8,7 @@ final class CityResponse
 {
     private int $id;
     private string $name;
-    private int $cityId;
+    private int $countryId;
 
     public function getId(): int
     {
@@ -32,14 +32,14 @@ final class CityResponse
         return $this;
     }
 
-    public function getCityId(): int
+    public function getCountryId(): int
     {
-        return $this->cityId;
+        return $this->countryId;
     }
 
-    public function setCityId(int $cityId): CityResponse
+    public function setCountryId(int $countryId): CityResponse
     {
-        $this->cityId = $cityId;
+        $this->countryId = $countryId;
         return $this;
     }
 }

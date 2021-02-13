@@ -79,9 +79,10 @@ class CityController
             JsonEncoder::FORMAT,
         );
 
-        $this->cityService->create($createCity);
+        $city = $this->cityService->create($createCity);
+        $data = $this->serializer->serialize($city, JsonEncoder::FORMAT);
 
-        return new JsonResponse();
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     public function update(Request $request, int $id): JsonResponse
