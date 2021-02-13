@@ -9,6 +9,7 @@ use App\DTO\Controller\Request\CreateCityRequest;
 use App\DTO\Controller\Response\CityResponse;
 use App\Entity\City;
 use App\Repository\CityRepository;
+use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class CityService
@@ -16,6 +17,7 @@ class CityService
     public function __construct(
         private CityRepository $cityRepository,
         private CountryService $countryService,
+        private ValidationServiceInterface $validationService,
     ) { }
 
     public function create(CreateCityRequest $createCityRequest): CityResponse
@@ -28,6 +30,7 @@ class CityService
             ->setCountry($country)
         ;
 
+        $this->validationService->validate($city);
         $this->cityRepository->save($city);
 
         $adapter = new CityAdapter($city);
