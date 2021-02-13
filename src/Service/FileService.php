@@ -21,9 +21,9 @@ class FileService
 
     public function uploadExerciseFile(UploadedFile $uploadedFile, int $exerciseId): string
     {
-        $fileDto = new VideoFile();
-        $fileDto->setUploadFile($uploadedFile);
-        $this->validateService->validate($fileDto);
+        $videoFile = new VideoFile();
+        $videoFile->setUploadFile($uploadedFile);
+        $this->validateService->validate($videoFile);
 
         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename     = $this->slugger->slug($originalFilename);

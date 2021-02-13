@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\DTO\Exception\NotFoundException;
 use App\DTO\Exception\UnauthorizedException;
+use App\Service\FoodService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\DTO\Exception\ValidationException;
 use App\DTO\Controller\Request\CreateFoodRequest;
 use App\DTO\Controller\Response\FoodResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @OA\Tag(name="Food")
@@ -35,6 +38,11 @@ use App\DTO\Controller\Response\FoodResponse;
  */
 class FoodController
 {
+    public function __construct(
+        private FoodService $foodService,
+        private SerializerInterface $serializer
+    ) { }
+
     /**
      * @Route("", name="food:create", methods={"POST"})
      * @OA\Post(
@@ -66,7 +74,16 @@ class FoodController
      */
     public function create(Request $request): JsonResponse
     {
-        return new JsonResponse();
+        $createFood = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateFoodRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $exercise = $this->foodService->create($createFood);
+        $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [],true);
     }
 
     /**
@@ -109,7 +126,16 @@ class FoodController
      */
     public function update(Request $request, int $id): JsonResponse
     {
-        return new JsonResponse();
+        $createFood = $this->serializer->deserialize(
+            $request->getContent(),
+            CreateFoodRequest::class,
+            JsonEncoder::FORMAT,
+        );
+
+        $exercise = $this->foodService->update($createFood, $id);
+        $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -139,7 +165,10 @@ class FoodController
      */
     public function getById(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $food = $this->foodService->getResponseById($id);
+        $data = $this->serializer->serialize($food, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -162,7 +191,10 @@ class FoodController
      */
     public function getAll(): JsonResponse
     {
-        return new JsonResponse();
+        $foods = $this->foodService->getAll();
+        $data  = $this->serializer->serialize($foods, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -186,6 +218,8 @@ class FoodController
      */
     public function delete(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $this->foodService->deleteById($id);
+
+        return new JsonResponse(null, JsonResponse::HTTP_OK);
     }
 }

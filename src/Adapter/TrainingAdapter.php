@@ -15,8 +15,8 @@ class TrainingAdapter
 
     public function createResponse(): TrainingResponse
     {
-        $trainingDto = new TrainingResponse();
-        $trainingDto
+        $result = new TrainingResponse();
+        $result
             ->setId($this->training->getId())
             ->setName($this->training->getName())
             ->setDescription($this->training->getDescription())
@@ -29,8 +29,8 @@ class TrainingAdapter
             $exercises[] = $adapter->createResponse();
         }
 
-        $trainingDto->setExercises($exercises);
+        $result->setExercises($exercises);
 
-        return $trainingDto;
+        return $result;
     }
 }

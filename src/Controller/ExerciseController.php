@@ -41,8 +41,7 @@ class ExerciseController
 {
     public function __construct(
         private ExerciseService $exerciseService,
-        private SerializerInterface $serializer,
-        private UrlGeneratorInterface $urlGenerator
+        private SerializerInterface $serializer
     ) { }
 
     /**
@@ -85,7 +84,7 @@ class ExerciseController
         $exercise = $this->exerciseService->create($createExercise);
         $data     = $this->serializer->serialize($exercise, JsonEncoder::FORMAT);
 
-        return new JsonResponse($data, JsonResponse::HTTP_OK, true);
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     /**
@@ -193,8 +192,8 @@ class ExerciseController
      */
     public function getById(int $id): JsonResponse
     {
-        $exerciseDto = $this->exerciseService->getResponseById($id);
-        $data        = $this->serializer->serialize($exerciseDto, JsonEncoder::FORMAT);
+        $exerciseResponse = $this->exerciseService->getResponseById($id);
+        $data = $this->serializer->serialize($exerciseResponse, JsonEncoder::FORMAT);
 
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }

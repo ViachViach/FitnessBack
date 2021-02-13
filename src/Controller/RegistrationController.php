@@ -26,14 +26,14 @@ class RegistrationController
 
     public function actionRegistration(Request $request): JsonResponse
     {
-        $registrationDto = $this->serializer->deserialize(
+        $registrationRequest = $this->serializer->deserialize(
             $request->getContent(),
             Registration::class,
             JsonEncoder::FORMAT,
         );
-        assert($registrationDto instanceof Registration);
+        assert($registrationRequest instanceof Registration);
 
-        $this->registrationService->registrationUser($registrationDto);
+        $this->registrationService->registrationUser($registrationRequest);
 
         return new JsonResponse();
     }

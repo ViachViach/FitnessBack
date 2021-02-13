@@ -7,7 +7,7 @@ namespace App\DTO\Controller\Request;
 final class CreateCityRequest
 {
     private string $name;
-    private int $countryId;
+    private int $count;
 
     public function getName(): string
     {
@@ -20,14 +20,14 @@ final class CreateCityRequest
         return $this;
     }
 
-    public function getCountryId(): int
+    public function getCount(): int
     {
-        return $this->countryId;
+        return $this->count;
     }
 
-    public function setCountryId(int $countryId): CreateCityRequest
+    public function setCount(int $count): CreateCityRequest
     {
-        $this->countryId = $countryId;
+        $this->count = $count;
         return $this;
     }
 }

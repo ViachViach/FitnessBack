@@ -26,13 +26,12 @@ class TrainingService
         $user      = $this->userService->getCurrencyUser();
         $trainings = $this->trainingRepository->findByUserId($user->getId());
 
-        $trainingsDto = [];
-
+        $result = [];
         foreach ($trainings as $training) {
-            $adapter        = new TrainingAdapter($training);
-            $trainingsDto[] = $adapter->createResponse();
+            $adapter  = new TrainingAdapter($training);
+            $result[] = $adapter->createResponse();
         }
 
-        return $trainingsDto;
+        return $result;
     }
 }

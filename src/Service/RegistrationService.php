@@ -19,13 +19,13 @@ class RegistrationService
         private ValidationServiceInterface $validationService
     ) { }
 
-    public function registrationUser(Registration $registrationDto): void
+    public function registrationUser(Registration $registrationRequest): void
     {
         $user = new User();
         $user
-            ->setEmail($registrationDto->getEmail())
+            ->setEmail($registrationRequest->getEmail())
             ->setRoles([RolesEnum::ROLE_USER]);
-        $password = $this->passwordEncoder->encodePassword($user, $registrationDto->getPassword());
+        $password = $this->passwordEncoder->encodePassword($user, $registrationRequest->getPassword());
         $user->setPassword($password);
 
         $this->validationService->validate($user);
