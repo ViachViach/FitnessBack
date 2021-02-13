@@ -4,17 +4,53 @@ declare(strict_types=1);
 
 namespace App\DTO\Controller\Response;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Training response",
+ *     description="Training response schema"
+ * )
+ */
 final class TrainingResponse
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Training's id"
+     * )
+     */
     private int $id;
 
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Training's name"
+     * )
+     */
     private string $name;
 
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Training's description"
+     * )
+     */
     private string $description;
 
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Training's week day"
+     * )
+     */
     private int $weekDay;
 
     /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Exercises"
+     * )
      * @var ExerciseResponse[]
     */
     private array $exercises;

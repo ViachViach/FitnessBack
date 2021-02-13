@@ -4,21 +4,78 @@ declare(strict_types=1);
 
 namespace App\DTO\Controller\Response;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Nutrition response",
+ *     description="Nutrition response schema"
+ * )
+ */
 final class NutritionResponse
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's id"
+     * )
+     */
     private int $id;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's name"
+     * )
+     */
     private string $name;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's description"
+     * )
+     */
     private string $description;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's mill"
+     * )
+     */
     private int $mill;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's calories"
+     * )
+     */
     private int $calories;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's protein"
+     * )
+     */
     private int $protein;
 
     /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Foods"
+     * )
      * @var array<FoodResponse>
     */
     private array $foods;
 
     /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Trainings"
+     * )
      * @var array<TrainingResponse>
      */
     private array $trainings;

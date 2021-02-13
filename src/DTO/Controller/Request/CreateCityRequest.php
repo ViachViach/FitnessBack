@@ -4,10 +4,31 @@ declare(strict_types=1);
 
 namespace App\DTO\Controller\Request;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Create city",
+ *     description="Create city schema",
+ *     required={"name", "countryId"}
+ * )
+ */
 final class CreateCityRequest
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="City's name"
+     * )
+     */
     private string $name;
-    private int $count;
+
+    /**
+     * @OA\Property(
+     *     nullable=true,
+     *     description="Country id"
+     * )
+     */
     private int $countryId;
 
     public function getName(): string
@@ -18,17 +39,6 @@ final class CreateCityRequest
     public function setName(string $name): CreateCityRequest
     {
         $this->name = $name;
-        return $this;
-    }
-
-    public function getCount(): int
-    {
-        return $this->count;
-    }
-
-    public function setCount(int $count): CreateCityRequest
-    {
-        $this->count = $count;
         return $this;
     }
 

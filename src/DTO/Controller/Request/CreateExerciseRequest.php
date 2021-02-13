@@ -23,6 +23,12 @@ final class CreateExerciseRequest
      */
     private string $name;
 
+    /**
+     * @OA\Property(
+     *     nullable=true,
+     *     description="Exercise's description"
+     * )
+     */
     private string $description;
 
     public function getName(): string

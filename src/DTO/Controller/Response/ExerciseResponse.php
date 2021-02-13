@@ -5,14 +5,62 @@ declare(strict_types=1);
 namespace App\DTO\Controller\Response;
 
 use DateTimeInterface;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *     title="Exercise response",
+ *     description="Exercise response schema"
+ * )
+ */
 final class ExerciseResponse
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Exercise's id"
+     * )
+     */
     private int $id;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Exercise's name"
+     * )
+     */
     private string $name;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Exercise's description"
+     * )
+     */
     private string $description;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Exercise's video path"
+     * )
+     */
     private string $videoPath;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="date create"
+     * )
+     */
     private DateTimeInterface $createAt;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="date update"
+     * )
+     */
     private DateTimeInterface $updateAt;
 
     public function getId(): int

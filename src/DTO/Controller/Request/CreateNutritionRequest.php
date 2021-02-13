@@ -4,12 +4,55 @@ declare(strict_types=1);
 
 namespace App\DTO\Controller\Request;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Create nutrition",
+ *     description="Create nutrition schema",
+ *     required={"name", "description", "mill", "calories", "protein"}
+ * )
+ */
 final class CreateNutritionRequest
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's name"
+     * )
+     */
     private string $name;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's description"
+     * )
+     */
     private string $description;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's mill"
+     * )
+     */
     private int $mill;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's calories"
+     * )
+     */
     private int $calories;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition's protein"
+     * )
+     */
     private int $protein;
 
     public function getName(): string

@@ -4,10 +4,38 @@ declare(strict_types=1);
 
 namespace App\DTO\Controller\Response;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="City response",
+ *     description="City response schema"
+ * )
+ */
 final class CityResponse
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="City's id"
+     * )
+     */
     private int $id;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="City's name"
+     * )
+     */
     private string $name;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="City's country id"
+     * )
+     */
     private int $countryId;
 
     public function getId(): int

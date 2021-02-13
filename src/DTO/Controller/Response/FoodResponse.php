@@ -4,11 +4,46 @@ declare(strict_types=1);
 
 namespace App\DTO\Controller\Response;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     title="Food response",
+ *     description="Food response schema"
+ * )
+ */
 final class FoodResponse
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Food's id"
+     * )
+     */
     private int $id;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Food's name"
+     * )
+     */
     private string $name;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Food's count"
+     * )
+     */
     private int $count;
+
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="Nutrition"
+     * )
+     */
     private NutritionResponse $nutrition;
 
     public function getId(): int

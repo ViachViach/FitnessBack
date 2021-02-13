@@ -5,14 +5,32 @@ declare(strict_types=1);
 namespace App\DTO\Controller\Request;
 
 use App\DTO\Controller\Response\ExerciseResponse;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema(
+ *     title="Registration",
+ *     description="Registration schema",
+ *     required={"email", "password"}
+ * )
+ */
 final class Registration
 {
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="eamil"
+     * )
+     */
     private string $email;
 
+    /**
+     * @OA\Property(
+     *     nullable=false,
+     *     description="password"
+     * )
+     */
     private string $password;
-
-    private ExerciseResponse $exercises;
 
     public function getEmail(): string
     {
@@ -34,18 +52,6 @@ final class Registration
     public function setPassword(string $password): Registration
     {
         $this->password = $password;
-
-        return $this;
-    }
-
-    public function getExercises(): ExerciseResponse
-    {
-        return $this->exercises;
-    }
-
-    public function setExercises(ExerciseResponse $exercises): Registration
-    {
-        $this->exercises = $exercises;
 
         return $this;
     }
