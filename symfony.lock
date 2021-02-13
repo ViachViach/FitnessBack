@@ -707,9 +707,12 @@
         "version": "v3.0.3"
     },
     "viachviach/custom-validation-bundle": {
-        "version": "v0.0.2"
+        "version": "dev-master"
     },
     "viachviach/exception-handler": {
+        "version": "dev-master"
+    },
+    "viachviach/storage-bundle": {
         "version": "dev-master"
     },
     "vimeo/psalm": {

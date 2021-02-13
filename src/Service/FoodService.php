@@ -10,7 +10,7 @@ use App\DTO\Controller\Response\FoodResponse;
 use App\Entity\Food;
 use App\Repository\FoodRepository;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
-use ViachViach\ExceptionHandler\Exception\NotFoundException;
+use ViachViach\Storage\Exception\NotFoundException;
 
 class FoodService
 {

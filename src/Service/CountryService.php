@@ -10,7 +10,7 @@ use App\DTO\Controller\Response\CountryResponse;
 use App\Entity\Country;
 use App\Repository\CountryRepository;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
-use ViachViach\ExceptionHandler\Exception\NotFoundException;
+use ViachViach\Storage\Exception\NotFoundException;
 
 class CountryService
 {

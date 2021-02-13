@@ -14,7 +14,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
-use ViachViach\ExceptionHandler\Exception\NotFoundException;
+use ViachViach\Storage\Exception\NotFoundException;
 
 class ExerciseService
 {

@@ -10,7 +10,7 @@ use App\DTO\Controller\Response\CityResponse;
 use App\Entity\City;
 use App\Repository\CityRepository;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
-use ViachViach\ExceptionHandler\Exception\NotFoundException;
+use ViachViach\Storage\Exception\NotFoundException;
 
 class CityService
 {

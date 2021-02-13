@@ -39,9 +39,34 @@ services:
     volumes:
       - ./:/var/www/:cached
       - ./docker/logs/nginx-back:/var/log/nginx:cached
+  redis-fitnes:
+    image: redis:4.0.11-alpine
+    container_name: redis-fitnes
+    command: redis-server
+    volumes:
+      - redis:/data
+    ports: [ 6379, '6379:6379' ]
+    networks:
+      - php-fitnes
+  rabbitmq-fitnes:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq-fitnes
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbit
+      RABBITMQ_DEFAULT_PASS: rabbit
+      RABBITMQ_DEFAULT_VHOST: fitnes
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    networks:
+      - php-fitnes
 
 volumes:
   fias_symfony_database:
+  redis:
+  rabbitmq:
 networks:
   db-fitnes:
   php-fitnes:

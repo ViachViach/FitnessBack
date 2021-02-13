@@ -11,7 +11,7 @@ use App\Entity\Nutrition;
 use App\Repository\NutritionRepository;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
 use DateTime;
-use ViachViach\ExceptionHandler\Exception\NotFoundException;
+use ViachViach\Storage\Exception\NotFoundException;
 
 class NutritionService
 {

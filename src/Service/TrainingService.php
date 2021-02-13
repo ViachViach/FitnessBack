@@ -11,7 +11,7 @@ use App\Entity\Training;
 use App\Exception\UserNotFoundException;
 use App\Repository\TrainingRepository;
 use ViachViach\CustomValidationBundle\Service\ValidationServiceInterface;
-use ViachViach\ExceptionHandler\Exception\NotFoundException;
+use ViachViach\Storage\Exception\NotFoundException;
 
 class TrainingService
 {
