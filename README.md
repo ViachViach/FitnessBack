@@ -1,6 +1,6 @@
 ## About
 
-Fitness REST API is an application which help people to training at home. We want to share a healthy lifestyle.
+Fitness REST API is an application which helps people to training at home. We want to share a healthy lifestyle.
 
 ## Installation
 ```
