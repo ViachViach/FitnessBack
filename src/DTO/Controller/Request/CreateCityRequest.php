@@ -8,6 +8,7 @@ final class CreateCityRequest
 {
     private string $name;
     private int $count;
+    private int $countryId;
 
     public function getName(): string
     {
@@ -28,6 +29,17 @@ final class CreateCityRequest
     public function setCount(int $count): CreateCityRequest
     {
         $this->count = $count;
+        return $this;
+    }
+
+    public function getCountryId(): int
+    {
+        return $this->countryId;
+    }
+
+    public function setCountryId(int $countryId): CreateCityRequest
+    {
+        $this->countryId = $countryId;
         return $this;
     }
 }

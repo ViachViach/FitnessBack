@@ -2,6 +2,14 @@
     "name": "fitsprint/application",
     "type": "project",
     "license": "proprietary",
+    "description": "Fitness application",
+    "homepage": "https://github.com/ViachViach/FitnessBack",
+    "authors": [
+        {
+            "name": "Slava Karmazin",
+            "role": "lead"
+        }
+    ],
     "require": {
         "php": "^7.4|^8.0",
         "ext-ctype": "*",
