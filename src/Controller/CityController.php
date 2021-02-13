@@ -137,9 +137,37 @@ class CityController
         return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
+    /**
+     *
+     * @Route("/{id}", name="city:get", methods={"GET"}, requirements={"id" = "\d+"})
+     *
+     * @OA\Get(
+     *    description="Get city by id",
+     *    summary="Return city by id",
+     *    @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        required=true,
+     *        schema=@OA\Schema(
+     *            type="integer",
+     *        ),
+     *        description="city id",
+     *    ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="city",
+     *        @OA\JsonContent(
+     *           ref=@Model(type=CityResponse::class)
+     *        )
+     *     ),
+     * )
+     */
     public function getById(int $id): JsonResponse
     {
-        return new JsonResponse();
+        $city = $this->cityService->getResponseById($id);
+        $data = $this->serializer->serialize($city, JsonEncoder::FORMAT);
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
     }
 
     public function getAll(): JsonResponse

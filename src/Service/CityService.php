@@ -9,6 +9,7 @@ use App\DTO\Controller\Request\CreateCityRequest;
 use App\DTO\Controller\Response\CityResponse;
 use App\Entity\City;
 use App\Repository\CityRepository;
+use ViachViach\ExceptionHandler\Exception\NotFoundException;
 
 class CityService
 {
@@ -51,7 +52,10 @@ class CityService
 
     public function getResponseById(int $id): CityResponse
     {
+        $city = $this->getById($id);
 
+        $adapter = new CityAdapter($city);
+        return $adapter->createResponse();
     }
 
     public function getAll(): array
@@ -64,8 +68,16 @@ class CityService
 
     }
 
+    /**
+     * @throws NotFoundException
+    */
     public function getById(int $id): City
     {
+        $city = $this->cityRepository->find($id);
+        if ($city === null) {
+            throw new NotFoundException(sprintf("Exercise by %d id not found", $id));
+        }
 
+        return $city;
     }
 }
