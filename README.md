@@ -19,7 +19,7 @@ This project store docker images. Download docker application to your machine if
 ### Composer
 Make composer install:
 
-    docker-composer exec php-fitness /bin/sh
+    docker-compose exec php-fitnes /bin/sh
     composer install
 
 ### Code style and test
