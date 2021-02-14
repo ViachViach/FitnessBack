@@ -26,11 +26,11 @@ Make composer install:
 
 ```
 # Create folder
-mkdir ./backend/config/jwt
+mkdir ./config/jwt
 
 # Generate keys
-openssl genpkey -out ./backend/config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
-openssl pkey -in ./backend/config/jwt/private.pem -out config/jwt/public.pem -pubout
+openssl genpkey -out ./config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+openssl pkey -in ./config/jwt/private.pem -out config/jwt/public.pem -pubout
 ```
 
 ### Code style and test
