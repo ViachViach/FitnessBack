@@ -22,6 +22,17 @@ Make composer install:
     docker-compose exec php-fitnes /bin/sh
     composer install
 
+### JWT token 
+
+```
+# Create folder
+mkdir ./backend/config/jwt
+
+# Generate keys
+openssl genpkey -out ./backend/config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+openssl pkey -in ./backend/config/jwt/private.pem -out config/jwt/public.pem -pubout
+```
+
 ### Code style and test
 You can check code style and test locally:
 
