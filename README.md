@@ -19,8 +19,7 @@ This project store docker images. Download docker application to your machine if
 ### Composer
 Make composer install:
 
-    docker-compose exec php-fitnes /bin/sh
-    composer install
+    docker-compose exec php-fitnes composer install
 
 ### JWT token 
 
@@ -37,6 +36,15 @@ openssl pkey -in ./config/jwt/private.pem -out config/jwt/public.pem -pubout
 You can check code style and test locally:
 
     composer check
+
+### DB 
+Migration:
+
+    docker-compose exec php-fitnes bin/console d:m:m
+
+Fixtures: 
+
+    docker-compose exec php-fitnes bin/console make:fixtures 
 
 ### Application
 Your application is available on localhost:81
