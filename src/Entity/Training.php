@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,6 +63,12 @@ class Training
      * @ORM\OneToMany(targetEntity="TrainingNutrition", mappedBy="nutrition")
      */
     private Collection $trainingNutrition;
+
+    private DateTimeImmutable $createAt;
+
+    private DateTimeImmutable $updateAt;
+
+    private DateTimeImmutable $deleteAt;
 
     public function __construct()
     {
@@ -139,6 +146,39 @@ class Training
     {
         $this->trainingNutrition = $trainingNutrition;
 
+        return $this;
+    }
+
+    public function getCreateAt(): DateTimeImmutable
+    {
+        return $this->createAt;
+    }
+
+    public function setCreateAt(DateTimeImmutable $createAt): Training
+    {
+        $this->createAt = $createAt;
+        return $this;
+    }
+
+    public function getUpdateAt(): DateTimeImmutable
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(DateTimeImmutable $updateAt): Training
+    {
+        $this->updateAt = $updateAt;
+        return $this;
+    }
+
+    public function getDeleteAt(): DateTimeImmutable
+    {
+        return $this->deleteAt;
+    }
+
+    public function setDeleteAt(DateTimeImmutable $deleteAt): Training
+    {
+        $this->deleteAt = $deleteAt;
         return $this;
     }
 }
