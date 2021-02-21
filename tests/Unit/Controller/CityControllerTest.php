@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Controller;
 
 use App\Controller\CityController;
+use App\DTO\Controller\Request\CreateCityRequest;
 use App\DTO\Controller\Response\CityResponse;
 use App\DTO\Controller\Response\CountryResponse;
 use App\Service\CityService;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -89,12 +91,83 @@ class CityControllerTest extends KernelTestCase
 
     public function testCreate()
     {
+        $countryId = rand(1, 100);
+        $country   = sprintf('{"name":"Moscow", "countryId": %d}', $countryId);
 
+        $requestMock = $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $requestMock
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn($country);
+
+        $createCityRequest = new CreateCityRequest();
+        $createCityRequest
+            ->setName('Moscow')
+            ->setCountryId($countryId)
+        ;
+
+        $createCityResponse = new CityResponse();
+        $createCityResponse
+            ->setId(rand(0, 100))
+            ->setName($createCityRequest->getName())
+            ->setCountryId($countryId)
+        ;
+
+        $this->cityService
+            ->expects($this->once())
+            ->method('create')
+            ->willReturn($createCityResponse);
+
+        $result = $this->controller->create($requestMock);
+
+        $data     = $this->serializer->serialize($createCityResponse, JsonEncoder::FORMAT);
+        $response = new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+
+        $this->assertEquals($response, $result);
     }
 
     public function testUpdate()
     {
+        $id        = rand(1, 100);
+        $countryId = rand(1, 100);
+        $country   = sprintf('{"name":"Moscow", "countryId": %d}', $countryId);
 
+        $requestMock = $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $requestMock
+            ->expects($this->once())
+            ->method('getContent')
+            ->willReturn($country);
+
+        $createCityRequest = new CreateCityRequest();
+        $createCityRequest
+            ->setName('Moscow')
+            ->setCountryId($countryId)
+        ;
+
+        $createCityResponse = new CityResponse();
+        $createCityResponse
+            ->setId(rand(0, 100))
+            ->setName($createCityRequest->getName())
+            ->setCountryId($countryId)
+        ;
+
+        $this->cityService
+            ->expects($this->once())
+            ->method('update')
+            ->willReturn($createCityResponse);
+
+        $result = $this->controller->update($requestMock, $id);
+
+        $data     = $this->serializer->serialize($createCityResponse, JsonEncoder::FORMAT);
+        $response = new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+
+        $this->assertEquals($response, $result);
     }
 
     public function testDelete()
