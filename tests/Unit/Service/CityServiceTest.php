@@ -18,9 +18,4 @@ class CityServiceTest extends KernelTestCase
 
         $this->cityService = $container->get(CityService::class);
     }
-
-    public function testUpdate()
-    {
-
-    }
 }
