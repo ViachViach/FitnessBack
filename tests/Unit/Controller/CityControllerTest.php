@@ -170,11 +170,6 @@ class CityControllerTest extends KernelTestCase
         $this->assertEquals($response, $result);
     }
 
-    public function testDelete()
-    {
-
-    }
-
     public function getAllCities(): array
     {
         $emptyCity = [];
