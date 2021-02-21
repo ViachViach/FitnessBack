@@ -19,13 +19,6 @@ class CityServiceTest extends KernelTestCase
         $this->cityService = $container->get(CityService::class);
     }
 
-
-    public function testCreate()
-    {
-
-        $this->assertEquals('asdsd', 'asdsd');
-    }
-
     public function testUpdate()
     {
 

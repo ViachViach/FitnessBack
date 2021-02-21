@@ -56,6 +56,52 @@ class CityControllerTest extends KernelTestCase
         $this->assertEquals($response, $result);
     }
 
+    public function testGetById()
+    {
+        $id      = rand(0, 100);
+        $country = new CountryResponse();
+        $country
+            ->setId(rand(0, 100))
+            ->setName('Russia')
+        ;
+
+
+        $city = new CityResponse();
+        $city
+            ->setId($id)
+            ->setName('Moscow')
+            ->setCountryId($country->getId())
+        ;
+
+        $this->cityService
+            ->expects($this->once())
+            ->method('getResponseById')
+            ->with($id)
+            ->willReturn($city);
+
+        $result = $this->controller->getById($id);
+
+        $data     = $this->serializer->serialize($city, JsonEncoder::FORMAT);
+        $response = new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
+
+        $this->assertEquals($response, $result);
+    }
+
+    public function testCreate()
+    {
+
+    }
+
+    public function testUpdate()
+    {
+
+    }
+
+    public function testDelete()
+    {
+
+    }
+
     public function getAllCities(): array
     {
         $emptyCity = [];
@@ -82,7 +128,10 @@ class CityControllerTest extends KernelTestCase
             ->setName('St. Petersburg')
             ->setCountryId($country->getId())
         ;
-        $resultThree = [$cityOne, $cityTwo];
+        $resultThree = [
+            $cityOne,
+            $cityTwo,
+        ];
 
         return [
             [$resultOne],
