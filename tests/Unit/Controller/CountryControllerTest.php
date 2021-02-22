@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Controller;
 
-use App\Controller\CityController;
-use App\DTO\Controller\Request\CreateCityRequest;
-use App\DTO\Controller\Response\CityResponse;
-use App\DTO\Controller\Response\CountryResponse;
-use App\Service\CityService;
+use App\Controller\CountryController;
+use App\DTO\Controller\Request\CreateCountryRequest;
+use App\Service\CountryService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class CityControllerTest extends AbstractControllerTest
+class CountryControllerTest extends AbstractControllerTest
 {
-    private CityController $controller;
 
-    private CityService $cityService;
+    private CountryController $controller;
+
+    private CountryService $countryService;
 
     private SerializerInterface $serializer;
 
@@ -27,31 +26,31 @@ class CityControllerTest extends AbstractControllerTest
         static::bootKernel();
         $container = static::$container;
 
-        $this->cityService = $this->getMockBuilder(CityService::class)
+        $this->countryService = $this->getMockBuilder(CountryService::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->serializer = $container->get(SerializerInterface::class);
 
-        $this->controller = new CityController(
+        $this->controller = new CountryController(
             $this->serializer,
-            $this->cityService,
+            $this->countryService,
         );
     }
 
     /**
-     * @dataProvider getAllCities
+     * @dataProvider getAllCountry
      */
-    public function testGetAll(array $cities): void
+    public function testGetAll(array $country): void
     {
-        $this->cityService
+        $this->countryService
             ->expects($this->once())
             ->method('getAll')
-            ->willReturn($cities);
+            ->willReturn($country);
 
         $result = $this->controller->getAll();
 
-        $data     = $this->serializer->serialize($cities, JsonEncoder::FORMAT);
+        $data     = $this->serializer->serialize($country, JsonEncoder::FORMAT);
         $response = new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
 
         $this->assertEquals($response, $result);
@@ -60,18 +59,17 @@ class CityControllerTest extends AbstractControllerTest
     public function testGetById(): void
     {
         $id      = rand(0, 100);
-        $country = $this->createCountry(rand(0, 100), 'Russia');
-        $city    = $this->createCity($id, 'Moscow', $country->getId());
+        $country = $this->createCountry($id,'Russia');
 
-        $this->cityService
+        $this->countryService
             ->expects($this->once())
             ->method('getResponseById')
             ->with($id)
-            ->willReturn($city);
+            ->willReturn($country);
 
         $result = $this->controller->getById($id);
 
-        $data     = $this->serializer->serialize($city, JsonEncoder::FORMAT);
+        $data     = $this->serializer->serialize($country, JsonEncoder::FORMAT);
         $response = new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
 
         $this->assertEquals($response, $result);
@@ -79,8 +77,9 @@ class CityControllerTest extends AbstractControllerTest
 
     public function testCreate(): void
     {
-        $countryId = rand(1, 100);
-        $country   = sprintf('{"name":"Moscow", "countryId": %d}', $countryId);
+        $id      = rand(1, 100);
+        $name    = 'Russian';
+        $country = sprintf('{"name":"%s", "id": %d}', $name, $id);
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
@@ -91,22 +90,21 @@ class CityControllerTest extends AbstractControllerTest
             ->method('getContent')
             ->willReturn($country);
 
-        $createCityRequest = new CreateCityRequest();
+        $createCityRequest = new CreateCountryRequest();
         $createCityRequest
-            ->setName('Moscow')
-            ->setCountryId($countryId)
+            ->setName($name)
         ;
 
-        $createCityResponse = $this->createCity(rand(0, 100), $createCityRequest->getName(), $countryId);
+        $createCountryResponse = $this->createCountry($id, 'Russian');
 
-        $this->cityService
+        $this->countryService
             ->expects($this->once())
             ->method('create')
-            ->willReturn($createCityResponse);
+            ->willReturn($createCountryResponse);
 
         $result = $this->controller->create($requestMock);
 
-        $data     = $this->serializer->serialize($createCityResponse, JsonEncoder::FORMAT);
+        $data     = $this->serializer->serialize($createCountryResponse, JsonEncoder::FORMAT);
         $response = new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
 
         $this->assertEquals($response, $result);
@@ -114,9 +112,9 @@ class CityControllerTest extends AbstractControllerTest
 
     public function testUpdate(): void
     {
-        $id        = rand(1, 100);
-        $countryId = rand(1, 100);
-        $country   = sprintf('{"name":"Moscow", "countryId": %d}', $countryId);
+        $id      = rand(1, 1000);
+        $name    = 'Russian';
+        $country = sprintf('{"name":"%s", "id": %d}', $name, $id);
 
         $requestMock = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
@@ -127,41 +125,42 @@ class CityControllerTest extends AbstractControllerTest
             ->method('getContent')
             ->willReturn($country);
 
-        $createCityRequest = new CreateCityRequest();
-        $createCityRequest
-            ->setName('Moscow')
-            ->setCountryId($countryId)
-        ;
+        $countryResponse = $this->createCountry($id, $name);
 
-        $createCityResponse = $this->createCity(rand(0, 100), $createCityRequest->getName(), $countryId);
-
-        $this->cityService
+        $this->countryService
             ->expects($this->once())
             ->method('update')
-            ->willReturn($createCityResponse);
+            ->willReturn($countryResponse);
 
         $result = $this->controller->update($requestMock, $id);
 
-        $data     = $this->serializer->serialize($createCityResponse, JsonEncoder::FORMAT);
+        $data     = $this->serializer->serialize($countryResponse, JsonEncoder::FORMAT);
         $response = new JsonResponse($data, JsonResponse::HTTP_OK, [], true);
 
         $this->assertEquals($response, $result);
     }
 
-    public function getAllCities(): array
+    public function testDelete(): void
+    {
+        $id       = rand(1, 1000);
+        $result   = $this->controller->delete($id);
+        $response = new JsonResponse(null, JsonResponse::HTTP_OK);
+
+        $this->assertEquals($response, $result);
+    }
+
+    public function getAllCountry(): array
     {
         $emptyCity = [];
         $resultOne = [$emptyCity];
 
-        $country = $this->createCountry(rand(0, 100), 'Russia');
+        $countryOne = $this->createCountry(rand(1, 1000),'Russia');
+        $resultTwo  = [$countryOne];
 
-        $cityOne   = $this->createCity(rand(0, 100), 'Moscow', $country->getId());
-        $resultTwo = [$cityOne];
-
-        $cityTwo     = $this->createCity(rand(0, 100), 'St. Petersburg', $country->getId());
+        $countryTwo  = $this->createCountry(rand(1, 1000),'Russia');
         $resultThree = [
-            $cityOne,
-            $cityTwo,
+            $countryTwo,
+            $resultTwo,
         ];
 
         return [
@@ -170,4 +169,5 @@ class CityControllerTest extends AbstractControllerTest
             [$resultThree],
         ];
     }
+
 }
