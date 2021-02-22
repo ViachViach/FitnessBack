@@ -40,8 +40,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ExerciseController
 {
     public function __construct(
+        private SerializerInterface $serializer,
         private ExerciseService $exerciseService,
-        private SerializerInterface $serializer
     ) { }
 
     /**
