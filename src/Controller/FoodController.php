@@ -39,8 +39,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 class FoodController
 {
     public function __construct(
+        private SerializerInterface $serializer,
         private FoodService $foodService,
-        private SerializerInterface $serializer
     ) { }
 
     /**

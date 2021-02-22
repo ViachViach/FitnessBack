@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Controller;
 use App\DTO\Controller\Response\CityResponse;
 use App\DTO\Controller\Response\CountryResponse;
 use App\DTO\Controller\Response\ExerciseResponse;
+use App\DTO\Controller\Response\FoodResponse;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use DateTimeImmutable;
 
@@ -48,6 +49,18 @@ abstract class AbstractControllerTest extends KernelTestCase
         ;
 
         return $exercise;
+    }
+
+    protected function createFood(int $id): FoodResponse
+    {
+        $foodResponse = new FoodResponse();
+        $foodResponse
+            ->setId($id)
+            ->setName($this->generateRandomString(rand(10, 20)))
+            ->setCount(rand(1, 100))
+        ;
+
+        return $foodResponse;
     }
 
     protected function generateRandomString(int $length=10): string
